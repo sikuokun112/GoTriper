@@ -60,15 +60,9 @@ public class UserService {
         return false;
     }
 
-    public List<Account> findAll() {
-        // TODO Auto-generated method stub
-        //return userRepository.findAll();
-        return null;
+    public Account findByUserName(String userName){
+        return userRepository.findByUserName(userName);
     }
 
-    public List<Account> findByName(String name) {
-        // TODO Auto-generated method stub
-        //return  userRepository.findByUserNameLike("%"+name+"%");
-        return null;
-    }
+
 }

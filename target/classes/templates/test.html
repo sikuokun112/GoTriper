@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>test xem lay duoc user name khac trang khong </title>
+</head>
+<body>
+<h3>Welcome : <span th:utext="${#request.userPrincipal.name}"></span></h3>
+</body>
+</html>

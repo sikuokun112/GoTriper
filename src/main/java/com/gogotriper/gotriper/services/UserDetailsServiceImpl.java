@@ -31,7 +31,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(account == null){
             System.out.println("User not found! "+userName);
             throw new UsernameNotFoundException("User "+userName+" was not found in data");
-
         }
         System.out.println("Found User: "+account);
         List<String> roleNames = this.roleDao.getRoleNames(account.getUserId());

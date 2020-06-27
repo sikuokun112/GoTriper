@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>DanhMucList</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/fragments/_menu"></th:block>
+
+
+<h2>DanhMuc List</h2>
+<br/><br/>
+<div class="container" style="margin-top: 10px;">
+    <div class="row"
+         style="border: 1px darkgrey solid; border-radius: 10px; width: 50%; margin: 0 auto; padding: 20px;">
+        <div class="col-sm-12">
+            </div>
+            <td th:each="image:${img}">
+                <img alt="" th:src="@{'getimage/'+${image.getImageUrl()}}" width="500" height="400">
+            </td>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <tr th:each="danhmuc : ${danhmuclist}">
+            <h1 th:text="${danhmuc.getTenDanhMuc()}"></h1>
+        </tr>
+
+        <form action="/savebaidang" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Tieu De</label>
+                <input type="text" class="form-control" name="tieude" placeholder="Tieu de">
+            </div>
+            <div class="form-group">
+                <label>Noi Dung</label>
+                <input type="text" class="form-control" name="noidung" placeholder="Noidung">
+            </div>
+            <div class="form-group">
+                <label>DanhMuc</label>
+                <input type="text" class="form-control" name="danhmuc" placeholder="DanhMuc">
+            </div>
+            <div class="form-group">
+                <label>Anh </label>
+                <input type="file" class="form-control" name="photo" placeholder="EnterPhoTo" multiple>
+            </div>
+            <button type="submit" class="btn-danger">SAVE</button>
+            <button type="reset" class="btn-primary">Cancel</button>
+        </form>
+    </div>
+</div>
+
+</body>
+
+</html>

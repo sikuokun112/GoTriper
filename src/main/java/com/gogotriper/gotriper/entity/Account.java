@@ -39,6 +39,19 @@ public class Account {
             @JoinColumn(name = "role_id")})
     private List<Role> roles;
 
+    @OneToMany(mappedBy = "userId")
+    private List<BaiDang> listBaiDang;
+
+    public List<BaiDang> getListBaiDang() {
+        return listBaiDang;
+    }
+
+    public void setListBaiDang(List<BaiDang> listBaiDang) {
+        this.listBaiDang = listBaiDang;
+    }
+
+
+
     public void setUserId(Long userId) {
         this.userId = userId;
     }
