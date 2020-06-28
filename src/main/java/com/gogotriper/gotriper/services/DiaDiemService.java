@@ -12,4 +12,8 @@ public class DiaDiemService  {
     public void saveDiaDiem(DiaDiem diaDiem){
         diaDiemRepository.save(diaDiem);
     }
+
+    public DiaDiem findDiaDiemById(int id){
+        return diaDiemRepository.findDiaDiemById(id);
+    }
 }

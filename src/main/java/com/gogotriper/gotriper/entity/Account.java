@@ -42,6 +42,19 @@ public class Account {
     @OneToMany(mappedBy = "userId")
     private List<BaiDang> listBaiDang;
 
+    @OneToMany(mappedBy = "userId")
+    private List<DiaDiem> listDiaDiem;
+
+    public List<DiaDiem> getListDiaDiem() {
+        return listDiaDiem;
+    }
+
+    public void setListDiaDiem(List<DiaDiem> listDiaDiem) {
+        this.listDiaDiem = listDiaDiem;
+    }
+
+
+
     public List<BaiDang> getListBaiDang() {
         return listBaiDang;
     }

@@ -108,7 +108,9 @@ public class MainController {
         diaDiem.setViDo(vido);
         diaDiem.setDiaChi(diachi);
         diaDiem.setSdt(phone);
-
+        String userName = principal.getName();
+        Account user  = userService.findByUserName(userName);
+        diaDiem.setUserId(user);
         List<Image > images = new ArrayList<>();
         int i =0;
         for(MultipartFile photo : photos){
@@ -116,7 +118,7 @@ public class MainController {
             i++;
             int series = imageService.getLatestIdImage()+i;
             image.setImageUrl(series+"_"+photo.getOriginalFilename());
-            image.setDiaDiem_image(diaDiem);
+            image.setDiaDiemImage(diaDiem);
             images.add(image);
             imageService.saveImageToUploads(photo,series);
         }
@@ -134,7 +136,12 @@ public class MainController {
     }
 
     @RequestMapping(value = {"/detail"},method =  RequestMethod.GET)
-    public String DetailMain(){
+    public String DetailMain(Model model){
+        DiaDiem diaDiem = diaDiemService.findDiaDiemById(1);
+        List<Image> img = imageService.findAllImageByDiaDiem(diaDiem);
+        model.addAttribute("img",img);
+        model.addAttribute("diadiem",diaDiem);
+
         return "layouts/detailmain";
     }
 

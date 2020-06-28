@@ -12,14 +12,23 @@ public class Image  {
 
     @Column(name = "imageurl")
     private String imageUrl;
-
     @ManyToOne
     @JoinColumn(name = "diadiem_id")
-    private DiaDiem diaDiem_image;
+    private DiaDiem diaDiemImage;
 
     @ManyToOne
     @JoinColumn(name = "baidang_id")
     private BaiDang baiDangImage;
+
+
+    public DiaDiem getDiaDiemImage() {
+        return diaDiemImage;
+    }
+
+    public void setDiaDiemImage(DiaDiem diaDiemImage) {
+        this.diaDiemImage = diaDiemImage;
+    }
+
 
 
 
@@ -39,13 +48,7 @@ public class Image  {
         this.imageUrl = imageUrl;
     }
 
-    public DiaDiem getDiaDiem_image() {
-        return diaDiem_image;
-    }
 
-    public void setDiaDiem_image(DiaDiem diaDiem_image) {
-        this.diaDiem_image = diaDiem_image;
-    }
 
 
     public BaiDang getBaiDangImage() {

@@ -37,8 +37,23 @@ public class DiaDiem {
     @OneToMany(mappedBy = "diaDiem")
     private List<BaiDang> listBaiDang_DiaDiem;
 
-    @OneToMany(mappedBy = "diaDiem_image",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "diaDiemImage",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Image> listImage_DiaDiem;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Account userId;
+
+    public Account getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Account userId) {
+        this.userId = userId;
+    }
+
+
+
 
     public int getGiamin() {
         return giamin;

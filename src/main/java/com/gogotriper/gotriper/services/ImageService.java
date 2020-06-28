@@ -1,6 +1,7 @@
 package com.gogotriper.gotriper.services;
 
 import com.gogotriper.gotriper.entity.BaiDang;
+import com.gogotriper.gotriper.entity.DiaDiem;
 import com.gogotriper.gotriper.entity.Image;
 import com.gogotriper.gotriper.repositories.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,9 @@ public class ImageService {
     }
     public List<Image> findAllImageByBaiDang(BaiDang baiDang){
         return imageRepository.findAllByBaiDangImage(baiDang);
+    }
+    public List<Image> findAllImageByDiaDiem(DiaDiem diaDiem){
+        return imageRepository.findAllByDiaDiemImage(diaDiem);
     }
 
 }

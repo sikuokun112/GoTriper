@@ -4,4 +4,5 @@ import com.gogotriper.gotriper.entity.DiaDiem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DiaDiemRepository extends JpaRepository<DiaDiem, String> {
+    public DiaDiem findDiaDiemById(int id);
 }
