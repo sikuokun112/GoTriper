@@ -1,13 +1,7 @@
 package com.gogotriper.gotriper.controllers;
 
-import com.gogotriper.gotriper.entity.Account;
-import com.gogotriper.gotriper.entity.BaiDang;
-import com.gogotriper.gotriper.entity.DanhMuc;
-import com.gogotriper.gotriper.entity.Image;
-import com.gogotriper.gotriper.services.BaiDangService;
-import com.gogotriper.gotriper.services.DanhMucService;
-import com.gogotriper.gotriper.services.ImageService;
-import com.gogotriper.gotriper.services.UserService;
+import com.gogotriper.gotriper.entity.*;
+import com.gogotriper.gotriper.services.*;
 import com.gogotriper.gotriper.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -37,6 +32,9 @@ public class MainController {
 
     @Autowired
     private ImageService imageService;
+
+    @Autowired
+    private DiaDiemService diaDiemService;
 
 
 
@@ -89,6 +87,45 @@ public class MainController {
 
         return "layouts/homemain";
     }
+
+    @RequestMapping(value = "/dangdiadiem", method = RequestMethod.GET)
+    public String dangDiaDiem(Model model) {
+
+        return "dangdiadiem";
+    }
+
+    @PostMapping("/savediadiem")
+    public String saveDiaDiem(@RequestParam("tendiadiem") String tendiadiem,@RequestParam("giohoatdong") String giohoatdong,@RequestParam("giodongcua") String giodongcua,@RequestParam("phone") int phone, @RequestParam("giamin") int giamin,@RequestParam("giamax") int giamax,@RequestParam("diachi") String diachi, @RequestParam("kinhdo") String kinhdo,@RequestParam("vido") String vido, @RequestParam("pro-image") List<MultipartFile> photos,Principal principal){
+
+        System.out.println(photos.get(0).getOriginalFilename());
+        DiaDiem diaDiem = new DiaDiem();
+        diaDiem.setTenDiaDiem(tendiadiem);
+        diaDiem.setGiamin(giamin);
+        diaDiem.setGiamax(giamax);
+        diaDiem.setGioHoatDong(new Date());
+        diaDiem.setGioDongCua(new Date());
+        diaDiem.setKinhDo(kinhdo);
+        diaDiem.setViDo(vido);
+        diaDiem.setDiaChi(diachi);
+        diaDiem.setSdt(phone);
+
+        List<Image > images = new ArrayList<>();
+        int i =0;
+        for(MultipartFile photo : photos){
+            Image image = new Image();
+            i++;
+            int series = imageService.getLatestIdImage()+i;
+            image.setImageUrl(series+"_"+photo.getOriginalFilename());
+            image.setDiaDiem_image(diaDiem);
+            images.add(image);
+            imageService.saveImageToUploads(photo,series);
+        }
+        diaDiem.setListImage_DiaDiem(images);
+        diaDiemService.saveDiaDiem(diaDiem);
+
+        return "success";
+    }
+
 
     // Do du lieu len thanh header
     @ModelAttribute("danhmuclist")

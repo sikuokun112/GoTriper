@@ -18,9 +18,6 @@ public class DanhMuc {
     @OneToMany(mappedBy = "danhMuc")
     private List<BaiDang> listBaiDang;
 
-
-
-
     public int getId() {
         return id;
     }

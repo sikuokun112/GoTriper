@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Colorlib">
+    <meta name="description" content="#">
+    <meta name="keywords" content="#">
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="#">
+    <!-- Page Title -->
+    <title>Listing &amp; Directory Website Template</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="mainpage/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <!-- Simple line Icon -->
+    <link rel="stylesheet" href="mainpage/css/simple-line-icons.css">
+    <!-- Themify Icon -->
+    <link rel="stylesheet" href="mainpage/css/themify-icons.css">
+    <!-- Hover Effects -->
+    <link rel="stylesheet" href="mainpage/css/set1.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="mainpage/css/style.css">
+
+    <!-- BLOG DETAIL COMMENT -->
+    <link rel="stylesheet" href="mainpage/css/blog_detail_comment_form.css">
+
+    <!-- SELECTEDBOX -->
+    <link rel="stylesheet" href="mainpage/css/selectedbox.css">
+
+    <!-- PREVIEW IMAGE CSS -->
+    <link rel="stylesheet" href="mainpage/css/previewimage.css">
+
+    <link rel="stylesheet" href="mainpage/css/inputcustom.css">
+
+
+    <!-- MAPBOXGL JS -->
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css' rel='stylesheet' />
+
+    <script src='https://tiles.locationiq.com/v2/js/liq-styles-ctrl-gl.js?v=0.1.6'></script>
+    <link href='https://tiles.locationiq.com/v2/css/liq-styles-ctrl-gl.css?v=0.1.6' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
+    <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+
+    <style>
+        /* CSS is set by JS */
+
+        .marker {
+            display: block;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .coordinates {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            position: absolute;
+            bottom: 40px;
+            left: 10px;
+            padding: 5px 10px;
+            margin: 0;
+            font-size: 14px;
+            line-height: 18px;
+            border-radius: 3px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+<th:block th:include="/fragments/headerpage"></th:block>
+<!--//END HEADER -->
+<!--============================= DETAIL =============================-->
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-7 responsive-wrap">
+                <div class="row detail-filter-wrap">
+                    <div class="col-md-4 featured-responsive">
+                        <div class="detail-filter-text">
+                            <p>34 Results For <span>Restaurant</span></p>
+                        </div>
+                        <div class="input-group">
+                            <input id="test1" value="" type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-8 featured-responsive">
+                        <div class="detail-filter">
+                            <p>Filter by</p>
+                            <form class="filter-dropdown">
+                                <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
+                                    <option selected>Best Match</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </form>
+                            <form class="filter-dropdown">
+                                <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect1">
+                                    <option selected>Restaurants</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </form>
+                            <div class="map-responsive-wrap">
+                                <a class="map-icon" href="#"><span class="icon-location-pin"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row detail-checkbox-wrap">
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Bike Parking</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Wireless Internet  </span>
+                        </label>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Smoking Allowed  </span>
+                        </label>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Street Parking</span>
+                        </label>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Special</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Accepts Credit cards</span>
+                        </label>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Pets Friendly</span>
+                        </label>
+
+                    </div>
+                </div>
+                <div class="container-contact100 responsive-wrap">
+                    <div class="wrap-contact100">
+                        <form class="contact100-form validate-form" action="/savediadiem" method="post" enctype="multipart/form-data">
+                                <span class="contact100-form-title">
+                                            ĐĂNG ĐỊA ĐIỂM
+                                        </span>
+
+                            <label class="label-input100" for="first-name">Tên địa điểm</label>
+                            <div class="wrap-input100 rs1 validate-input">
+                                <input id="first-name" class="input100" type="text" name="tendiadiem" placeholder="Tên địa điểm">
+                                <span class="focus-input100"></span>
+                            </div>
+
+                            <div class="select-box">
+                                <div class="options-container">
+                                    <div class="option">
+                                        <input type="radio" class="radio" id="automobiles" name="category" />
+                                        <label for="automobiles">Automobiles</label>
+                                    </div>
+
+                                    <div class="option">
+                                        <input type="radio" class="radio" id="film" name="category" />
+                                        <label for="film">Film & Animation</label>
+                                    </div>
+                                    <div class="option">
+                                        <input type="radio" class="radio" id="science" name="category" />
+                                        <label for="science">Science & Technology</label>
+                                    </div>
+
+                                    <div class="option">
+                                        <input type="radio" class="radio" id="art1" name="category" />
+                                        <label for="art1">Art</label>
+                                    </div>
+                                    <div class="option">
+                                        <input type="radio" class="radio" id="art2" name="category" />
+                                        <label for="art2">Art</label>
+                                    </div>
+                                    <div class="option">
+                                        <input type="radio" class="radio" id="art3" name="category" />
+                                        <label for="art3">Art</label>
+                                    </div>
+                                </div>
+
+                                <div class="selected">
+                                    TỈNH THÀNH
+                                </div>
+                            </div>
+
+
+                            <label class="label-input100" for="giohoatdong">Giờ hoạt động *</label>
+                            <div class="wrap-input100 validate-input">
+                                <input id="giohoatdong" class="input100" type="datetime-local" name="giohoatdong" value="2020-06-29">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <label class="label-input100" for="giodongcua">Giờ đóng cửa *</label>
+                            <div class="wrap-input100 validate-input">
+                                <input id="giodongcua" class="input100" type="datetime-local" name="giodongcua" value="2020-06-29">
+                                <span class="focus-input100"></span>
+                            </div>
+
+                            <label class="label-input100" for="phone">Phone Number</label>
+                            <div class="wrap-input100">
+                                <input id="phone" class="input100" type="number" name="phone" placeholder="Eg. +1 800 000000">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <label class="label-input100" for="giamin">Giá Min *</label>
+                            <div class="wrap-input100 rs1 validate-input">
+                                <input id="giamin" class="input100" type="number" name="giamin" placeholder="1000000">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <div class="wrap-input100 rs1 validate-input">
+                                <input id="giamax" class="input100" type="number" name="giamax" placeholder="2000000">
+                                <span class="focus-input100"></span>
+                            </div>
+
+                            <label class="label-input100" for="diachi">Địa chỉ *</label>
+                            <div class="wrap-input100 validate-input">
+                                <input id="diachi" class="input100" type="text" name="diachi" placeholder="336/44 Quận Tân Bình, Tp Hồ Chí Minh">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <label class="label-input100" for="phone">Toạ độ địa lý</label>
+                            <div class="wrap-input100 rs1">
+                                <input id="kinhdo" class="input100" type="text" name="kinhdo" placeholder="10.223">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <div class="wrap-input100 rs1">
+                                <input id="vido" class="input100" type="text" name="vido" placeholder="106.334">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <div class="preview-images-zone">
+
+                            </div>
+                            <div class="">
+                                <fieldset class="form-group">
+                                    <a class="btn btn-danger" href="javascript:void(0)" onclick="$('#pro-image').click()">Upload Image</a>
+                                    <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control" multiple>
+                                </fieldset>
+                            </div>
+
+
+
+                            <div class="container-contact100-form-btn">
+                                <button class="contact100-form-btn">
+                                                <span>
+                                                    Submit
+                                                    <i class="zmdi zmdi-arrow-right m-l-8"></i>
+                                                </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="col-md-5 responsive-wrap map-wrap">
+                <div class="map-fix">
+                    <!-- data-toggle="affix" -->
+                    <!-- Google map will appear here! Edit the Latitude, Longitude and Zoom Level below using data-attr-*  -->
+                    <div id='map'></div>
+                    <div id="coordinates" class="coordinates"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--//END DETAIL -->
+<!--============================= FOOTER =============================-->
+<th:block th:include="/fragments/footermain"></th:block>
+<!--//END FOOTER -->
+
+
+
+
+<!-- selectedbox js -->
+<script src="mainpage/js/selectedbox.js"></script>
+
+<!-- prievew image -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="mainpage/js/previewimage.js"></script>
+
+<!-- jQuery, Bootstrap JS. -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!-- <script src="js/jquery-3.2.1.min.js"></script> -->
+<script src="mainpage/js/popper.min.js"></script>
+<script src="mainpage/js/bootstrap.min.js"></script>
+
+<script>
+    //Add your LocationIQ Maps Access Token here (not the API token!)
+
+    locationiq.key = 'pk.2308d72370d062bea24af4ac2d37ee18';
+    var center1 = [106.65202418650699, 10.773604802848894];
+    //Define the map and configure the map's theme
+    var map = new mapboxgl.Map({
+        container: 'map',
+        attributionControl: false, //need this to show a compact attribution icon (i) instead of the whole text
+        zoom: 13,
+        center: center1
+    });
+
+    //Define layers you want to add to the layer controls; the first element will be the default layer
+    var layerStyles = {
+        "Streets": "streets/raster",
+        "Satellite": "earth/raster",
+        "Hybrid": "hybrid/raster",
+        "Dark": "dark/raster",
+        "Light": "light/raster",
+    };
+
+    map.addControl(new locationiqLayerControl({
+        key: locationiq.key,
+        layerStyles: layerStyles
+    }), 'top-left');
+
+    //Add Navigation controls to the map to the top-right corner of the map
+    var nav = new mapboxgl.NavigationControl();
+    map.addControl(nav, 'top-right');
+
+
+    //Add a 'full screen' button to the map
+    map.addControl(new mapboxgl.FullscreenControl());
+
+    //Add a Scale to the map
+    map.addControl(new mapboxgl.ScaleControl({
+        maxWidth: 80,
+        unit: 'metric' //imperial for miles
+    }));
+
+    //Add Geolocation control to the map (will only render when page is opened over HTTPS)
+    map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true
+    }));
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2lrdW9rdW4xMSIsImEiOiJja2J5bDlkemcwNG9mMnNwOXZlZjgyczlzIn0.tG7282mKVo6pVtlP8kkkTQ';
+
+    map.addControl(
+        new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl
+        })
+    );
+
+    //Marker can be style either while adding the marker using JS or separately using CSS
+    //Marker can be style either while adding the marker using JS or separately using CSS
+
+    // First create DOM element for the marker
+    var el = document.createElement('div');
+    el.className = 'marker';
+    // Set marker properties using JS
+    el.style.backgroundImage = 'url(https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png)';
+    el.style.width = '50px';
+    el.style.height = '50px';
+
+    // varibale to store final Lat and Long
+
+
+    var kinhdo;
+    var vido;
+    map.on('mousedown', e => {
+        // e.point is the x, y coordinates of the mousemove event relative
+        // to the top-left corner of the map
+        // e.lngLat is the longitude, latitude geographical position of the event
+
+        // Finally, create the marker where the mouse was clicked
+        var marker = new mapboxgl.Marker(el)
+            .setLngLat(e.lngLat.wrap())
+            .addTo(map);
+
+        var lngLat = marker.getLngLat();
+        coordinates.style.display = 'block';
+        coordinates.innerHTML =
+            'Latitude: ' + lngLat.lat + '<br />Longitude: ' + lngLat.lng;
+        kinhdo = lngLat.lat;
+        vido = lngLat.lng;
+    });
+
+
+    window.onload = function(e) {
+        document.getElementById('coordinates').onmousedown = function() {
+            var a = document.getElementById('coordinates');
+            console.log(a);
+
+            document.getElementById('kinhdo').value = kinhdo;
+            document.getElementById('vido').value = vido;
+        };
+    };
+    // First create DOM element for the marker
+
+    // Add the geocoder to the map
+    map.addControl(geocoder);
+</script>
+
+</body>
+
+</html>
