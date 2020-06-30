@@ -36,7 +36,11 @@ public class MainController {
     @Autowired
     private DiaDiemService diaDiemService;
 
-
+    // Do du lieu len thanh header
+    @ModelAttribute("danhmuclist")
+    public List<DanhMuc> getAllDanhMuc(){
+        return danhMucService.getAllDanhMuc();
+    }
 
     @RequestMapping(value = "/listdanhmuc", method = RequestMethod.GET)
     public String ShowListDanhMuc(Model model) {
@@ -74,6 +78,32 @@ public class MainController {
         return "success";
     }
 
+    @PostMapping("/diadiem/{id}/savebaidang2")
+    public String saveBaiDang2(@RequestParam("tieude") String tieude , @RequestParam("noidung") String noidung, @RequestParam("danhmucname") String danhmucname, @RequestParam("pro-image")List<MultipartFile> photos,Principal principal,@PathVariable String id){
+        BaiDang baiDang = new BaiDang();
+        baiDang.setDanhMuc(danhMucService.findDanhMucById(Integer.parseInt(danhmucname)));
+        baiDang.setDiaDiem(diaDiemService.findDiaDiemById(Integer.parseInt(id)));
+        baiDang.setNoiDung(noidung);
+        baiDang.setTieuDe(tieude);
+        String userName = principal.getName();
+        Account user  = userService.findByUserName(userName);
+        baiDang.setUserId(user);
+        List<Image > images = new ArrayList<>();
+        int i =0;
+        for(MultipartFile photo : photos){
+            Image image = new Image();
+            i++;
+            int series = imageService.getLatestIdImage()+i;
+            image.setImageUrl(series+"_"+photo.getOriginalFilename());
+            image.setBaiDangImage(baiDang);
+            images.add(image);
+            imageService.saveImageToUploads(photo,series);
+        }
+        baiDang.setListImage_BaiDang(images);
+        baiDangService.saveBaiDang(baiDang);
+        return "success";
+    }
+
     // test
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test(Model model) {
@@ -88,14 +118,24 @@ public class MainController {
         return "layouts/homemain";
     }
 
+    @RequestMapping(value = "/diadiem/{id}/dangbaiviet", method = RequestMethod.GET)
+    public String dangBaiViet(Model model,@PathVariable String id) {
+
+        System.out.println("ID :"+id);
+        model.addAttribute("diadiem",diaDiemService.findDiaDiemById(Integer.parseInt(id)));
+        return "layouts/dangbaiviet";
+    }
+
     @RequestMapping(value = "/dangdiadiem", method = RequestMethod.GET)
     public String dangDiaDiem(Model model) {
 
         return "dangdiadiem";
     }
 
+
+
     @PostMapping("/savediadiem")
-    public String saveDiaDiem(@RequestParam("tendiadiem") String tendiadiem,@RequestParam("giohoatdong") String giohoatdong,@RequestParam("giodongcua") String giodongcua,@RequestParam("phone") int phone, @RequestParam("giamin") int giamin,@RequestParam("giamax") int giamax,@RequestParam("diachi") String diachi, @RequestParam("kinhdo") String kinhdo,@RequestParam("vido") String vido, @RequestParam("pro-image") List<MultipartFile> photos,Principal principal){
+    public String saveDiaDiem(@RequestParam("tendiadiem") String tendiadiem,@RequestParam("giohoatdong") String giohoatdong,@RequestParam("giodongcua") String giodongcua,@RequestParam("phone") int phone, @RequestParam("giamin") int giamin,@RequestParam("giamax") int giamax,@RequestParam("diachi") String diachi, @RequestParam("kinhdo") String kinhdo,@RequestParam("vido") String vido,@RequestParam("noidung") String noidung, @RequestParam("pro-image") List<MultipartFile> photos,Principal principal){
 
         System.out.println(photos.get(0).getOriginalFilename());
         DiaDiem diaDiem = new DiaDiem();
@@ -107,6 +147,7 @@ public class MainController {
         diaDiem.setKinhDo(kinhdo);
         diaDiem.setViDo(vido);
         diaDiem.setDiaChi(diachi);
+        diaDiem.setNoiDung(noidung);
         diaDiem.setSdt(phone);
         String userName = principal.getName();
         Account user  = userService.findByUserName(userName);
@@ -124,16 +165,10 @@ public class MainController {
         }
         diaDiem.setListImage_DiaDiem(images);
         diaDiemService.saveDiaDiem(diaDiem);
-
         return "success";
     }
 
 
-    // Do du lieu len thanh header
-    @ModelAttribute("danhmuclist")
-    public List<DanhMuc> getAllDanhMuc(){
-            return danhMucService.getAllDanhMuc();
-    }
 
     @RequestMapping(value = {"/detail"},method =  RequestMethod.GET)
     public String DetailMain(Model model){

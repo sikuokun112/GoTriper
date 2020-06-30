@@ -19,4 +19,7 @@ public class DanhMucService {
     public DanhMuc findDanhMucByName(String name){
         return danhMucRepository.findDanhMucByTenDanhMuc(name);
     }
+    public DanhMuc findDanhMucById(int id){
+        return danhMucRepository.findDanhMucById(id);
+    }
 }

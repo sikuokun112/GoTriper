@@ -33,6 +33,17 @@ public class DiaDiem {
     @Column(name = "sdt")
     private int sdt;
 
+    public String getNoiDung() {
+        return noiDung;
+    }
+
+    public void setNoiDung(String noiDung) {
+        this.noiDung = noiDung;
+    }
+
+    @Column(name = "noidung")
+    private String noiDung;
+
 
     @OneToMany(mappedBy = "diaDiem")
     private List<BaiDang> listBaiDang_DiaDiem;

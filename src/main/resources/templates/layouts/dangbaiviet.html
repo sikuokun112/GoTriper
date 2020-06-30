@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Colorlib">
+    <meta name="description" content="#">
+    <meta name="keywords" content="#">
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="#">
+    <!-- Page Title -->
+    <title>Listing &amp; Directory Website Template</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/bootstrap.min.css}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <!-- Simple line Icon -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/simple-line-icons.css}">
+    <!-- Themify Icon -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/themify-icons.css}">
+    <!-- Hover Effects -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/set1.css}">
+    <!-- Swipper Slider -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/swiper.min.css}">
+    <!-- Main CSS -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/style.css}">
+
+    <!-- BLOG DETAIL COMMENT -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/blog_detail_comment_form.css}">
+
+    <!-- SELECTEDBOX -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/selectedbox.css}">
+
+    <!-- PREVIEW IMAGE CSS -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/previewimage.css}">
+
+    <link rel="stylesheet" th:href="@{/mainpage/css/inputcustom.css}">
+
+
+    <!-- ---- TEXT EDITOR ---- -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea'
+        });
+    </script>
+
+    <!-- MAPBOXGL JS -->
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css' rel='stylesheet' />
+
+    <script src='https://tiles.locationiq.com/v2/js/liq-styles-ctrl-gl.js?v=0.1.6'></script>
+    <link href='https://tiles.locationiq.com/v2/css/liq-styles-ctrl-gl.css?v=0.1.6' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
+    <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+
+    <style>
+        /* CSS is set by JS */
+
+        .marker {
+            display: block;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+    </style>
+</head>
+</head>
+
+<body>
+        <th:block th:include="/fragments/headerpage"></th:block>
+
+        <!--//END HEADER -->
+<!--============================= BOOKING =============================-->
+<div>
+    <!-- Swiper -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+                <a th:href="@{/mainpage/images/reserve-slide2.jpg}" class="grid image-link">
+                    <img th:src="@{/mainpage/images/reserve-slide2.jpg}" class="img-fluid" alt="#">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a th:href="@{/mainpage/images/reserve-slide1.jpg}" class="grid image-link">
+                    <img th:src="@{/mainpage/images/reserve-slide1.jpg}" class="img-fluid" alt="#">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a th:href="@{/mainpage/images/reserve-slide3.jpg}" class="grid image-link">
+                    <img th:src="@{/mainpage/images/reserve-slide3.jpg}" class="img-fluid" alt="#">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a th:href="@{/mainpage/images/reserve-slide1.jpg}" class="grid image-link">
+                    <img th:src="@{/mainpage/images/reserve-slide1.jpg}" class="img-fluid" alt="#">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a th:href="@{/mainpage/images/reserve-slide2.jpg}" class="grid image-link">
+                    <img th:src="@{/mainpage/images/reserve-slide2.jpg}" class="img-fluid" alt="#">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a th:href="@{/mainpage/images/reserve-slide3.jpg}" class="grid image-link">
+                    <img th:src="@{/mainpage/images/reserve-slide3.jpg}" class="img-fluid" alt="#">
+                </a>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination swiper-pagination-white"></div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+    </div>
+</div>
+
+<!--//END BOOKING -->
+<!--============================= RESERVE A SEAT =============================-->
+<section class="reserve-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Tasty Hand-Pulled Noodles</h5>
+                <p><span>$$$</span>$$</p>
+                <p class="reserve-description">Innovative cooking, paired with fine wines in a modern setting.</p>
+            </div>
+            <div class="col-md-6">
+                <div class="reserve-seat-block">
+                    <div class="reserve-rating">
+                        <span>9.5</span>
+                    </div>
+                    <div class="review-btn">
+                        <a href="#" class="btn btn-outline-danger">WRITE A REVIEW</a>
+                        <span>34 reviews</span>
+                    </div>
+                    <div class="reserve-btn">
+                        <div class="featured-btn-wrap">
+                            <a href="#" class="btn btn-danger">RESERVE A SEAT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--//END RESERVE A SEAT -->
+
+<!-- CREATE BAI DANG FORM -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 responsive-wrap">
+            <div class="container-contact100 responsive-wrap">
+                <div class="wrap-contact100">
+                    <form class="contact100-form validate-form" th:action="@{'/diadiem/'+${diadiem.getId()}+'/savebaidang2'}" method="post" enctype="multipart/form-data">
+                            <span class="contact100-form-title">
+                                        Đăng Bài Viết
+                                    </span>
+                        <label class="label-input100" >Dia Diem</label>
+                        <div class="wrap-input100 rs1 validate-input">
+                            <h3 th:text="${diadiem.getTenDiaDiem()}"></h3>
+                        </div>
+                        <label class="label-input100" for="tieude">Tiêu đề</label>
+                        <div class="wrap-input100 rs1 validate-input">
+                            <input id="tieude" class="input100" type="text" name="tieude" placeholder="Tiêu đề">
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="select-box">
+                            <div class="options-container">
+                                <th:block th:each="danhmuc: ${danhmuclist}">
+                                    <div class="option">
+                                        <input type="radio" class="radio" th:id = "${danhmuc.getId()}" name="danhmucname" th:value="${danhmuc.getId()}" />
+                                        <label th:text="${danhmuc.getTenDanhMuc()}" th:for="${danhmuc.getId()}" ></label>
+                                    </div>
+                                </th:block>
+
+                            </div>
+
+                            <div class="selected">
+                                Danh Mục
+                            </div>
+                        </div>
+                        <label class="label-input100" for="noidung">Nội Dung</label>
+                        <div class="wrap-input100">
+                            <textarea id="noidung" name="noidung"></textarea>
+                        </div>
+                        <div class="preview-images-zone">
+
+                        </div>
+                        <div class="">
+                            <fieldset class="form-group">
+                                <a class="btn btn-danger" href="javascript:void(0)" onclick="$('#pro-image').click()">Upload Image</a>
+                                <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control" multiple>
+                            </fieldset>
+                        </div>
+
+                        <div class="container-contact100-form-btn">
+                            <button class="contact100-form-btn">
+                                            <span>
+                                                Submit
+                                                <i class="zmdi zmdi-arrow-right m-l-8"></i>
+                                            </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 responsive-wrap">
+            <div class="contact-info">
+                <div class="">
+                    <!-- data-toggle="affix" -->
+                    <!-- Google map will appear here! Edit the Latitude, Longitude and Zoom Level below using data-attr-*  -->
+                    <div id='map' class="z-depth-1-half map-container-6" style="height: 400px"></div>
+                </div>
+            </div>
+            <div class="follow">
+                <div class="follow-img">
+                    <img th:src="@{/mainpage/images/follow-img.jpg}" class="img-fluid" alt="#">
+                    <h6 th:utext="${#request.userPrincipal.name}"></h6>
+                    <span>New York</span>
+                </div>
+                <ul class="social-counts">
+                    <li>
+                        <h6>26</h6>
+                        <span>Listings</span>
+                    </li>
+                    <li>
+                        <h6>326</h6>
+                        <span>Followers</span>
+                    </li>
+                    <li>
+                        <h6>12</h6>
+                        <span>Followers</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!--============================= FOOTER =============================-->
+
+        <th:block th:include="/fragments/footermain"></th:block>
+
+<!--//END FOOTER -->
+
+<!-- selectedbox js -->
+<script th:src="@{/mainpage/js/selectedbox.js}"></script>
+
+<!-- prievew image -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script th:src="@{/mainpage/js/previewimage.js}"></script>
+
+<!-- jQuery, Bootstrap JS. -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!-- <script src="js/jquery-3.2.1.min.js"></script> -->
+<script th:src="@{/mainpage/js/popper.min.js}"></script>
+<script th:src="@{/mainpage/js/bootstrap.min.js}"></script>
+<!-- Magnific popup JS -->
+<script th:src="@{/mainpage/js/jquery.magnific-popup.js}"></script>
+<!-- Swipper Slider JS -->
+<script th:src="@{/mainpage/js/swiper.min.js}"></script>
+<script>
+    //Add your LocationIQ Maps Access Token here (not the API token!)
+
+    locationiq.key = 'pk.2308d72370d062bea24af4ac2d37ee18';
+
+    //var kinhdo = document.getElementById("kinhdo").innerText;
+    //var vido = document.getElementById("vido").innerText;
+    var center1 = [106.23232, 10.6777];
+    //Define the map and configure the map's theme
+    var map = new mapboxgl.Map({
+        container: 'map',
+        attributionControl: false, //need this to show a compact attribution icon (i) instead of the whole text
+        zoom: 15,
+        center: center1
+    });
+
+    //Define layers you want to add to the layer controls; the first element will be the default layer
+    var layerStyles = {
+        "Streets": "streets/raster",
+        "Satellite": "earth/raster",
+        "Hybrid": "hybrid/raster",
+        "Dark": "dark/raster",
+        "Light": "light/raster",
+    };
+
+    map.addControl(new locationiqLayerControl({
+        key: locationiq.key,
+        layerStyles: layerStyles
+    }), 'top-left');
+
+    //Add Navigation controls to the map to the top-right corner of the map
+    var nav = new mapboxgl.NavigationControl();
+    map.addControl(nav, 'top-right');
+
+
+    //Add a 'full screen' button to the map
+    map.addControl(new mapboxgl.FullscreenControl());
+
+    //Add a Scale to the map
+    map.addControl(new mapboxgl.ScaleControl({
+        maxWidth: 80,
+        unit: 'metric' //imperial for miles
+    }));
+
+    //Add Geolocation control to the map (will only render when page is opened over HTTPS)
+    map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true
+    }));
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2lrdW9rdW4xMSIsImEiOiJja2J5bDlkemcwNG9mMnNwOXZlZjgyczlzIn0.tG7282mKVo6pVtlP8kkkTQ';
+    map.addControl(
+        new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl
+        })
+    );
+
+
+    var el = document.createElement('div');
+    el.className = 'marker';
+    // Set marker properties using JS
+    el.style.backgroundImage = 'url(https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png)';
+    el.style.width = '20px';
+    el.style.height = '20px';
+
+    var marker = new mapboxgl.Marker(el)
+        .setLngLat([vido, kinhdo])
+        .addTo(map);
+
+    // Add the geocoder to the map
+    map.addControl(geocoder);
+</script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 3,
+        slidesPerGroup: 3,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+</script>
+<script>
+    if ($('.image-link').length) {
+        $('.image-link').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            }
+        });
+    }
+    if ($('.image-link2').length) {
+        $('.image-link2').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            }
+        });
+    }
+    //////// PREVIEW ANH TRUOC KHI UPLOAD
+</script>
+</body>
+
+</html>

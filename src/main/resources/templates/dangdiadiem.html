@@ -38,6 +38,14 @@
     <link rel="stylesheet" href="mainpage/css/inputcustom.css">
 
 
+    <!-- ---- TEXT EDITOR ---- -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea'
+        });
+    </script>
+
     <!-- MAPBOXGL JS -->
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js'></script>
@@ -271,6 +279,10 @@
                                 <input id="vido" class="input100" type="text" name="vido" placeholder="106.334">
                                 <span class="focus-input100"></span>
                             </div>
+                            <label class="label-input100" for="noidung">Nội Dung</label>
+                            <div class="wrap-input100">
+                                <textarea id="noidung" name="noidung"></textarea>
+                            </div>
                             <div class="preview-images-zone">
 
                             </div>
@@ -395,8 +407,8 @@
     el.className = 'marker';
     // Set marker properties using JS
     el.style.backgroundImage = 'url(https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png)';
-    el.style.width = '50px';
-    el.style.height = '50px';
+    el.style.width = '20px';
+    el.style.height = '20px';
 
     // varibale to store final Lat and Long
 

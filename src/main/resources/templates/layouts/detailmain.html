@@ -94,7 +94,7 @@
                             <span>9.5</span>
                         </div>
                         <div class="review-btn">
-                            <a href="#" class="btn btn-outline-danger">WRITE A REVIEW</a>
+                            <a th:href="'/diadiem/'+${diadiem.getId()}+'/dangbaiviet'" class="btn btn-outline-danger">WRITE A REVIEW</a>
                             <span>34 reviews</span>
                         </div>
                         <div class="reserve-btn">
@@ -122,13 +122,26 @@
                             <div id="kinhdo" th:text="${diadiem.getKinhDo()}"></div>
                             <div id="vido" th:text="${diadiem.getViDo()}"></div>
 
-                            <p>Tasty Hand-Pulled Noodles is a 1950s style diner located in Madison, Wisconsin. Opened in 1946 by Mickey Weidman, and located just across the street from Camp Randall Stadium, it has become a popular game day tradition amongst
-                                many Badger fans. The diner is well known for its breakfast selections, especially the Scrambler, which is a large mound of potatoes, eggs, cheese, gravy, and a patrons’ choice of other toppings.</p>
-                            <p>Mickies has also been featured on “Todd’s Taste of the Town” during one of ESPN’s college football broadcasts. We are one of the best Chinese restaurants in the New York, New York area. We have been recognized for our outstanding
-                                Chinese & Asian cuisine, excellent Chinese menu, and great restaurant specials. We are one of the best Chinese restaurants in the New York, New York area. We have been recognized for our outstanding Chinese & Asian cuisine,
-                                excellent Chinese menu, and great restaurant specials.</p>
-                            <hr>
-                        </div>
+                            <th:block th:utext="${diadiem.getNoiDung()}">
+
+                            </th:block>
+                            <div class="row">
+                                <div class="col-sm-4 featured-responsive">
+                                    <div class="featured-place-wrap">
+                                        <a href="#">
+                                            <img th:src="@{'getimage/'+${img.get(1).getImageUrl()}}" class="img-fluid" alt="#">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 featured-responsive">
+                                    <div class="featured-place-wrap">
+                                        <a href="#">
+                                            <img th:src="@{'getimage/'+${img.get(1).getImageUrl()}}" class="img-fluid" alt="#">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <label class="custom-checkbox">

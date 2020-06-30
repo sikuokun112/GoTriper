@@ -20,7 +20,6 @@ public class Image  {
     @JoinColumn(name = "baidang_id")
     private BaiDang baiDangImage;
 
-
     public DiaDiem getDiaDiemImage() {
         return diaDiemImage;
     }
