@@ -180,6 +180,15 @@ public class MainController {
         return "layouts/detailmain";
     }
 
+    @RequestMapping(value = {"/chitietbaidang"},method =  RequestMethod.GET)
+    public String ChiTietBaiDang(Model model){
+        BaiDang baiDang = baiDangService.findBaiDangById(1);
+        List<Image> img = imageService.findAllImageByBaiDang(baiDang);
+        model.addAttribute("img",img);
+        model.addAttribute("baidang",baiDang);
+        return "layouts/chitietbaidang";
+    }
+
     @RequestMapping(value = {"/listing"},method =  RequestMethod.GET)
     public String Listing(){
 

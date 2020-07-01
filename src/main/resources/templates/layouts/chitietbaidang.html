@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Colorlib">
+    <meta name="description" content="#">
+    <meta name="keywords" content="#">
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="#">
+    <!-- Page Title -->
+    <title>Listing &amp; Directory Website Template</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="mainpage/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <!-- Simple line Icon -->
+    <link rel="stylesheet" href="mainpage/css/simple-line-icons.css">
+    <!-- Themify Icon -->
+    <link rel="stylesheet" href="mainpage/css/themify-icons.css">
+    <!-- Hover Effects -->
+    <link rel="stylesheet" href="mainpage/css/set1.css">
+    <!-- Swipper Slider -->
+    <link rel="stylesheet" href="mainpage/css/swiper.min.css">
+    <!-- Magnific Popup CSS -->
+    <link rel="stylesheet" href="mainpage/css/magnific-popup.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="mainpage/css/style.css">
+
+    <!-- MAPBOXGL JS -->
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css' rel='stylesheet' />
+
+    <script src='https://tiles.locationiq.com/v2/js/liq-styles-ctrl-gl.js?v=0.1.6'></script>
+    <link href='https://tiles.locationiq.com/v2/css/liq-styles-ctrl-gl.css?v=0.1.6' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
+    <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+    <style>
+        .marker {
+            display: block;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<th:block th:include="/fragments/headerpage"></th:block>
+<!--============================= BOOKING =============================-->
+<div>
+    <!-- Swiper -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <th:block th:each="image: ${img}">
+                <div class="swiper-slide">
+                    <a th:href="@{'getimage/'+${image.getImageUrl()}}" class="grid image-link">
+                        <img th:src="@{'getimage/'+${image.getImageUrl()}}" class="img-fluid" alt="#">
+                    </a>
+                </div>
+            </th:block>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination swiper-pagination-white"></div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+    </div>
+</div>
+<!--//END BOOKING -->
+<!--============================= RESERVE A SEAT =============================-->
+<section class="reserve-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5 th:text="${baidang.getTieuDe()}">Tasty x</h5>
+                <p><span>$$$</span>$$</p>
+                <p class="reserve-description">Innovative cooking, paired with fine wines in a modern setting.</p>
+            </div>
+            <div class="col-md-6">
+                <div class="reserve-seat-block">
+                    <div class="reserve-rating">
+                        <span>9.5</span>
+                    </div>
+                    <div class="review-btn">
+                        <a href="#" class="btn btn-outline-danger">WRITE A REVIEW</a>
+                        <span>34 reviews</span>
+                    </div>
+                    <div class="reserve-btn">
+                        <div class="featured-btn-wrap">
+                            <a href="#" class="btn btn-danger">RESERVE A SEAT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--//END RESERVE A SEAT -->
+<!--============================= BOOKING DETAILS =============================-->
+<section class="light-bg booking-details_wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 responsive-wrap">
+                <div class="booking-checkbox_wrap">
+                    <div class="booking-checkbox">
+                        <p th:utext="${baidang.getNoiDung()}"></p>
+                        <p th:text="${baidang.getDanhMuc().getTenDanhMuc()}"></p>
+
+                        <div id="kinhdo" th:text="${baidang.getDiaDiem().getKinhDo()}"></div>
+                        <div id="vido" th:text="${baidang.getDiaDiem().getViDo()}"></div>
+
+                        </th:block>
+                        <div class="row">
+                            <div class="col-sm-4 featured-responsive">
+                                <div class="featured-place-wrap">
+                                    <a href="#">
+                                        <img th:src="@{'getimage/'+${img.get(1).getImageUrl()}}" class="img-fluid" alt="#">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 featured-responsive">
+                                <div class="featured-place-wrap">
+                                    <a href="#">
+                                        <img th:src="@{'getimage/'+${img.get(1).getImageUrl()}}" class="img-fluid" alt="#">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="custom-checkbox">
+                                <span class="ti-check-box"></span>
+                                <span class="custom-control-description">Bike Parking</span>
+                            </label> </div>
+                        <div class="col-md-4">
+                            <label class="custom-checkbox">
+                                <span class="ti-check-box"></span>
+                                <span class="custom-control-description">Wireless Internet  </span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="custom-checkbox">
+                                <span class="ti-check-box"></span>
+                                <span class="custom-control-description">Smoking Allowed  </span>
+                            </label> </div>
+                        <div class="col-md-4">
+                            <label class="custom-checkbox">
+                                <span class="ti-check-box"></span>
+                                <span class="custom-control-description">Street Parking</span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="custom-checkbox">
+                                <span class="ti-check-box"></span>
+                                <span class="custom-control-description">Special</span>
+                            </label> </div>
+                        <div class="col-md-4">
+                            <label class="custom-checkbox">
+                                <span class="ti-check-box"></span>
+                                <span class="custom-control-description">Accepts Credit cards</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="booking-checkbox_wrap mt-4">
+                    <h5>34 Reviews</h5>
+                    <hr>
+                    <th:block th:each="binhluan : ${baidang.getListBinhLuans()}">
+                        <div class="customer-review_wrap">
+                            <div class="customer-img">
+                                <img src="mainpage/images/customer-img1.jpg" class="img-fluid" alt="#">
+                                <p>Amanda G</p>
+                                <span>35 Reviews</span>
+                            </div>
+                        <div class="customer-content-wrap">
+                            <div class="customer-content">
+                                <div class="customer-review">
+                                    <h6 th:text="${binhluan.getTieude()}">Best noodles in the Newyork city</h6>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span class="round-icon-blank"></span>
+                                    <p>Reviewed 2 days ago</p>
+                                </div>
+                                <div class="customer-rating" th:text="${binhluan.getDiemdanhgia()}">8.0</div>
+                            </div>
+                            <p class="customer-text" th:utext="${binhluan.getNoidung()}">I love the noodles here but it is so rare that I get to come here. Tasty Hand-Pulled Noodles is the best type of whole in the wall restaurant. The staff are really nice, and you should be seated quickly. I usually get the
+                                hand pulled noodles in a soup. House Special #1 is amazing and the lamb noodles are also great. If you want your noodles a little chewier, get the knife cut noodles, which are also amazing. Their dumplings are great
+                                dipped in their chili sauce.
+                            </p>
+                            <p class="customer-text">I love how you can see into the kitchen and watch them make the noodles and you can definitely tell that this is a family run establishment. The prices are are great with one dish maybe being $9. You just have to remember
+                                to bring cash.
+                            </p>
+                            <ul>
+                                <li><img src="mainpage/images/review-img1.jpg" class="img-fluid" alt="#"></li>
+                                <li><img src="mainpage/images/review-img2.jpg" class="img-fluid" alt="#"></li>
+                                <li><img src="mainpage/images/review-img3.jpg" class="img-fluid" alt="#"></li>
+                            </ul>
+                            <span>28 people marked this review as helpful</span>
+                            <a href="#"><span class="icon-like"></span>Helpful</a>
+                        </div>
+                     </div>
+                     <hr>
+                    </th:block>
+                </div>
+            </div>
+            <div class="col-md-4 responsive-wrap">
+                <div class="contact-info">
+                    <div class="">
+                        <!-- data-toggle="affix" -->
+                        <!-- Google map will appear here! Edit the Latitude, Longitude and Zoom Level below using data-attr-*  -->
+                        <div id='map' class="z-depth-1-half map-container-6" style="height: 400px"></div>
+                    </div>
+                    <div class="address">
+                        <span class="icon-location-pin"></span>
+                        <p> Doyers St<br> New York, NY 10013<br> b/t Division St & St James Pl <br> Chinatown, Civic Center</p>
+                    </div>
+                    <div class="address">
+                        <span class="icon-screen-smartphone"></span>
+                        <p> +44 20 7336 8898</p>
+                    </div>
+                    <div class="address">
+                        <span class="icon-link"></span>
+                        <p>https://burgerandlobster.com</p>
+                    </div>
+                    <div class="address">
+                        <span class="icon-clock"></span>
+                        <p>Mon - Sun 09:30 am - 05:30 pm <br>
+                            <span class="open-now">OPEN NOW</span></p>
+                    </div>
+                    <a href="#" class="btn btn-outline-danger btn-contact">SEND A MESSAGE</a>
+                </div>
+                <div class="follow">
+                    <div class="follow-img">
+                        <img src="mainpage/images/follow-img.jpg" class="img-fluid" alt="#">
+                        <h6>Christine Evans</h6>
+                        <span>New York</span>
+                    </div>
+                    <ul class="social-counts">
+                        <li>
+                            <h6>26</h6>
+                            <span>Listings</span>
+                        </li>
+                        <li>
+                            <h6>326</h6>
+                            <span>Followers</span>
+                        </li>
+                        <li>
+                            <h6>12</h6>
+                            <span>Followers</span>
+                        </li>
+                    </ul>
+                    <a href="#">FOLLOW</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--//END BOOKING DETAILS -->
+<th:block th:include="/fragments/footermain"></th:block>
+
+
+
+
+<!-- jQuery, Bootstrap JS. -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="mainpage/js/jquery-3.2.1.min.js"></script>
+<script src="mainpage/js/popper.min.js"></script>
+<script src="mainpage/js/bootstrap.min.js"></script>
+<!-- Magnific popup JS -->
+<script src="mainpage/js/jquery.magnific-popup.js"></script>
+<!-- Swipper Slider JS -->
+<script src="mainpage/js/swiper.min.js"></script>
+<script>
+    //Add your LocationIQ Maps Access Token here (not the API token!)
+
+    locationiq.key = 'pk.2308d72370d062bea24af4ac2d37ee18';
+
+    var kinhdo = document.getElementById("kinhdo").innerText;
+    var vido = document.getElementById("vido").innerText;
+    var center1 = [vido, kinhdo];
+    //Define the map and configure the map's theme
+    var map = new mapboxgl.Map({
+        container: 'map',
+        attributionControl: false, //need this to show a compact attribution icon (i) instead of the whole text
+        zoom: 15,
+        center: center1
+    });
+
+    //Define layers you want to add to the layer controls; the first element will be the default layer
+    var layerStyles = {
+        "Streets": "streets/raster",
+        "Satellite": "earth/raster",
+        "Hybrid": "hybrid/raster",
+        "Dark": "dark/raster",
+        "Light": "light/raster",
+    };
+
+    map.addControl(new locationiqLayerControl({
+        key: locationiq.key,
+        layerStyles: layerStyles
+    }), 'top-left');
+
+    //Add Navigation controls to the map to the top-right corner of the map
+    var nav = new mapboxgl.NavigationControl();
+    map.addControl(nav, 'top-right');
+
+
+    //Add a 'full screen' button to the map
+    map.addControl(new mapboxgl.FullscreenControl());
+
+    //Add a Scale to the map
+    map.addControl(new mapboxgl.ScaleControl({
+        maxWidth: 80,
+        unit: 'metric' //imperial for miles
+    }));
+
+    //Add Geolocation control to the map (will only render when page is opened over HTTPS)
+    map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true
+    }));
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2lrdW9rdW4xMSIsImEiOiJja2J5bDlkemcwNG9mMnNwOXZlZjgyczlzIn0.tG7282mKVo6pVtlP8kkkTQ';
+    map.addControl(
+        new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl
+        })
+    );
+
+
+    var el = document.createElement('div');
+    el.className = 'marker';
+    // Set marker properties using JS
+    el.style.backgroundImage = 'url(https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png)';
+    el.style.width = '20px';
+    el.style.height = '20px';
+
+    var marker = new mapboxgl.Marker(el)
+        .setLngLat([vido, kinhdo])
+        .addTo(map);
+
+
+
+
+
+
+    // Add the geocoder to the map
+    map.addControl(geocoder);
+</script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 3,
+        slidesPerGroup: 3,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+</script>
+<script>
+    if ($('.image-link').length) {
+        $('.image-link').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            }
+        });
+    }
+    if ($('.image-link2').length) {
+        $('.image-link2').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            }
+        });
+    }
+</script>
+</body>
+
+</html>

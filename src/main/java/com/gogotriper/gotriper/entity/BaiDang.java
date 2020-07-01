@@ -30,6 +30,10 @@ public class BaiDang {
     @JoinColumn(name = "user_id")
     private Account userId;
 
+    @OneToMany(mappedBy = "baiDang")
+    private List<BinhLuan> listBinhLuans;
+
+
 
     public Account getUserId() {
         return userId;
@@ -91,5 +95,13 @@ public class BaiDang {
 
     public void setListImage_BaiDang(List<Image> listImage_BaiDang) {
         this.listImage_BaiDang = listImage_BaiDang;
+    }
+
+    public List<BinhLuan> getListBinhLuans() {
+        return listBinhLuans;
+    }
+
+    public void setListBinhLuans(List<BinhLuan> listBinhLuans) {
+        this.listBinhLuans = listBinhLuans;
     }
 }
