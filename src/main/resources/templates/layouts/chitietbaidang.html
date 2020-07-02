@@ -66,7 +66,7 @@
             <th:block th:each="image: ${img}">
                 <div class="swiper-slide">
                     <a th:href="@{'getimage/'+${image.getImageUrl()}}" class="grid image-link">
-                        <img th:src="@{'getimage/'+${image.getImageUrl()}}" class="img-fluid" alt="#">
+                        <img th:src="@{'getimage/'+${image.getImageUrl()}}" class="img-fluid" alt="#" >
                     </a>
                 </div>
             </th:block>
@@ -84,7 +84,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h5 th:text="${baidang.getTieuDe()}">Tasty x</h5>
+                <h3 th:text="${baidang.getTieuDe()}"></h3>
                 <p><span>$$$</span>$$</p>
                 <p class="reserve-description">Innovative cooking, paired with fine wines in a modern setting.</p>
             </div>
@@ -115,29 +115,27 @@
             <div class="col-md-8 responsive-wrap">
                 <div class="booking-checkbox_wrap">
                     <div class="booking-checkbox">
+                        <h4>Nội Dung</h4>
                         <p th:utext="${baidang.getNoiDung()}"></p>
+                        <h4>Danh Mục</h4>
                         <p th:text="${baidang.getDanhMuc().getTenDanhMuc()}"></p>
 
                         <div id="kinhdo" th:text="${baidang.getDiaDiem().getKinhDo()}"></div>
                         <div id="vido" th:text="${baidang.getDiaDiem().getViDo()}"></div>
 
                         </th:block>
-                        <div class="row">
-                            <div class="col-sm-4 featured-responsive">
-                                <div class="featured-place-wrap">
-                                    <a href="#">
-                                        <img th:src="@{'getimage/'+${img.get(1).getImageUrl()}}" class="img-fluid" alt="#">
-                                    </a>
+                            <h4>Gallery</h4>
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                <th:block th:each="photo : ${baidang.getDiaDiem().getListImage_DiaDiem()}">
+                                <div class="swiper-slide">
+                                    <img th:src="@{'getimage/'+${photo.getImageUrl()}}" class="img-fluid" alt="#" >
                                 </div>
-                            </div>
-                            <div class="col-sm-4 featured-responsive">
-                                <div class="featured-place-wrap">
-                                    <a href="#">
-                                        <img th:src="@{'getimage/'+${img.get(1).getImageUrl()}}" class="img-fluid" alt="#">
-                                    </a>
-                                </div>
+                                </th:block>
+
                             </div>
                         </div>
+
                     </div>
                     <div class="row">
                         <div class="col-md-4">
@@ -182,7 +180,7 @@
                         <div class="customer-review_wrap">
                             <div class="customer-img">
                                 <img src="mainpage/images/customer-img1.jpg" class="img-fluid" alt="#">
-                                <p>Amanda G</p>
+                                <p th:text="${binhluan.getUserId().getUserName()}"></p>
                                 <span>35 Reviews</span>
                             </div>
                         <div class="customer-content-wrap">
@@ -198,12 +196,9 @@
                                 </div>
                                 <div class="customer-rating" th:text="${binhluan.getDiemdanhgia()}">8.0</div>
                             </div>
-                            <p class="customer-text" th:utext="${binhluan.getNoidung()}">I love the noodles here but it is so rare that I get to come here. Tasty Hand-Pulled Noodles is the best type of whole in the wall restaurant. The staff are really nice, and you should be seated quickly. I usually get the
-                                hand pulled noodles in a soup. House Special #1 is amazing and the lamb noodles are also great. If you want your noodles a little chewier, get the knife cut noodles, which are also amazing. Their dumplings are great
-                                dipped in their chili sauce.
+                            <p class="customer-text" th:utext="${binhluan.getNoidung()}">
                             </p>
-                            <p class="customer-text">I love how you can see into the kitchen and watch them make the noodles and you can definitely tell that this is a family run establishment. The prices are are great with one dish maybe being $9. You just have to remember
-                                to bring cash.
+                            <p class="customer-text">
                             </p>
                             <ul>
                                 <li><img src="mainpage/images/review-img1.jpg" class="img-fluid" alt="#"></li>
@@ -216,6 +211,8 @@
                      </div>
                      <hr>
                     </th:block>
+                    <div class="blog__pagination row" id="review_pagination">
+                    </div>
                 </div>
             </div>
             <div class="col-md-4 responsive-wrap">
@@ -279,6 +276,9 @@
 <!-- jQuery, Bootstrap JS. -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="mainpage/js/jquery-3.2.1.min.js"></script>
+<!--Pagination-->
+<script src="mainpage/js/pagination.js"></script>
+
 <script src="mainpage/js/popper.min.js"></script>
 <script src="mainpage/js/bootstrap.min.js"></script>
 <!-- Magnific popup JS -->
