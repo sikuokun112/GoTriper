@@ -36,6 +36,9 @@ public class MainController {
     @Autowired
     private DiaDiemService diaDiemService;
 
+    @Autowired
+    private BinhLuanService binhLuanService;
+
     // Do du lieu len thanh header
     @ModelAttribute("danhmuclist")
     public List<DanhMuc> getAllDanhMuc(){
@@ -169,14 +172,32 @@ public class MainController {
     }
 
 
+    @PostMapping("/savebinhluan")
+    public String saveBinhluan(@RequestParam("tieude") String tieude, @RequestParam("diemdanhgia") Float diemdanhgia,@RequestParam("noidung") String noidung, Principal principal){
+        // thay the ID bang Pathvariable ID
+        int id =1;
+         BaiDang baiDang =  baiDangService.findBaiDangById(id);
+
+        BinhLuan binhLuan = new BinhLuan();
+        binhLuan.setTieude(tieude);
+        binhLuan.setDiemdanhgia(diemdanhgia);
+        binhLuan.setNoidung(noidung);
+
+        binhLuan.setUserId(userService.findByUserName(principal.getName()));
+        binhLuan.setBaiDang(baiDang);
+        binhLuanService.saveBinhLuan(binhLuan);
+
+        return "redirect:chitietbaidang";
+
+    }
+
 
     @RequestMapping(value = {"/detail"},method =  RequestMethod.GET)
     public String DetailMain(Model model){
-        DiaDiem diaDiem = diaDiemService.findDiaDiemById(1);
+        DiaDiem diaDiem = diaDiemService.findDiaDiemById(2);
         List<Image> img = imageService.findAllImageByDiaDiem(diaDiem);
         model.addAttribute("img",img);
         model.addAttribute("diadiem",diaDiem);
-
         return "layouts/detailmain";
     }
 

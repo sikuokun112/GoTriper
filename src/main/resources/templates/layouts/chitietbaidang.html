@@ -30,6 +30,19 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="mainpage/css/style.css">
 
+    <!-- BLOG DETAIL COMMENT -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/blog_detail_comment_form.css}">
+
+    <link rel="stylesheet" th:href="@{/mainpage/css/inputcustom.css}">
+
+    <!-- ---- TEXT EDITOR ---- -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea'
+        });
+    </script>
+
     <!-- MAPBOXGL JS -->
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js'></script>
@@ -200,11 +213,6 @@
                             </p>
                             <p class="customer-text">
                             </p>
-                            <ul>
-                                <li><img src="mainpage/images/review-img1.jpg" class="img-fluid" alt="#"></li>
-                                <li><img src="mainpage/images/review-img2.jpg" class="img-fluid" alt="#"></li>
-                                <li><img src="mainpage/images/review-img3.jpg" class="img-fluid" alt="#"></li>
-                            </ul>
                             <span>28 people marked this review as helpful</span>
                             <a href="#"><span class="icon-like"></span>Helpful</a>
                         </div>
@@ -212,6 +220,38 @@
                      <hr>
                     </th:block>
                     <div class="blog__pagination row" id="review_pagination">
+                    </div>
+                </div>
+
+                <div class="container-contact100 responsive-wrap">
+                    <div class="wrap-contact100">
+                        <form class="contact100-form validate-form" th:action="@{/savebinhluan}" method="post" enctype="multipart/form-data">
+                            <span class="contact100-form-title">
+                                        GỬI BÌNH LUẬN
+                                    </span>
+                            <label class="label-input100" for="tieude">Tiêu đề</label>
+                            <div class="wrap-input100 rs1 validate-input">
+                                <input id="tieude" class="input100" type="text" name="tieude" placeholder="Tiêu đề">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <label class="label-input100" for="tieude">Điểm đánh giá</label>
+                            <div class="wrap-input100 rs1 validate-input">
+                                <input id="diemdanhgia" class="input100" type="number" name="diemdanhgia" placeholder="9">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <label class="label-input100" for="noidung">Nội Dung</label>
+                            <div class="wrap-input100">
+                                <textarea id="noidung" name="noidung"></textarea>
+                            </div>
+                            <div class="container-contact100-form-btn">
+                                <button class="contact100-form-btn">
+                                            <span>
+                                                Submit
+                                                <i class="zmdi zmdi-arrow-right m-l-8"></i>
+                                            </span>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

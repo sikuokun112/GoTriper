@@ -272,6 +272,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script th:src="@{/mainpage/js/previewimage.js}"></script>
 
+
 <!-- jQuery, Bootstrap JS. -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <!-- <script src="js/jquery-3.2.1.min.js"></script> -->
@@ -285,10 +286,11 @@
     //Add your LocationIQ Maps Access Token here (not the API token!)
 
     locationiq.key = 'pk.2308d72370d062bea24af4ac2d37ee18';
-
     //var kinhdo = document.getElementById("kinhdo").innerText;
-    //var vido = document.getElementById("vido").innerText;
-    var center1 = [106.23232, 10.6777];
+    //var vido = document.getElementById("vido").innerText;vido
+    var vido = 106.65202418650699;
+    var kinhdo = 10.773604802848894;
+    var center1 = [106.65202418650699, 10.773604802848894];
     //Define the map and configure the map's theme
     var map = new mapboxgl.Map({
         container: 'map',
