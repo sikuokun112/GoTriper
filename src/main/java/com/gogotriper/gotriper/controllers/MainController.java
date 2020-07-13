@@ -39,11 +39,20 @@ public class MainController {
     @Autowired
     private BinhLuanService binhLuanService;
 
+    @Autowired
+    private TinhThanhService tinhThanhService;
+
     // Do du lieu len thanh header
     @ModelAttribute("danhmuclist")
     public List<DanhMuc> getAllDanhMuc(){
         return danhMucService.getAllDanhMuc();
     }
+
+    @ModelAttribute("tinhthanhlist")
+    public List<TinhThanh> getAllTinhThanh(){
+        return tinhThanhService.getAllTinhThanh();
+    }
+
 
     @RequestMapping(value = "/listdanhmuc", method = RequestMethod.GET)
     public String ShowListDanhMuc(Model model) {
@@ -111,7 +120,7 @@ public class MainController {
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test(Model model) {
 
-        return "test";
+        return "layouts/userInfor";
     }
 
     // main
@@ -138,7 +147,7 @@ public class MainController {
 
 
     @PostMapping("/savediadiem")
-    public String saveDiaDiem(@RequestParam("tendiadiem") String tendiadiem,@RequestParam("giohoatdong") String giohoatdong,@RequestParam("giodongcua") String giodongcua,@RequestParam("phone") int phone, @RequestParam("giamin") int giamin,@RequestParam("giamax") int giamax,@RequestParam("diachi") String diachi, @RequestParam("kinhdo") String kinhdo,@RequestParam("vido") String vido,@RequestParam("noidung") String noidung, @RequestParam("pro-image") List<MultipartFile> photos,Principal principal){
+    public String saveDiaDiem(@RequestParam("tendiadiem") String tendiadiem,@RequestParam("tinhthanhname") String tinhthanhname,@RequestParam("giohoatdong") String giohoatdong,@RequestParam("giodongcua") String giodongcua,@RequestParam("phone") int phone, @RequestParam("giamin") int giamin,@RequestParam("giamax") int giamax,@RequestParam("diachi") String diachi, @RequestParam("kinhdo") String kinhdo,@RequestParam("vido") String vido,@RequestParam("noidung") String noidung, @RequestParam("pro-image") List<MultipartFile> photos,Principal principal){
 
         System.out.println(photos.get(0).getOriginalFilename());
         DiaDiem diaDiem = new DiaDiem();
@@ -166,6 +175,8 @@ public class MainController {
             images.add(image);
             imageService.saveImageToUploads(photo,series);
         }
+        TinhThanh tinhThanh = tinhThanhService.getTinhThanhById(Integer.parseInt(tinhthanhname));
+        diaDiem.setTinhThanh(tinhThanh);
         diaDiem.setListImage_DiaDiem(images);
         diaDiemService.saveDiaDiem(diaDiem);
         return "success";
@@ -194,7 +205,7 @@ public class MainController {
 
     @RequestMapping(value = {"/detail"},method =  RequestMethod.GET)
     public String DetailMain(Model model){
-        DiaDiem diaDiem = diaDiemService.findDiaDiemById(2);
+        DiaDiem diaDiem = diaDiemService.findDiaDiemById(1);
         List<Image> img = imageService.findAllImageByDiaDiem(diaDiem);
         model.addAttribute("img",img);
         model.addAttribute("diadiem",diaDiem);
@@ -202,12 +213,21 @@ public class MainController {
     }
 
     @RequestMapping(value = {"/chitietbaidang"},method =  RequestMethod.GET)
-    public String ChiTietBaiDang(Model model){
+    public String ChiTietBaiDang(Model model, Principal principal){
         BaiDang baiDang = baiDangService.findBaiDangById(1);
         List<Image> img = imageService.findAllImageByBaiDang(baiDang);
+        Account account = userService.findByUserName(principal.getName());
         model.addAttribute("img",img);
         model.addAttribute("baidang",baiDang);
+        model.addAttribute("account",account);
         return "layouts/chitietbaidang";
+    }
+
+    @RequestMapping(value = "/mybaidang",method = RequestMethod.GET)
+    public String myBaiDang(Model model ,Principal principal){
+        Account account = userService.findByUserName(principal.getName());
+        model.addAttribute("account",account);
+        return "layouts/myBaiDang";
     }
 
     @RequestMapping(value = {"/listing"},method =  RequestMethod.GET)
@@ -316,4 +336,45 @@ public class MainController {
 
         return "403Page";
     }
+
+
+    // Profile Page
+    @RequestMapping(value = "/profile",method = RequestMethod.GET)
+    public String getProFile(Model model,Principal principal){
+        String userName = principal.getName();
+        Account user = userService.findByUserName(userName);
+        boolean check = false;
+        if(user.getListUserImages().size() == 0){
+            check = false;
+
+        }else{
+            check = true;
+        }
+        model.addAttribute("userInfor",user);
+        model.addAttribute("check",check);
+        return "layouts/userInfor";
+    }
+
+    @PostMapping("/postavatar/{id}/saveavatar")
+    public String changeAvatar(Model model, @PathVariable String id ,@RequestParam("pro-image") List<MultipartFile> photos){
+            Account account = userService.findByUserId(Long.parseLong(id));
+            List<Image > images = new ArrayList<>();
+        int i =0;
+        for(MultipartFile photo : photos){
+            Image image = new Image();
+            i++;
+            int series = imageService.getLatestIdImage()+i;
+            image.setImageUrl(series+"_"+photo.getOriginalFilename());
+            image.setUserImage(account);
+            images.add(image);
+
+            imageService.saveImageToUploads(photo,series);
+        }
+        account.setListUserImages(images);
+        userService.saveUser(account);
+
+
+        return "redirect:/profile";
+    }
+
 }

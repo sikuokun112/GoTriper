@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Colorlib">
+    <meta name="description" content="#">
+    <meta name="keywords" content="#">
+    <!-- Page Title -->
+    <title>Pro</title>
+    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/bootstrap.min.css}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <!-- Simple line Icon -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/simple-line-icons.css}">
+    <!-- Themify Icon -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/themify-icons.css}">
+    <!-- Hover Effects -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/set1.css}">
+    <!-- Swipper Slider -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/swiper.min.css}">
+    <!-- Main CSS -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/style.css}">
+
+    <!-- BLOG DETAIL COMMENT -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/blog_detail_comment_form.css}">
+
+    <!-- SELECTEDBOX -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/selectedbox.css}">
+
+    <!-- PREVIEW IMAGE CSS -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/previewimage.css}">
+
+    <link rel="stylesheet" th:href="@{/mainpage/css/inputcustom.css}">
+
+    <!--    HERO WRAP-->
+    <link rel="stylesheet" th:href="@{/mainpage/css/herowrap.css}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+</head>
+
+<body>
+<th:block th:include="/fragments/headerpage"></th:block>
+<!--END HEADER-->
+
+<!--BODY-->
+    <div class="hero-wrap">
+        <div class="overlay"></div>
+        <div class="d-flex">
+            <div class="author-image text img p-md-5" style="background-image: url(mainpage/images/featured1.jpg);">
+            </div>
+            <div class="author-info text p-4 p-md-5 mt-5 mb-5">
+                <div class="desc">
+                    <div class="follow">
+                        <div class="follow-img">
+                            <th:block th:if="${check}">
+                            <img th:src="@{'getimage/'+${userInfor.getListUserImages().get(0).getImageUrl()}}" class="img-fluid" alt="#">
+                            </th:block>
+                            <th:block th:unless="${check}">
+                                <img th:src="@{/mainpage/images/featured1.jpg}" class="img-fluid" alt="#">
+                            </th:block>
+                        </div>
+                    </div>
+                    <span class="subheading">MY INFOR</span>
+                    <h1 class="big-letter">Louie Smith</h1>
+                    <h1 class="mb-4"><span th:text="${userInfor.getUserName()}">My Name is Louie Smith</span></h1>
+                    <p class="mb-4" th:text="${userInfor.getPassWord()}">I am A Photographer from America Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large
+                        language ocean.</p>
+                    <h3 class="signature h1" th:text="${userInfor.getUserName()}">Louie Smith</h3>
+                </div>
+                <form class="contact100-form validate-form" th:action="@{'/postavatar/'+${userInfor.getUserId()}+'/saveavatar'}" method="post" enctype="multipart/form-data">
+                    <div class="preview-images-zone">
+
+                    </div>
+                    <div class="">
+                        <fieldset class="form-group">
+                            <a class="btn btn-danger" href="javascript:void(0)" onclick="$('#pro-image').click()">Upload Image</a>
+                            <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control">
+                        </fieldset>
+                    </div>
+
+                    <div class="container-contact100-form-btn">
+                        <button class="contact100-form-btn">
+                                            <span>
+                                                Submit
+                                                <i class="zmdi zmdi-arrow-right m-l-8"></i>
+                                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+<!--END BODY-->
+
+
+
+<!--============================= FIND PLACES =============================-->
+
+<!--//END ADD LISTING -->
+<th:block th:include="/fragments/footermain"></th:block>
+
+<!-- prievew image -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script th:src="@{/mainpage/js/previewimage.js}"></script>
+<!-- jQuery, Bootstrap JS. -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!--<script th:src="@{/mainpage/js/jquery-3.2.1.min.js}"></script>-->
+<script th:src="@{/mainpage/js/popper.min.js}"></script>
+<script th:src="@{/mainpage/js/bootstrap.min.js}"></script>
+<!-- Magnific popup JS -->
+<script th:src="@{/mainpage/js/jquery.magnific-popup.js}"></script>
+<!-- Swipper Slider JS -->
+<script th:src="@{/mainpage/js/swiper.min.js}"></script>
+
+<script>
+    $(window).scroll(function() {
+        // 100 = The point you would like to fade the nav in.
+
+        if ($(window).scrollTop() > 100) {
+
+            $('.fixed').addClass('is-sticky');
+
+        } else {
+
+            $('.fixed').removeClass('is-sticky');
+
+        };
+    });
+</script>
+</body>
+
+</html>

@@ -205,36 +205,17 @@
 
                             <div class="select-box">
                                 <div class="options-container">
-                                    <div class="option">
-                                        <input type="radio" class="radio" id="automobiles" name="category" />
-                                        <label for="automobiles">Automobiles</label>
-                                    </div>
+                                    <th:block th:each="tinhthanh: ${tinhthanhlist}">
+                                        <div class="option">
+                                            <input type="radio" class="radio" th:id = "${tinhthanh.getId()}" name="tinhthanhname" th:value="${tinhthanh.getId()}" />
+                                            <label th:text="${tinhthanh.getTen()}" th:for="${tinhthanh.getId()}" ></label>
+                                        </div>
+                                    </th:block>
 
-                                    <div class="option">
-                                        <input type="radio" class="radio" id="film" name="category" />
-                                        <label for="film">Film & Animation</label>
-                                    </div>
-                                    <div class="option">
-                                        <input type="radio" class="radio" id="science" name="category" />
-                                        <label for="science">Science & Technology</label>
-                                    </div>
-
-                                    <div class="option">
-                                        <input type="radio" class="radio" id="art1" name="category" />
-                                        <label for="art1">Art</label>
-                                    </div>
-                                    <div class="option">
-                                        <input type="radio" class="radio" id="art2" name="category" />
-                                        <label for="art2">Art</label>
-                                    </div>
-                                    <div class="option">
-                                        <input type="radio" class="radio" id="art3" name="category" />
-                                        <label for="art3">Art</label>
-                                    </div>
                                 </div>
 
                                 <div class="selected">
-                                    TỈNH THÀNH
+                                    Tỉnh Thành
                                 </div>
                             </div>
 
@@ -346,6 +327,7 @@
     //Add your LocationIQ Maps Access Token here (not the API token!)
 
     locationiq.key = 'pk.2308d72370d062bea24af4ac2d37ee18';
+
     var center1 = [106.65202418650699, 10.773604802848894];
     //Define the map and configure the map's theme
     var map = new mapboxgl.Map({

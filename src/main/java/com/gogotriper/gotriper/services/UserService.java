@@ -34,6 +34,9 @@ public class UserService {
         userRepository.save(account);
     }
 
+    public void saveUser(Account account){
+        userRepository.save(account);
+    }
 //    public void createAdmin(Account account) {
 //        BCryptPasswordEncoder  encoder = new  BCryptPasswordEncoder();
 //        account.setPassWord(encoder.encode(account.getPassWord()));
@@ -63,6 +66,8 @@ public class UserService {
     public Account findByUserName(String userName){
         return userRepository.findByUserName(userName);
     }
-
+    public Account findByUserId(Long id ){
+        return  userRepository.findByUserId(id);
+    }
 
 }

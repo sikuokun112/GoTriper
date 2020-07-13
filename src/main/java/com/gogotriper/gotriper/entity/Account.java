@@ -48,10 +48,11 @@ public class Account {
     @OneToMany(mappedBy = "userId")
     private List<BinhLuan> listBinhLuans;
 
+    @OneToMany(mappedBy = "userImage",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<Image> listUserImages;
     public List<DiaDiem> getListDiaDiem() {
         return listDiaDiem;
     }
-
     public void setListDiaDiem(List<DiaDiem> listDiaDiem) {
         this.listDiaDiem = listDiaDiem;
     }
@@ -103,5 +104,13 @@ public class Account {
 
     public void setListBinhLuans(List<BinhLuan> listBinhLuans) {
         this.listBinhLuans = listBinhLuans;
+    }
+
+    public List<Image> getListUserImages() {
+        return listUserImages;
+    }
+
+    public void setListUserImages(List<Image> listUserImages) {
+        this.listUserImages = listUserImages;
     }
 }

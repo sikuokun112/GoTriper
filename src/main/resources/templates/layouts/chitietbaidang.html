@@ -35,6 +35,11 @@
 
     <link rel="stylesheet" th:href="@{/mainpage/css/inputcustom.css}">
 
+    <!--    HERO WRAP-->
+    <link rel="stylesheet" th:href="@{/mainpage/css/herowrap.css}">
+
+
+
     <!-- ---- TEXT EDITOR ---- -->
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
@@ -98,8 +103,8 @@
         <div class="row">
             <div class="col-md-6">
                 <h3 th:text="${baidang.getTieuDe()}"></h3>
-                <p><span>$$$</span>$$</p>
-                <p class="reserve-description">Innovative cooking, paired with fine wines in a modern setting.</p>
+                <p><span>**************************************************************</span>********************</p>
+
             </div>
             <div class="col-md-6">
                 <div class="reserve-seat-block">
@@ -128,26 +133,33 @@
             <div class="col-md-8 responsive-wrap">
                 <div class="booking-checkbox_wrap">
                     <div class="booking-checkbox">
-                        <h4>Nội Dung</h4>
-                        <p th:utext="${baidang.getNoiDung()}"></p>
-                        <h4>Danh Mục</h4>
-                        <p th:text="${baidang.getDanhMuc().getTenDanhMuc()}"></p>
+                        <div class="hero-wrap">
+                            <div class="text ">
+                                <h1 class="big-letter">Nội Dung</h1>
+                                <br>
+                                <br>
+                                <h3 th:utext="${baidang.getNoiDung()}"></h3>
+                                <h1 class="big-letter">Danh Mục</h1>
+                                <br>
+                                <p  class="mb-4" th:text="${baidang.getDanhMuc().getTenDanhMuc()}"></p>
+                                <h1 class="big-letter">Toạ Độ Địa Lý</h1>
+                                <div>Kinh Độ<div id="kinhdo" th:text="${baidang.getDiaDiem().getKinhDo()}"></div></div>
+                                <div>Vĩ Độ<div id="vido" th:text="${baidang.getDiaDiem().getViDo()}"></div></div>
 
-                        <div id="kinhdo" th:text="${baidang.getDiaDiem().getKinhDo()}"></div>
-                        <div id="vido" th:text="${baidang.getDiaDiem().getViDo()}"></div>
-
-                        </th:block>
-                            <h4>Gallery</h4>
-                        <div class="swiper-container">
-                            <div class="swiper-wrapper">
-                                <th:block th:each="photo : ${baidang.getDiaDiem().getListImage_DiaDiem()}">
-                                <div class="swiper-slide">
-                                    <img th:src="@{'getimage/'+${photo.getImageUrl()}}" class="img-fluid" alt="#" >
-                                </div>
                                 </th:block>
-
+                                <h1 class="big-letter">Gallery</h1>
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <th:block th:each="photo : ${baidang.getDiaDiem().getListImage_DiaDiem()}">
+                                            <div class="swiper-slide">
+                                                <img th:src="@{'getimage/'+${photo.getImageUrl()}}" class="img-fluid" alt="#" >
+                                            </div>
+                                        </th:block>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
 
                     </div>
                     <div class="row">
@@ -192,7 +204,7 @@
                     <th:block th:each="binhluan : ${baidang.getListBinhLuans()}">
                         <div class="customer-review_wrap">
                             <div class="customer-img">
-                                <img src="mainpage/images/customer-img1.jpg" class="img-fluid" alt="#">
+                                <img th:src="@{'getimage/'+${binhluan.getUserId().getListUserImages().get(0).getImageUrl()}}" class="img-fluid" style="width: 100px; height: 70px" alt="#">
                                 <p th:text="${binhluan.getUserId().getUserName()}"></p>
                                 <span>35 Reviews</span>
                             </div>
@@ -262,46 +274,13 @@
                         <!-- Google map will appear here! Edit the Latitude, Longitude and Zoom Level below using data-attr-*  -->
                         <div id='map' class="z-depth-1-half map-container-6" style="height: 400px"></div>
                     </div>
-                    <div class="address">
-                        <span class="icon-location-pin"></span>
-                        <p> Doyers St<br> New York, NY 10013<br> b/t Division St & St James Pl <br> Chinatown, Civic Center</p>
-                    </div>
-                    <div class="address">
-                        <span class="icon-screen-smartphone"></span>
-                        <p> +44 20 7336 8898</p>
-                    </div>
-                    <div class="address">
-                        <span class="icon-link"></span>
-                        <p>https://burgerandlobster.com</p>
-                    </div>
-                    <div class="address">
-                        <span class="icon-clock"></span>
-                        <p>Mon - Sun 09:30 am - 05:30 pm <br>
-                            <span class="open-now">OPEN NOW</span></p>
-                    </div>
-                    <a href="#" class="btn btn-outline-danger btn-contact">SEND A MESSAGE</a>
                 </div>
                 <div class="follow">
                     <div class="follow-img">
-                        <img src="mainpage/images/follow-img.jpg" class="img-fluid" alt="#">
-                        <h6>Christine Evans</h6>
-                        <span>New York</span>
+                        <img th:src="@{'getimage/'+${account.getListUserImages().get(0).getImageUrl()}}" class="img-fluid" style="width: 150px; height: 100px" alt="#">
+                        <h6 th:text="${account.getUserName()}">Unknow User</h6>
                     </div>
-                    <ul class="social-counts">
-                        <li>
-                            <h6>26</h6>
-                            <span>Listings</span>
-                        </li>
-                        <li>
-                            <h6>326</h6>
-                            <span>Followers</span>
-                        </li>
-                        <li>
-                            <h6>12</h6>
-                            <span>Followers</span>
-                        </li>
-                    </ul>
-                    <a href="#">FOLLOW</a>
+                    <a href="#">IT'S ME</a>
                 </div>
             </div>
         </div>

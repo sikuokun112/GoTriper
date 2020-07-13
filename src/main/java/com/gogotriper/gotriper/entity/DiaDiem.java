@@ -55,6 +55,10 @@ public class DiaDiem {
     @JoinColumn(name = "user_id")
     private Account userId;
 
+    @ManyToOne
+    @JoinColumn(name = "tinhthanh_id")
+    private TinhThanh tinhThanh;
+
     public Account getUserId() {
         return userId;
     }
@@ -161,5 +165,13 @@ public class DiaDiem {
 
     public void setViDo(String viDo) {
         this.viDo = viDo;
+    }
+
+    public TinhThanh getTinhThanh() {
+        return tinhThanh;
+    }
+
+    public void setTinhThanh(TinhThanh tinhThanh) {
+        this.tinhThanh = tinhThanh;
     }
 }

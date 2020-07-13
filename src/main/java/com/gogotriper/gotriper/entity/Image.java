@@ -20,6 +20,10 @@ public class Image  {
     @JoinColumn(name = "baidang_id")
     private BaiDang baiDangImage;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Account userImage;
+
     public DiaDiem getDiaDiemImage() {
         return diaDiemImage;
     }
@@ -56,5 +60,13 @@ public class Image  {
 
     public void setBaiDangImage(BaiDang baiDangImage) {
         this.baiDangImage = baiDangImage;
+    }
+
+    public Account getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(Account userImage) {
+        this.userImage = userImage;
     }
 }
