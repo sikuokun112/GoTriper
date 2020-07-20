@@ -91,8 +91,8 @@
                     <th:block th:each="baidang: ${account.getListBaiDang()}">
                         <div class="col-sm-6 col-lg-12 col-xl-6 featured-responsive">
                             <div class="featured-place-wrap">
-                                <a href="#">
-                                    <img th:src="@{'getimage/'+${baidang.getListImage_BaiDang().get(0).getImageUrl()}}" class="img-fluid" alt="#">
+                                <a th:href="'/chitietbaidang/'+${baidang.getId()}">
+                                    <img th:src="@{'getimage/'+${baidang.getListImage_BaiDang().get(0).getImageUrl()}}" class="img-fluid" style="width: 400px; height: 150px" alt="#">
                                     <span class="featured-rating-orange ">*</span>
                                     <div class="featured-title-box">
                                         <h6 th:text="${baidang.getTieuDe()}"></h6>
@@ -116,14 +116,7 @@
                                 </a>
                             </div>
                         </div>
-
-
                     </th:block>
-
-
-
-
-
                 </div>
             </div>
         </div>
@@ -156,7 +149,6 @@
 <script>
     $(window).scroll(function() {
         // 100 = The point you would like to fade the nav in.
-
         if ($(window).scrollTop() > 100) {
 
             $('.fixed').addClass('is-sticky');

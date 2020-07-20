@@ -183,11 +183,11 @@ public class MainController {
     }
 
 
-    @PostMapping("/savebinhluan")
-    public String saveBinhluan(@RequestParam("tieude") String tieude, @RequestParam("diemdanhgia") Float diemdanhgia,@RequestParam("noidung") String noidung, Principal principal){
+    @PostMapping("/savebinhluan/{id}")
+    public String saveBinhluan(@RequestParam("tieude") String tieude, @RequestParam("diemdanhgia") Float diemdanhgia,@RequestParam("noidung") String noidung,@PathVariable String id, Principal principal){
         // thay the ID bang Pathvariable ID
-        int id =1;
-         BaiDang baiDang =  baiDangService.findBaiDangById(id);
+
+         BaiDang baiDang =  baiDangService.findBaiDangById(Integer.parseInt(id));
 
         BinhLuan binhLuan = new BinhLuan();
         binhLuan.setTieude(tieude);
@@ -198,7 +198,7 @@ public class MainController {
         binhLuan.setBaiDang(baiDang);
         binhLuanService.saveBinhLuan(binhLuan);
 
-        return "redirect:chitietbaidang";
+        return "redirect:/chitietbaidang/"+id;
 
     }
 
@@ -212,9 +212,9 @@ public class MainController {
         return "layouts/detailmain";
     }
 
-    @RequestMapping(value = {"/chitietbaidang"},method =  RequestMethod.GET)
-    public String ChiTietBaiDang(Model model, Principal principal){
-        BaiDang baiDang = baiDangService.findBaiDangById(1);
+    @RequestMapping(value = {"/chitietbaidang/{id}"},method =  RequestMethod.GET)
+    public String ChiTietBaiDang(Model model, Principal principal,@PathVariable String id){
+        BaiDang baiDang = baiDangService.findBaiDangById(Integer.parseInt(id));
         List<Image> img = imageService.findAllImageByBaiDang(baiDang);
         Account account = userService.findByUserName(principal.getName());
         model.addAttribute("img",img);

@@ -16,9 +16,25 @@ import java.nio.file.Paths;
 
 @Controller
 public class ImageuploadController {
-    @RequestMapping(value = "getimage/{photo}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{path}/getimage/{photo}",method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity <ByteArrayResource> getImage(@PathVariable("photo") String photo){
+        if(!photo.equals("") || photo!=null){
+            try {
+                Path filename = Paths.get("uploads",photo);
+                byte[] buffer = Files.readAllBytes(filename);
+                ByteArrayResource byteArrayResource = new ByteArrayResource(buffer);
+                return ResponseEntity.ok().contentLength(buffer.length).contentType(MediaType.parseMediaType("image/png")).body(byteArrayResource);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @RequestMapping(value = "getimage/{photo}",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity <ByteArrayResource> getImage2(@PathVariable("photo") String photo){
         if(!photo.equals("") || photo!=null){
             try {
                 Path filename = Paths.get("uploads",photo);

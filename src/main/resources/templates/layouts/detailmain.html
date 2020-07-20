@@ -66,7 +66,7 @@
                 <th:block th:each="image: ${img}">
                     <div class="swiper-slide">
                         <a th:href="@{'getimage/'+${image.getImageUrl()}}" class="grid image-link">
-                            <img th:src="@{'getimage/'+${image.getImageUrl()}}" class="img-fluid" alt="#">
+                            <img th:src="@{'getimage/'+${image.getImageUrl()}}" class="img-fluid" style="width: 400px; height: 250px" alt="#">
                         </a>
                     </div>
                 </th:block>
