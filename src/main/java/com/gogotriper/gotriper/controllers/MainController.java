@@ -4,6 +4,7 @@ import com.gogotriper.gotriper.entity.*;
 import com.gogotriper.gotriper.services.*;
 import com.gogotriper.gotriper.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -71,6 +75,21 @@ public class MainController {
         baiDang.setDanhMuc(danhMucService.findDanhMucByName(danhmuc));
         baiDang.setNoiDung(noidung);
         baiDang.setTieuDe(tieude);
+        // set ngay dang now
+        Date now = new Date();
+        Timestamp ts = new Timestamp(now.getTime());
+        baiDang.setThoiGianDang(ts);
+        // set ngay dang them 2 ngay
+        Calendar c = Calendar.getInstance();
+        c.setTime(now);
+        c.add(Calendar.DATE,10);
+        Date end = c.getTime();
+        Timestamp ts2 = new Timestamp(end.getTime());
+        System.out.println("TG DANG "+ ts2);
+        baiDang.setThoiGianHetHan(ts2);
+
+        baiDang.setSoLuotXem(1);
+
         String userName = principal.getName();
         Account user  = userService.findByUserName(userName);
         baiDang.setUserId(user);
@@ -100,6 +119,19 @@ public class MainController {
         String userName = principal.getName();
         Account user  = userService.findByUserName(userName);
         baiDang.setUserId(user);
+        // set ngay dang now
+
+        Date now = new Date();
+        Timestamp ts = new Timestamp(now.getTime());
+        baiDang.setThoiGianDang(ts);
+        // set ngay dang them 2 ngay
+        Calendar c = Calendar.getInstance();
+        c.setTime(now);
+        c.add(Calendar.DATE,10);
+        Date end = c.getTime();
+        Timestamp ts2 = new Timestamp(end.getTime());
+        baiDang.setThoiGianHetHan(ts2);
+
         List<Image > images = new ArrayList<>();
         int i =0;
         for(MultipartFile photo : photos){
@@ -125,8 +157,14 @@ public class MainController {
 
     // main
     @RequestMapping(value = {"/home"},method =  RequestMethod.GET)
-    public String HomeMain(){
+    public String HomeMain(@Param("test1") String test1, @Param("test2") String test2){
+        if(test1!=null || test2 != null){
+            System.out.println(test1 + test2);
+        }
+        else{
+            System.out.println("NULL");
 
+        }
         return "layouts/homemain";
     }
 
@@ -193,12 +231,34 @@ public class MainController {
         binhLuan.setTieude(tieude);
         binhLuan.setDiemdanhgia(diemdanhgia);
         binhLuan.setNoidung(noidung);
-
+        Date date = new Date();
+        Timestamp ts = new Timestamp(date.getTime());
+        binhLuan.setThoigian(ts);
         binhLuan.setUserId(userService.findByUserName(principal.getName()));
         binhLuan.setBaiDang(baiDang);
         binhLuanService.saveBinhLuan(binhLuan);
 
         return "redirect:/chitietbaidang/"+id;
+
+    }
+
+    @PostMapping("/updatenoidung/{id}")
+    public String updateNoiDung(@RequestParam("noidungchinhsua") String noidungchinhsua,@PathVariable String id, Principal principal){
+        // thay the ID bang Pathvariable ID
+
+        BaiDang baiDang =  baiDangService.findBaiDangById(Integer.parseInt(id));
+        baiDang.setNoiDung(noidungchinhsua);
+        baiDangService.saveBaiDang(baiDang);
+        return "redirect:/chitietbaidang/"+id;
+
+    }
+
+    @PostMapping("/deletebaiviet/{id}")
+    public String deleteBaiViet(@PathVariable String id, Principal principal){
+        // thay the ID bang Pathvariable ID
+        BaiDang baiDang =  baiDangService.findBaiDangById(Integer.parseInt(id));
+        baiDangService.deleteBaiDang(baiDang);
+        return "redirect:/mybaidang";
 
     }
 
@@ -212,21 +272,48 @@ public class MainController {
         return "layouts/detailmain";
     }
 
+
+
     @RequestMapping(value = {"/chitietbaidang/{id}"},method =  RequestMethod.GET)
     public String ChiTietBaiDang(Model model, Principal principal,@PathVariable String id){
         BaiDang baiDang = baiDangService.findBaiDangById(Integer.parseInt(id));
+//        System.out.println("SO LUOT XEM");
+
+        baiDang.setSoLuotXem(baiDang.getSoLuotXem()+1);
+        baiDangService.saveBaiDang(baiDang);
         List<Image> img = imageService.findAllImageByBaiDang(baiDang);
         Account account = userService.findByUserName(principal.getName());
+        List<BinhLuan> binhLuanList = binhLuanService.getAllBinhLuanOfBaiDang(Integer.parseInt(id));
+
+        Date now = new Date();
+        Timestamp ts = new Timestamp(now.getTime());
+        boolean check = false;
+        if(ts.before(baiDang.getThoiGianHetHan())){
+            check = true;
+//            System.out.println("CHUA HET HAN");
+        }
+        boolean checkauthor =false;
+        if(baiDang.getUserId() == account){
+            checkauthor = true;
+        }
+
+        List<BaiDang> baidanglienquan = baiDangService.findListBaiDangByDanhMuc(baiDang.getDanhMuc());
         model.addAttribute("img",img);
         model.addAttribute("baidang",baiDang);
         model.addAttribute("account",account);
-        return "layouts/chitietbaidang";
+        model.addAttribute("listbinhluans",binhLuanList);
+        model.addAttribute("check",check);
+        model.addAttribute("checkauthor",checkauthor);
+        model.addAttribute("baidanglienquan",baidanglienquan);
+
+        return "layouts/baidangchitiet";
     }
 
     @RequestMapping(value = "/mybaidang",method = RequestMethod.GET)
     public String myBaiDang(Model model ,Principal principal){
         Account account = userService.findByUserName(principal.getName());
         model.addAttribute("account",account);
+
         return "layouts/myBaiDang";
     }
 
@@ -354,6 +441,69 @@ public class MainController {
         model.addAttribute("check",check);
         return "layouts/userInfor";
     }
+
+   public String searchText1 = "";
+    public String searchText2 = "";
+    @RequestMapping(value = "/searchDetail",method = RequestMethod.GET)
+    public String searchDetail2(Model model,@RequestParam(value = "test1",required=false) String test1, @RequestParam(value = "test2",required=false) String test2){
+        List<BaiDang> baidangsearchs = new ArrayList<>();
+        if(test1 == null && test2 == null){
+            if(searchText1.length()!=0 && searchText2.length() == 0){
+                baidangsearchs = baiDangService.findAllBaiDangSearchByName(searchText1,"NUL");
+            }else if(searchText1.length() == 0 && searchText2.length() !=0){
+                baidangsearchs = baiDangService.findAllBaiDangSearchByName("NUL",searchText2);
+            }
+            else if (searchText1.length() != 0 && searchText2.length() != 0){
+                baidangsearchs = baiDangService.findAllBaiDangSearchByName(searchText1,searchText2);
+            }else{
+                baidangsearchs = baiDangService.findAllBaiDangSearchByName("","");
+            }
+        }else if(test1.length()!=0 && test2.length()==0){
+            searchText1 = test1;
+            baidangsearchs = baiDangService.findAllBaiDangSearchByName(test1,"NUL");
+        }else if(test1.length() == 0 && test2.length()!=0){
+            searchText2 =test2;
+            baidangsearchs = baiDangService.findAllBaiDangSearchByName("NUL",test2);
+        }
+        else{
+            searchText1 =test1;
+            searchText2 = test2;
+            baidangsearchs = baiDangService.findAllBaiDangSearchByName(test1,test2);
+        }
+        model.addAttribute("baidangsearchs",baidangsearchs);
+        return "layouts/searchDetail";
+    }
+
+    @RequestMapping(value = "/searchDetail",method = RequestMethod.POST)
+    public String searchDetail(Model model,@RequestParam(value = "test1",required=false) String test1, @RequestParam(value = "test2",required=false) String test2){
+        List<BaiDang> baidangsearchs = new ArrayList<>();
+        if(test1 == null && test2 == null){
+            if(searchText1.length()!=0 && searchText2.length() == 0){
+                baidangsearchs = baiDangService.findAllBaiDangSearchByName(searchText1,"NUL");
+            }else if(searchText1.length() == 0 && searchText2.length() !=0){
+                baidangsearchs = baiDangService.findAllBaiDangSearchByName("NUL",searchText2);
+            }
+            else if (searchText1.length() != 0 && searchText2.length() != 0){
+                baidangsearchs = baiDangService.findAllBaiDangSearchByName(searchText1,searchText2);
+            }else{
+                baidangsearchs = baiDangService.findAllBaiDangSearchByName("","");
+            }
+        }else if(test1.length()!=0 && test2.length()==0){
+            searchText1 = test1;
+            baidangsearchs = baiDangService.findAllBaiDangSearchByName(test1,"NUL");
+        }else if(test1.length() == 0 && test2.length()!=0){
+            searchText2 =test2;
+            baidangsearchs = baiDangService.findAllBaiDangSearchByName("NUL",test2);
+        }
+         else{
+             searchText1 =test1;
+             searchText2 = test2;
+            baidangsearchs = baiDangService.findAllBaiDangSearchByName(test1,test2);
+        }
+        model.addAttribute("baidangsearchs",baidangsearchs);
+        return "redirect:/searchDetail";
+    }
+
 
     @PostMapping("/postavatar/{id}/saveavatar")
     public String changeAvatar(Model model, @PathVariable String id ,@RequestParam("pro-image") List<MultipartFile> photos){

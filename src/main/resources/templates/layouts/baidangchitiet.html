@@ -37,9 +37,6 @@
     <!--    HERO WRAP-->
     <link rel="stylesheet" th:href="@{/mainpage/css/herowrap.css}">
 
-
-
-
     <!-- ---- TEXT EDITOR ---- -->
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
@@ -104,22 +101,25 @@
             <div class="col-md-6">
                 <h3 th:text="${baidang.getTieuDe()}"></h3>
                 <p><span>**************************************************************</span>********************</p>
-
+               <div class="review-btn"><span th:text="'Đăng vào: '+ ${baidang.getThoiGianDang()}"></span></div>
             </div>
             <div class="col-md-6">
                 <div class="reserve-seat-block">
                     <div class="reserve-rating">
-                        <span>9.5</span>
+                        <span>***</span>
                     </div>
                     <div class="review-btn">
-                        <a href="#" class="btn btn-outline-danger">WRITE A REVIEW</a>
+                        <a href="#" class="btn btn-outline-danger">Đánh giá</a>
                         <span>34 reviews</span>
                     </div>
-                    <div class="reserve-btn">
-                        <div class="featured-btn-wrap">
-                            <a href="#" class="btn btn-danger">RESERVE A SEAT</a>
+                    <th:block th:unless="${check}">
+                        <div class="rese-btn">
+                            <div class="featured-btn-wrap">
+                                <a href="#" class="btn btn-danger">HẾT HẠN</a>
+                            </div>
                         </div>
-                    </div>
+                    </th:block>
+
                 </div>
             </div>
         </div>
@@ -135,28 +135,61 @@
                     <div class="booking-checkbox">
                         <div class="hero-wrap">
                             <div class="text ">
+                                <h1 class="big-letter" th:utext="${baidang.getDiaDiem().getTenDiaDiem()}"></h1>
+                                <br>
+                                <br>
+                                <hr>
                                 <h1 class="big-letter">Nội Dung</h1>
                                 <br>
-                                <br>
                                 <h3 th:utext="${baidang.getNoiDung()}"></h3>
-                                <h1 class="big-letter">Danh Mục</h1>
-                                <br>
-                                <p  class="mb-4" th:text="${baidang.getDanhMuc().getTenDanhMuc()}"></p>
-                                <h1 class="big-letter">Toạ Độ Địa Lý</h1>
-                                <div>Kinh Độ<div id="kinhdo" th:text="${baidang.getDiaDiem().getKinhDo()}"></div></div>
-                                <div>Vĩ Độ<div id="vido" th:text="${baidang.getDiaDiem().getViDo()}"></div></div>
-
+                                <th:block th:if="${checkauthor}">
+                                    <div class="rese-btn">
+                                        <div class="featured-btn-wrap">
+                                            <a href="#" class="btn btn-danger" data-toggle="collapse" data-target="#chinhsua">CHỈNH SỬA</a>
+                                        </div>
+                                        <div id="chinhsua" class="collapse">
+                                            <div class="container-contact100 responsive-wrap">
+                                                <div class="wrap-contact100">
+                                                    <form class="contact100-form validate-form" th:action="@{'/updatenoidung/'+${id}}" method="post" enctype="multipart/form-data">
+                                                        <div class="wrap-input100">
+                                                            <textarea id="noidungchinhsua" name="noidungchinhsua" th:utext="${baidang.getNoiDung()}"></textarea>
+                                                        </div>
+                                                        <div class="container-contact100-form-btn">
+                                                            <button class="contact100-form-btn">
+                                                            <span>
+                                                                Submit
+                                                                <i class="zmdi zmdi-arrow-right m-l-8"></i>
+                                                            </span>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </th:block>
+                                <hr>
                                 <h1 class="big-letter">Gallery</h1>
                                 <div class="swiper-container">
                                     <div class="swiper-wrapper">
                                         <th:block th:each="photo : ${baidang.getDiaDiem().getListImage_DiaDiem()}">
                                             <div class="swiper-slide">
-                                                <img th:src="@{'getimage/'+${photo.getImageUrl()}}" class="img-fluid" alt="#" >
+                                                <img th:src="@{'getimage/'+${photo.getImageUrl()}}" class="img-fluid" style="width: 150px; height: 150px" alt="#" >
                                             </div>
                                         </th:block>
                                     </div>
                                 </div>
+                                <hr>
+                                <h1 class="big-letter">Địa chỉ</h1>
+                                <br>
+                                <p class="mb-4" th:utext="${baidang.getDiaDiem().getDiaChi()}"></p>
+                                <br>
+                                <hr>
+                                <h1 class="big-letter">Toạ Độ Địa Lý</h1>
+                                <div style="font-size: 10px;" >Kinh Độ: <div id="kinhdo" th:text="${baidang.getDiaDiem().getKinhDo()}"></div></div>
+                                <div style="font-size: 10px;">Vĩ Độ: <div id="vido" th:text="${baidang.getDiaDiem().getViDo()}"></div></div>
+                                <hr>
+
                             </div>
                         </div>
 
@@ -201,12 +234,17 @@
                 <div class="booking-checkbox_wrap mt-4">
                     <h5 th:text="${baidang.getListBinhLuans().size()}+' Reviews'">34 Reviews</h5>
                     <hr>
-                    <th:block th:each="binhluan : ${baidang.getListBinhLuans()}">
+                    <th:block th:each="binhluan : ${listbinhluans}">
                         <div class="customer-review_wrap">
                             <div class="customer-img">
-                                <img th:src="@{'getimage/'+${binhluan.getUserId().getListUserImages().get(0).getImageUrl()}}" class="img-fluid" style="width: 100px; height: 70px" alt="#">
+                                <th:block th:if="${binhluan.getUserId().getListUserImages().size()!=0 }">
+                                    <img th:src="@{'getimage/'+${binhluan.getUserId().getListUserImages().get(0).getImageUrl()}}" class="img-fluid" style="width: 100px; height: 70px" alt="#">
+                                </th:block>
+                                <th:block th:unless="${binhluan.getUserId().getListUserImages().size()!=0}">
+                                    <img th:src="@{/mainpage/images/featured1.jpg}"  class="img-fluid" style="width: 100px; height: 70px" alt="#">
+                                </th:block>
                                 <p th:text="${binhluan.getUserId().getUserName()}"></p>
-                                <span>35 Reviews</span>
+                                <span>Reviewer</span>
                             </div>
                         <div class="customer-content-wrap">
                             <div class="customer-content">
@@ -217,7 +255,7 @@
                                     <span></span>
                                     <span></span>
                                     <span class="round-icon-blank"></span>
-                                    <p>Reviewed 2 days ago</p>
+                                    <p th:utext="'Reviewed '+${binhluan.getThoigian()}">Reviewed 2 days ago</p>
                                 </div>
                                 <div class="customer-rating" th:text="${binhluan.getDiemdanhgia()}">8.0</div>
                             </div>
@@ -225,11 +263,11 @@
                             </p>
                             <p class="customer-text">
                             </p>
-                            <span>28 people marked this review as helpful</span>
+                            <span>people marked this review as helpful</span>
                             <a href="#"><span class="icon-like"></span>Helpful</a>
+                            <hr>
                         </div>
                      </div>
-                     <hr>
                     </th:block>
                     <div class="blog__pagination row" id="review_pagination">
                     </div>
@@ -275,17 +313,65 @@
                         <div id='map' class="z-depth-1-half map-container-6" style="height: 400px"></div>
                     </div>
                 </div>
-                <div class="follow">
-                    <div class="follow-img">
-                        <img th:src="@{'getimage/'+${account.getListUserImages().get(0).getImageUrl()}}" class="img-fluid" style="width: 150px; height: 100px" alt="#">
-                        <h6 th:text="${account.getUserName()}">Unknow User</h6>
+
+                    <div class="follow">
+                        <div class="follow-img">
+                            <th:block th:if="${account.getListUserImages().size()!=0 }">
+                                <img th:src="@{'getimage/'+${account.getListUserImages().get(0).getImageUrl()}}" class="img-fluid" style="width: 150px; height: 100px" alt="#">
+                            </th:block>
+                            <th:block th:unless="${account.getListUserImages().size()!=0}">
+                                <img th:src="@{/mainpage/images/featured1.jpg}"  class="img-fluid" style="width: 100px; height: 70px" alt="#">
+                            </th:block>
+                            <h6 th:text="${account.getUserName()}">Unknow User</h6>
+                        </div>
+                        <a href="#">IT'S ME</a>
                     </div>
-                    <a href="#">IT'S ME</a>
-                </div>
+
             </div>
         </div>
     </div>
 </section>
+<div class="hero-wrap">
+    <div class="text ">
+        <h2 class="big-letter" style="color: darksalmon">CÁC BÀI LIÊN QUAN </h2>
+    </div>
+</div>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <th:block th:each="baidang1 : ${baidanglienquan}">
+            <div class="swiper-slide">
+                <div class="row light-bg detail-options-wrap">
+                    <div class="col-sm-9 featured-responsive">
+                        <div class="featured-place-wrap">
+                            <a th:href="'/chitietbaidang/'+${baidang1.getId()}">
+                                <img th:src="@{'getimage/'+${baidang1.getListImage_BaiDang().get(0).getImageUrl()}}" class="img-fluid" style="width: 400px; height: 150px" alt="#">
+                                <div class="featured-title-box">
+                                    <h6 th:text="${baidang1.getTieuDe()}"></h6>
+                                    <p th:text="${baidang1.getDanhMuc().getTenDanhMuc()}"></p> <span>• </span>
+                                    <p>3 Reviews</p> <span> • </span>
+                                    <p><span>***</span>**</p>
+                                    <ul>
+                                        <li><span class="icon-location-pin"></span>
+                                            <p th:text="${baidang1.getDiaDiem().getDiaChi()}"></p>
+                                        </li>
+                                        <li><span class="icon-screen-smartphone"></span>
+                                            <p th:text="${baidang1.getDiaDiem().getSdt()}"></p>
+                                        </li>
+                                    </ul>
+                                    <div class="bottom-icons">
+                                        <div class="closed-now">READ NOW</div>
+                                        <span class="ti-heart"></span>
+                                        <span class="ti-bookmark"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+</div>
 <!--//END BOOKING DETAILS -->
 <th:block th:include="/fragments/footermain"></th:block>
 
@@ -381,7 +467,7 @@
 
 
     // Add the geocoder to the map
-    map.addControl(geocoder);
+    // map.addControl(geocoder);
 </script>
 <script>
     var swiper = new Swiper('.swiper-container', {

@@ -10,7 +10,7 @@
     <meta name="description" content="#">
     <meta name="keywords" content="#">
     <!-- Page Title -->
-    <title>Profile</title>
+    <title>My Bai Dang</title>
     <!-- Bootstrap CSS -->
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/mainpage/css/bootstrap.min.css}">
@@ -33,8 +33,8 @@
     <!-- SELECTEDBOX -->
     <link rel="stylesheet" th:href="@{/mainpage/css/selectedbox.css}">
 
-    <!-- PREVIEW IMAGE CSS -->
-    <link rel="stylesheet" th:href="@{/mainpage/css/previewimage.css}">
+    <!--    &lt;!&ndash; PREVIEW IMAGE CSS &ndash;&gt;-->
+    <!--    <link rel="stylesheet" th:href="@{/mainpage/css/previewimage.css}">-->
 
     <link rel="stylesheet" th:href="@{/mainpage/css/inputcustom.css}">
 
@@ -52,57 +52,63 @@
 <!--END HEADER-->
 
 <!--BODY-->
-    <div class="hero-wrap">
-        <div class="overlay"></div>
-        <div class="d-flex">
-            <div class="author-image text img p-md-5" style="background-image: url(mainpage/images/featured1.jpg);">
-            </div>
-            <div class="author-info text p-4 p-md-5 mt-5 mb-5">
-                <div class="desc">
-                    <div class="follow">
-                        <div class="follow-img">
-                            <th:block th:if="${check}">
-                            <img th:src="@{'getimage/'+${userInfor.getListUserImages().get(0).getImageUrl()}}" class="img-fluid" alt="#">
-                            </th:block>
-                            <th:block th:unless="${check}">
-                                <img th:src="@{/mainpage/images/featured1.jpg}" class="img-fluid" alt="#">
-                            </th:block>
-                        </div>
-                    </div>
-                    <span class="subheading">MY INFOR</span>
-                    <h1 class="big-letter">Louie Smith</h1>
-                    <h1 class="mb-4"><span th:text="${userInfor.getUserName()}">My Name is Louie Smith</span></h1>
-                    <p class="mb-4" th:text="${userInfor.getPassWord()}">I am A Photographer from America Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large
-                        language ocean.</p>
-                    <h3 class="signature h1" th:text="${userInfor.getUserName()}">Louie Smith</h3>
+<section class="main-block light-bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="styled-heading">
+                    <h3>Featured Places</h3>
                 </div>
-                <form class="contact100-form validate-form" th:action="@{'/postavatar/'+${userInfor.getUserId()}+'/saveavatar'}" method="post" enctype="multipart/form-data">
-                    <div class="preview-images-zone">
+            </div>
+        </div>
+        <div class="row">
+            <th:block th:each="baidang: ${baidangsearchs}">
+                <div class="col-md-4 featured-responsive">
+                    <div class="featured-place-wrap">
+                        <a href="detailmain.html">
+                            <img src="mainpage/images/featured2.jpg" class="img-fluid" alt="#">
+                            <span class="featured-rating-green">9.5</span>
+                            <div class="featured-title-box">
+                                <h6 th:text="${baidang.getTieuDe()}">Joe’s Shanghai</h6>
+                                <p>Restaurant </p> <span>• </span>
+                                <p>3 Reviews</p> <span> • </span>
+                                <p><span>$$$</span>$$</p>
+                                <ul>
+                                    <li><span class="icon-location-pin"></span>
+                                        <p>1301 Avenue, Brooklyn, NY 11230</p>
+                                    </li>
+                                    <li><span class="icon-screen-smartphone"></span>
+                                        <p>+44 20 7336 8898</p>
+                                    </li>
+                                    <li><span class="icon-link"></span>
+                                        <p>https://burgerandlobster.com</p>
+                                    </li>
 
+                                </ul>
+                                <div class="bottom-icons">
+                                    <div class="closed-now">CLOSED NOW</div>
+                                    <span class="ti-heart"></span>
+                                    <span class="ti-bookmark"></span>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <div class="">
-                        <fieldset class="form-group">
-                            <a class="btn btn-danger" href="javascript:void(0)" onclick="$('#pro-image').click()">Upload Image</a>
-                            <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control">
-                        </fieldset>
-                    </div>
-
-                    <div class="container-contact100-form-btn">
-                        <button class="contact100-form-btn">
-                                            <span>
-                                                Submit
-                                                <i class="zmdi zmdi-arrow-right m-l-8"></i>
-                                            </span>
-                        </button>
-                    </div>
-                </form>
+                </div>
+            </th:block>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="featured-btn-wrap">
+                    <a href="#" class="btn btn-danger">VIEW ALL</a>
+                </div>
             </div>
         </div>
     </div>
+</section>
+<!--//END FEATURED PLACES -->
 
 
 <!--END BODY-->
-
 
 
 <!--============================= FIND PLACES =============================-->
@@ -112,7 +118,7 @@
 
 <!-- prievew image -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script th:src="@{/mainpage/js/previewimage.js}"></script>
+<!--<script th:src="@{/mainpage/js/previewimage.js}"></script>-->
 <!-- jQuery, Bootstrap JS. -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <!--<script th:src="@{/mainpage/js/jquery-3.2.1.min.js}"></script>-->
@@ -126,7 +132,6 @@
 <script>
     $(window).scroll(function() {
         // 100 = The point you would like to fade the nav in.
-
         if ($(window).scrollTop() > 100) {
 
             $('.fixed').addClass('is-sticky');
@@ -138,6 +143,7 @@
         };
     });
 </script>
+
 </body>
 
 </html>

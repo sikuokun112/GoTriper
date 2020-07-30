@@ -1,6 +1,7 @@
 package com.gogotriper.gotriper.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "binhluan")
@@ -16,6 +17,9 @@ public class BinhLuan {
     private String noidung;
     @Column(name = "diemdanhgia")
     private Float diemdanhgia;
+
+    @Column(name = "thoigian")
+    private Timestamp thoigian;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -69,5 +73,13 @@ public class BinhLuan {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Timestamp getThoigian() {
+        return thoigian;
+    }
+
+    public void setThoigian(Timestamp thoigian) {
+        this.thoigian = thoigian;
     }
 }

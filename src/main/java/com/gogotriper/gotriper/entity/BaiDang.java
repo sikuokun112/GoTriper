@@ -1,6 +1,7 @@
 package com.gogotriper.gotriper.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,16 @@ public class BaiDang {
 
     @Column(name = "noidung")
     private String noiDung;
+
+    @Column(name = "thoigiandang")
+    private Timestamp thoiGianDang;
+
+    @Column(name = "thoigianhethan")
+    private Timestamp thoiGianHetHan;
+
+    @Column(name = "soluotxem")
+    private int soLuotXem;
+
     @ManyToOne
     @JoinColumn(name = "danhmuc_id")
     private DanhMuc danhMuc;
@@ -30,7 +41,7 @@ public class BaiDang {
     @JoinColumn(name = "user_id")
     private Account userId;
 
-    @OneToMany(mappedBy = "baiDang")
+    @OneToMany(mappedBy = "baiDang",cascade = CascadeType.ALL)
     private List<BinhLuan> listBinhLuans;
 
 
@@ -103,5 +114,29 @@ public class BaiDang {
 
     public void setListBinhLuans(List<BinhLuan> listBinhLuans) {
         this.listBinhLuans = listBinhLuans;
+    }
+
+    public Timestamp getThoiGianDang() {
+        return thoiGianDang;
+    }
+
+    public void setThoiGianDang(Timestamp thoiGianDang) {
+        this.thoiGianDang = thoiGianDang;
+    }
+
+    public Timestamp getThoiGianHetHan() {
+        return thoiGianHetHan;
+    }
+
+    public void setThoiGianHetHan(Timestamp thoiGianHetHan) {
+        this.thoiGianHetHan = thoiGianHetHan;
+    }
+
+    public int getSoLuotXem() {
+        return soLuotXem;
+    }
+
+    public void setSoLuotXem(int soLuotXem) {
+        this.soLuotXem = soLuotXem;
     }
 }
