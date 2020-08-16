@@ -5,6 +5,8 @@ import com.gogotriper.gotriper.repositories.DiaDiemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DiaDiemService  {
     @Autowired
@@ -15,5 +17,9 @@ public class DiaDiemService  {
 
     public DiaDiem findDiaDiemById(int id){
         return diaDiemRepository.findDiaDiemById(id);
+    }
+
+    public List<DiaDiem> findAllListByName(String tendiadiem){
+        return diaDiemRepository.findAllListByName(tendiadiem);
     }
 }

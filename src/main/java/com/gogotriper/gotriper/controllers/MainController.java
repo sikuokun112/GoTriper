@@ -17,6 +17,8 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,6 +57,19 @@ public class MainController {
     @ModelAttribute("tinhthanhlist")
     public List<TinhThanh> getAllTinhThanh(){
         return tinhThanhService.getAllTinhThanh();
+    }
+
+    @ModelAttribute("avatar")
+    public String getAccountAvatar(Principal principal){
+
+        if(principal !=null){
+            String userName = principal.getName();
+            Account user = userService.findByUserName(userName);
+            if(user.getListUserImages().size()!=0){
+                return "getimage/"+user.getListUserImages().get(0).getImageUrl();
+            }
+        }
+        return "/mainpage/images/featured1.jpg";
     }
 
 
@@ -156,15 +171,12 @@ public class MainController {
     }
 
     // main
-    @RequestMapping(value = {"/home"},method =  RequestMethod.GET)
-    public String HomeMain(@Param("test1") String test1, @Param("test2") String test2){
-        if(test1!=null || test2 != null){
-            System.out.println(test1 + test2);
-        }
-        else{
-            System.out.println("NULL");
-
-        }
+    @RequestMapping(value = {"/home","/"},method =  RequestMethod.GET)
+    public String HomeMain(Model model){
+        List<BaiDang> top3views = baiDangService.findTop3BaiDangByViews();
+        List<BaiDang> top3BinhLuans = baiDangService.findTop3BaiDangByBinhLuan();
+        model.addAttribute("top3views",top3views);
+        model.addAttribute("top3BinhLuans",top3BinhLuans);
         return "layouts/homemain";
     }
 
@@ -185,15 +197,19 @@ public class MainController {
 
 
     @PostMapping("/savediadiem")
-    public String saveDiaDiem(@RequestParam("tendiadiem") String tendiadiem,@RequestParam("tinhthanhname") String tinhthanhname,@RequestParam("giohoatdong") String giohoatdong,@RequestParam("giodongcua") String giodongcua,@RequestParam("phone") int phone, @RequestParam("giamin") int giamin,@RequestParam("giamax") int giamax,@RequestParam("diachi") String diachi, @RequestParam("kinhdo") String kinhdo,@RequestParam("vido") String vido,@RequestParam("noidung") String noidung, @RequestParam("pro-image") List<MultipartFile> photos,Principal principal){
+    public String saveDiaDiem(@RequestParam("tendiadiem") String tendiadiem,@RequestParam("tinhthanhname") String tinhthanhname,@RequestParam("giohoatdong") String giohoatdong,@RequestParam("giodongcua") String giodongcua,@RequestParam("phone") int phone, @RequestParam("giamin") int giamin,@RequestParam("giamax") int giamax,@RequestParam("diachi") String diachi, @RequestParam("kinhdo") String kinhdo,@RequestParam("vido") String vido,@RequestParam("noidung") String noidung, @RequestParam("pro-image") List<MultipartFile> photos,Principal principal) throws ParseException {
 
         System.out.println(photos.get(0).getOriginalFilename());
+        System.out.println(giohoatdong);
+        System.out.println(giodongcua);
         DiaDiem diaDiem = new DiaDiem();
         diaDiem.setTenDiaDiem(tendiadiem);
         diaDiem.setGiamin(giamin);
         diaDiem.setGiamax(giamax);
-        diaDiem.setGioHoatDong(new Date());
-        diaDiem.setGioDongCua(new Date());
+        Date start = new  SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(giohoatdong);
+        Date end = new  SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(giodongcua);
+        diaDiem.setGioHoatDong(start);
+        diaDiem.setGioDongCua(end);
         diaDiem.setKinhDo(kinhdo);
         diaDiem.setViDo(vido);
         diaDiem.setDiaChi(diachi);
@@ -263,12 +279,14 @@ public class MainController {
     }
 
 
-    @RequestMapping(value = {"/detail"},method =  RequestMethod.GET)
-    public String DetailMain(Model model){
-        DiaDiem diaDiem = diaDiemService.findDiaDiemById(1);
+    @RequestMapping(value = {"/chitietdiadiem/{id}"},method =  RequestMethod.GET)
+    public String DetailMain(Model model,@PathVariable String id){
+        DiaDiem diaDiem = diaDiemService.findDiaDiemById(Integer.parseInt(id));
         List<Image> img = imageService.findAllImageByDiaDiem(diaDiem);
+        List<BaiDang> baidanglienquan = baiDangService.findAllBaiDangByDiaDiem(diaDiem);
         model.addAttribute("img",img);
         model.addAttribute("diadiem",diaDiem);
+        model.addAttribute("baidanglienquan",baidanglienquan);
         return "layouts/detailmain";
     }
 
@@ -358,7 +376,7 @@ public class MainController {
 
     }
 
-    @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/welcome" }, method = RequestMethod.GET)
     public String welcomePage(Model model) {
         model.addAttribute("title", "Welcome");
         model.addAttribute("message", "This is welcome page!");
@@ -420,7 +438,6 @@ public class MainController {
             model.addAttribute("message", message);
 
         }
-
         return "403Page";
     }
 
@@ -441,13 +458,70 @@ public class MainController {
         model.addAttribute("check",check);
         return "layouts/userInfor";
     }
+    @RequestMapping(value = "/searchDiaDiem",method = RequestMethod.GET)
+    public String searchDiaDiem(Model model, @Param(value = "tendiadiem") String tendiadiem){
 
-   public String searchText1 = "";
+        System.out.println(tendiadiem);
+        List<DiaDiem> diaDiemList = diaDiemService.findAllListByName(tendiadiem);
+        List<BaiDang> baiDangList = baiDangService.findAllBaiDangSearchByName(tendiadiem,"NUL");
+        model.addAttribute("diaDiemList",diaDiemList);
+        model.addAttribute("baiDangList",baiDangList);
+
+
+        return "layouts/searchDiaDiem";
+    }
+
+    @RequestMapping(value = "/searchDanhMuc/{id}",method = RequestMethod.GET)
+    public String searchDanhMuc(Model model,@PathVariable String id, @RequestParam(value = "tendiadiem",required = false) String tendiadiem ){
+        if(tendiadiem == null || tendiadiem.length()==0){
+            DanhMuc d =  danhMucService.findDanhMucById(Integer.parseInt(id));
+            List<DiaDiem> diaDiemList = diaDiemService.findAllListByName("NUL");
+            List<BaiDang> baiDangList = baiDangService.findAllBaiDangSearchByName("NUL",d.getTenDanhMuc());
+            model.addAttribute("diaDiemList",diaDiemList);
+            model.addAttribute("baiDangList",baiDangList);
+        }else{
+            List<DiaDiem> diaDiemList = diaDiemService.findAllListByName(tendiadiem);
+            List<BaiDang> baiDangList = baiDangService.findAllBaiDangSearchByName(tendiadiem,"NUL");
+            model.addAttribute("diaDiemList",diaDiemList);
+            model.addAttribute("baiDangList",baiDangList);
+        }
+
+        return "layouts/searchDiaDiem";
+    }
+
+    @RequestMapping(value = "/searchDiaDiem/{id}",method = RequestMethod.GET)
+    public String searchDiaDiem2(Model model,@PathVariable String id, @RequestParam(value = "tendiadiem",required = false) String tendiadiem ){
+        if(tendiadiem == null || tendiadiem.length()==0){
+            TinhThanh t =  tinhThanhService.getTinhThanhById(Integer.parseInt(id));
+            List<DiaDiem> diaDiemList = diaDiemService.findAllListByName(t.getTen());
+            List<BaiDang> baiDangList = baiDangService.findAllBaiDangSearchByName(t.getTen(),"NUL");
+            model.addAttribute("diaDiemList",diaDiemList);
+            model.addAttribute("baiDangList",baiDangList);
+        }else{
+            List<DiaDiem> diaDiemList = diaDiemService.findAllListByName(tendiadiem);
+            List<BaiDang> baiDangList = baiDangService.findAllBaiDangSearchByName(tendiadiem,"NUL");
+            model.addAttribute("diaDiemList",diaDiemList);
+            model.addAttribute("baiDangList",baiDangList);
+        }
+
+        return "layouts/searchDiaDiem";
+    }
+
+
+
+
+    public String searchText1 = "";
     public String searchText2 = "";
     @RequestMapping(value = "/searchDetail",method = RequestMethod.GET)
     public String searchDetail2(Model model,@RequestParam(value = "test1",required=false) String test1, @RequestParam(value = "test2",required=false) String test2){
         List<BaiDang> baidangsearchs = new ArrayList<>();
-        if(test1 == null && test2 == null){
+        System.out.println("GET");
+        System.out.println("TEST1:" +test1);
+        System.out.println("TEST2: "+test2);
+        System.out.println("SEARCHTEXT1 BEF: "+searchText1);
+        System.out.println("SEARCHTEXT2: BEF"+searchText2);
+
+        if((test1 == null && test2 == null) || (test1.length()==0 && test2.length()==0)){
             if(searchText1.length()!=0 && searchText2.length() == 0){
                 baidangsearchs = baiDangService.findAllBaiDangSearchByName(searchText1,"NUL");
             }else if(searchText1.length() == 0 && searchText2.length() !=0){
@@ -460,8 +534,10 @@ public class MainController {
             }
         }else if(test1.length()!=0 && test2.length()==0){
             searchText1 = test1;
+            searchText2 = "";
             baidangsearchs = baiDangService.findAllBaiDangSearchByName(test1,"NUL");
         }else if(test1.length() == 0 && test2.length()!=0){
+            searchText1 = "";
             searchText2 =test2;
             baidangsearchs = baiDangService.findAllBaiDangSearchByName("NUL",test2);
         }
@@ -471,13 +547,21 @@ public class MainController {
             baidangsearchs = baiDangService.findAllBaiDangSearchByName(test1,test2);
         }
         model.addAttribute("baidangsearchs",baidangsearchs);
+        System.out.println("SEARCHTEXT1 AF: "+searchText1);
+        System.out.println("SEARCHTEXT2: AF"+searchText2);
         return "layouts/searchDetail";
     }
 
     @RequestMapping(value = "/searchDetail",method = RequestMethod.POST)
     public String searchDetail(Model model,@RequestParam(value = "test1",required=false) String test1, @RequestParam(value = "test2",required=false) String test2){
         List<BaiDang> baidangsearchs = new ArrayList<>();
-        if(test1 == null && test2 == null){
+        System.out.println("POST");
+        System.out.println("TEST1:" +test1);
+        System.out.println("TEST2: "+test2);
+        System.out.println("SEARCHTEXT1 BF: "+searchText1);
+        System.out.println("SEARCHTEXT2: BF"+searchText2);
+        if((test1 == null && test2 == null) || (test1.length()==0 && test2.length()==0)){
+            System.out.println("CA 2 DEU NULL ");
             if(searchText1.length()!=0 && searchText2.length() == 0){
                 baidangsearchs = baiDangService.findAllBaiDangSearchByName(searchText1,"NUL");
             }else if(searchText1.length() == 0 && searchText2.length() !=0){
@@ -489,18 +573,25 @@ public class MainController {
                 baidangsearchs = baiDangService.findAllBaiDangSearchByName("","");
             }
         }else if(test1.length()!=0 && test2.length()==0){
+            System.out.println("CA 2 NULL ");
             searchText1 = test1;
+            searchText2="";
             baidangsearchs = baiDangService.findAllBaiDangSearchByName(test1,"NUL");
         }else if(test1.length() == 0 && test2.length()!=0){
+            System.out.println("CA 1 NULL");
             searchText2 =test2;
+            searchText1="";
             baidangsearchs = baiDangService.findAllBaiDangSearchByName("NUL",test2);
         }
          else{
+             System.out.println("CA 2 DEU KHONG NULL ");
              searchText1 =test1;
              searchText2 = test2;
             baidangsearchs = baiDangService.findAllBaiDangSearchByName(test1,test2);
         }
         model.addAttribute("baidangsearchs",baidangsearchs);
+        System.out.println("SEARCHTEXT1 AF: "+searchText1);
+        System.out.println("SEARCHTEXT2: AF"+searchText2);
         return "redirect:/searchDetail";
     }
 

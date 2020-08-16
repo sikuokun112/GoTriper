@@ -19,6 +19,12 @@ public class Account {
     @Column(name = "password",length = 128)
     private String passWord;
 
+    @Column(name = "fullname",length = 128)
+    private String fullName;
+
+    @Column(name = "email",length = 128)
+    private String email;
+
     @Column(name = "enable",length = 1)
     private boolean enable;
     public Long getUserId() {
@@ -112,5 +118,21 @@ public class Account {
 
     public void setListUserImages(List<Image> listUserImages) {
         this.listUserImages = listUserImages;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

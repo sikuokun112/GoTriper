@@ -70,11 +70,10 @@
                         </div>
                     </div>
                     <span class="subheading">MY INFOR</span>
-                    <h1 class="big-letter">Louie Smith</h1>
+                    <h1 class="big-letter"></h1>
                     <h1 class="mb-4"><span th:text="${userInfor.getUserName()}">My Name is Louie Smith</span></h1>
-                    <p class="mb-4" th:text="${userInfor.getPassWord()}">I am A Photographer from America Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large
-                        language ocean.</p>
-                    <h3 class="signature h1" th:text="${userInfor.getUserName()}">Louie Smith</h3>
+                    <h3 class="signature h1" th:text="${userInfor.getFullName()}">Louie Smith</h3>
+                    <p class="mb-4" th:text="'email:     '+${userInfor.getEmail()}"></p>
                 </div>
                 <form class="contact100-form validate-form" th:action="@{'/postavatar/'+${userInfor.getUserId()}+'/saveavatar'}" method="post" enctype="multipart/form-data">
                     <div class="preview-images-zone">
