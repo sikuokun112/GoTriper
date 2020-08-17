@@ -118,6 +118,14 @@ create table binhluan(
     user_id bigint
 );
 
+create table vande(
+	vande_id int not null auto_increment primary key,
+    tieude nvarchar(50),
+    noidung text,
+    flag int,
+    user_id bigint
+);
+
 AlTER table baidang add constraint BD_DM_FK foreign key(danhmuc_id) references danhmuc(danhmuc_id);
 AlTER table baidang add constraint BD_diadiem_FK foreign key(diadiem_id) references diadiem(diadiem_id);
 ALTER table baidang add constraint BD_USER_FK foreign key(user_id) references account(user_id);
@@ -133,6 +141,7 @@ Alter table image add constraint image_user_FK foreign key(user_id) references a
 ALTER table binhluan add constraint binhluan_baidang_FK foreign key(baidang_id) references baidang(baidang_id);
 AlTER table binhluan add constraint binhluan_taikhoan_FK foreign key(user_id) references account(user_id);
 
+AlTER table vande add constraint vande_taikhoan_FK foreign key(user_id) references account(user_id);
 
 
 insert into tinhthanh values(1,"Hồ Chí Minh");
