@@ -54,6 +54,9 @@ public class Account {
     @OneToMany(mappedBy = "userId")
     private List<BinhLuan> listBinhLuans;
 
+    @OneToMany(mappedBy = "userIdVanDe")
+    private List<VanDe> listVanDes;
+
     @OneToMany(mappedBy = "userImage",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Image> listUserImages;
     public List<DiaDiem> getListDiaDiem() {
@@ -134,5 +137,12 @@ public class Account {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public List<VanDe> getListVanDes() {
+        return listVanDes;
+    }
+
+    public void setListVanDes(List<VanDe> listVanDes) {
+        this.listVanDes = listVanDes;
     }
 }

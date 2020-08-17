@@ -48,6 +48,9 @@ public class MainController {
     @Autowired
     private TinhThanhService tinhThanhService;
 
+    @Autowired
+    private VanDeService vanDeService;
+
     // Do du lieu len thanh header
     @ModelAttribute("danhmuclist")
     public List<DanhMuc> getAllDanhMuc(){
@@ -163,11 +166,26 @@ public class MainController {
         return "success";
     }
 
-    // test
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String test(Model model) {
+    // vande
+    @RequestMapping(value = "/vande", method = RequestMethod.GET)
+    public String vanDe() {
 
-        return "layouts/userInfor";
+        return "layouts/vanDe";
+    }
+
+    @PostMapping("/savevande")
+    public String saveVanDe(@RequestParam("tieude") String tieude,@RequestParam("noidung") String noidung, Principal principal){
+
+        Account account = userService.findByUserName(principal.getName());
+        VanDe vanDe = new VanDe();
+        vanDe.setTieude(tieude);
+        vanDe.setNoidung(noidung);
+        vanDe.setFlag(0);
+        vanDe.setUserIdVanDe(account);
+
+        vanDeService.saveVanDe(vanDe);
+        return "redirect:/vande";
+
     }
 
     // main

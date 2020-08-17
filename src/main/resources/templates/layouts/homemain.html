@@ -80,7 +80,7 @@
                                 <img src="mainpage/images/find-place1.jpg" class="img-fluid" alt="img13" />
                                 <figcaption>
                                     <h5>Cuộc Sống</h5>
-                                    <p>385 Listings</p>
+                                    <p> Listings</p>
                                 </figcaption>
                             </figure>
                         </div>
@@ -95,7 +95,7 @@
                                         <img src="mainpage/images/find-place2.jpg" class="img-fluid" alt="img13" />
                                         <figcaption>
                                             <h5>Ẩm Thực</h5>
-                                            <p>210 Listings</p>
+                                            <p> Listings</p>
                                         </figcaption>
                                     </figure>
                                 </div>
@@ -110,7 +110,7 @@
                                         <img src="mainpage/images/find-place3.jpg" class="img-fluid" alt="img13" />
                                         <figcaption>
                                             <h5>Du Lịch</h5>
-                                            <p>114 Listings</p>
+                                            <p> Listings</p>
                                         </figcaption>
                                     </figure>
                                 </div>
@@ -127,7 +127,7 @@
                                         <img src="mainpage/images/find-place4.jpg" class="img-fluid" alt="img13" />
                                         <figcaption>
                                             <h5>Khách Sạn</h5>
-                                            <p>577 Listings</p>
+                                            <p> Listings</p>
                                         </figcaption>
                                     </figure>
                                 </div>
@@ -142,7 +142,7 @@
                                         <img src="mainpage/images/find-place5.jpg" class="img-fluid" alt="img13" />
                                         <figcaption>
                                             <h5>Văn Hoá</h5>
-                                            <p>79 Listings</p>
+                                            <p> Listings</p>
                                         </figcaption>
                                     </figure>
                                 </div>
@@ -170,11 +170,11 @@
                         <div class="featured-place-wrap">
                             <a th:href="'/chitietbaidang/'+${baidang.getId()}">
                                 <img th:src="@{'getimage/'+${baidang.getListImage_BaiDang().get(0).getImageUrl()}}" class="img-fluid" style="width: 400px; height: 150px" alt="#">
-                                <span class="featured-rating">3.2</span>
+                                <span class="featured-rating">.</span>
                                 <div class="featured-title-box">
                                     <h6 th:text="${baidang.getTieuDe()}">Joe’s Shanghai</h6>
                                     <p th:text="${baidang.getDanhMuc().getTenDanhMuc()}"></p><span>• </span>
-                                    <p>3 Reviews</p> <span> • </span>
+                                    <p th:text="${baidang.getSoLuotXem()}+' Views'"></p> <span> • </span>
                                     <p><span>$$$</span>$$</p>
                                     <ul>
                                         <li><span class="icon-location-pin"></span>
@@ -229,7 +229,7 @@
                                 <div class="featured-title-box">
                                     <h6 th:text="${baidang.getTieuDe()}">Joe’s Shanghai</h6>
                                     <p th:text="${baidang.getDanhMuc().getTenDanhMuc()}"></p><span>• </span>
-                                    <p>3 Reviews</p> <span> • </span>
+                                    <p th:text="${baidang.getListBinhLuans().size()}+' Reviews'"></p> <span> • </span>
                                     <p><span>$$$</span>$$</p>
                                     <ul>
                                         <li><span class="icon-location-pin"></span>

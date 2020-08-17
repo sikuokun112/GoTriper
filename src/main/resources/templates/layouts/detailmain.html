@@ -262,7 +262,7 @@
                                     <div class="featured-title-box">
                                         <h6 th:text="${baidang1.getTieuDe()}"></h6>
                                         <p th:text="${baidang1.getDanhMuc().getTenDanhMuc()}"></p> <span>• </span>
-                                        <p>3 Reviews</p> <span> • </span>
+                                        <p th:text="${baidang1.getListBinhLuans().size()} +' Reviews'"></p> <span> • </span>
                                         <p><span>***</span>**</p>
                                         <ul>
                                             <li><span class="icon-location-pin"></span>
