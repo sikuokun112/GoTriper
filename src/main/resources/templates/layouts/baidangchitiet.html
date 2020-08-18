@@ -238,7 +238,7 @@
                         <div class="customer-review_wrap">
                             <div class="customer-img">
                                 <th:block th:if="${binhluan.getUserId().getListUserImages().size()!=0 }">
-                                    <img th:src="@{'getimage/'+${binhluan.getUserId().getListUserImages().get(0).getImageUrl()}}" class="img-fluid" style="width: 100px; height: 70px" alt="#">
+                                    <img th:src="@{'getimage/'+${binhluan.getUserId().getListUserImages().get(binhluan.getUserId().getListUserImages().size()-1).getImageUrl()}}" class="img-fluid" style="width: 100px; height: 70px" alt="#">
                                 </th:block>
                                 <th:block th:unless="${binhluan.getUserId().getListUserImages().size()!=0}">
                                     <img th:src="@{/mainpage/images/featured1.jpg}"  class="img-fluid" style="width: 100px; height: 70px" alt="#">
@@ -317,7 +317,7 @@
                     <div class="follow">
                         <div class="follow-img">
                             <th:block th:if="${account.getListUserImages().size()!=0 }">
-                                <img th:src="@{'getimage/'+${account.getListUserImages().get(0).getImageUrl()}}" class="img-fluid" style="width: 150px; height: 100px" alt="#">
+                                <img th:src="@{'getimage/'+${account.getListUserImages().get(account.getListUserImages().size()-1).getImageUrl()}}" class="img-fluid" style="width: 150px; height: 100px" alt="#">
                             </th:block>
                             <th:block th:unless="${account.getListUserImages().size()!=0}">
                                 <img th:src="@{/mainpage/images/featured1.jpg}"  class="img-fluid" style="width: 100px; height: 70px" alt="#">

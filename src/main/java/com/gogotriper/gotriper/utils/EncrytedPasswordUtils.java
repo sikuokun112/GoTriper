@@ -7,6 +7,7 @@ public class EncrytedPasswordUtils {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return  encoder.encode(password);
 
+
     }
 
 //    public static void main(String[] args) {

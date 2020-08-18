@@ -2,17 +2,22 @@ package com.gogotriper.gotriper.controllers;
 
 import com.gogotriper.gotriper.entity.*;
 import com.gogotriper.gotriper.services.*;
+import com.gogotriper.gotriper.utils.EncrytedPasswordUtils;
 import com.gogotriper.gotriper.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Time;
@@ -69,7 +74,7 @@ public class MainController {
             String userName = principal.getName();
             Account user = userService.findByUserName(userName);
             if(user.getListUserImages().size()!=0){
-                return "getimage/"+user.getListUserImages().get(0).getImageUrl();
+                return "getimage/"+user.getListUserImages().get(user.getListUserImages().size()-1).getImageUrl();
             }
         }
         return "/mainpage/images/featured1.jpg";
@@ -287,6 +292,28 @@ public class MainController {
 
     }
 
+    @PostMapping("/updatepassword/{id}")
+    public String updatePassword(@RequestParam("oldpassword") String oldpassword,@RequestParam("newpassword") String newpassword,@RequestParam("confirmpassword") String confirmpassword,@PathVariable String id, Principal principal){
+
+        Account account = userService.findByUserId(Long.parseLong(id));
+        System.out.println(account.getPassWord());
+        System.out.println(oldpassword);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.encode(newpassword));
+        System.out.println(newpassword);
+        System.out.println(confirmpassword);
+        System.out.println(encoder.matches(oldpassword,account.getPassWord()));
+       if(encoder.matches(oldpassword,account.getPassWord()) == false || newpassword.compareTo(confirmpassword) != 0){
+           return "error_changepass";
+       }else{
+           account.setPassWord(EncrytedPasswordUtils.encrytedPassword(newpassword));
+           userService.saveUser(account);
+           return "redirect:/profile";
+       }
+
+    }
+
     @PostMapping("/deletebaiviet/{id}")
     public String deleteBaiViet(@PathVariable String id, Principal principal){
         // thay the ID bang Pathvariable ID
@@ -308,7 +335,22 @@ public class MainController {
         return "layouts/detailmain";
     }
 
+    @RequestMapping("/error")
+    public String handleError(HttpServletRequest request) {
+        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
+        if (status != null) {
+            Integer statusCode = Integer.valueOf(status.toString());
+
+            if(statusCode == HttpStatus.NOT_FOUND.value()) {
+                return "404";
+            }
+            else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                return "500";
+            }
+        }
+        return "403Page";
+    }
 
     @RequestMapping(value = {"/chitietbaidang/{id}"},method =  RequestMethod.GET)
     public String ChiTietBaiDang(Model model, Principal principal,@PathVariable String id){

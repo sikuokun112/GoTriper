@@ -62,7 +62,7 @@
                     <div class="follow">
                         <div class="follow-img">
                             <th:block th:if="${check}">
-                            <img th:src="@{'getimage/'+${userInfor.getListUserImages().get(0).getImageUrl()}}" class="img-fluid" alt="#">
+                            <img th:src="@{'getimage/'+${userInfor.getListUserImages().get(userInfor.getListUserImages().size()-1).getImageUrl()}}" class="img-fluid" alt="#">
                             </th:block>
                             <th:block th:unless="${check}">
                                 <img th:src="@{/mainpage/images/featured1.jpg}" class="img-fluid" alt="#">
@@ -95,6 +95,33 @@
                         </button>
                     </div>
                 </form>
+                <div class="rese-btn">
+                    <div class="featured-btn-wrap">
+                        <a href="#" class="btn btn-danger" data-toggle="collapse" data-target="#chinhsua">ĐỔI MẬT KHẨU</a>
+                    </div>
+                    <div id="chinhsua" class="collapse">
+                        <div class="container-contact100 responsive-wrap">
+                            <div class="wrap-contact100">
+                                <form class="contact100-form validate-form" th:action="@{'/updatepassword/'+${userInfor.getUserId()}}" method="post" enctype="multipart/form-data">
+                                    <label class="label-input100" for="oldpassword">Old Password</label>
+                                    <input id="oldpassword" class="input100" type="text" name="oldpassword" placeholder="******">
+                                    <label class="label-input100" for="newpassword">New Password</label>
+                                    <input id="newpassword" class="input100" type="text" name="newpassword" placeholder="******">
+                                    <label class="label-input100" for="confirmpassword">Confirm Password</label>
+                                    <input id="confirmpassword" class="input100" type="text" name="confirmpassword" placeholder="******">
+                                    <div class="container-contact100-form-btn">
+                                        <button class="contact100-form-btn">
+                                                            <span>
+                                                                Submit
+                                                                <i class="zmdi zmdi-arrow-right m-l-8"></i>
+                                                            </span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -137,6 +164,7 @@
         };
     });
 </script>
+
 </body>
 
 </html>
