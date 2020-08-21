@@ -22,4 +22,12 @@ public class DiaDiemService  {
     public List<DiaDiem> findAllListByName(String tendiadiem){
         return diaDiemRepository.findAllListByName(tendiadiem);
     }
+
+    public List<DiaDiem> findAll(){
+        return diaDiemRepository.findAll();
+    }
+
+    public void removeDiaDiem(DiaDiem diaDiem){
+        diaDiemRepository.delete(diaDiem);
+    }
 }

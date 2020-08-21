@@ -1,6 +1,7 @@
 package com.gogotriper.gotriper.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ public class TinhThanh {
     @Column(name = "ten")
     private String ten;
 
-    @OneToMany(mappedBy = "tinhThanh")
+    @OneToMany(mappedBy = "tinhThanh",cascade = CascadeType.ALL)
     private List<DiaDiem> listDiaDiems;
 
     public String getTen() {

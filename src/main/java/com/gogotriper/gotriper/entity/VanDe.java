@@ -1,6 +1,7 @@
 package com.gogotriper.gotriper.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "vande")

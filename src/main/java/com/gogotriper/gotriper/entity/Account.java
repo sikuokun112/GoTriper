@@ -1,12 +1,15 @@
 package com.gogotriper.gotriper.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "account",uniqueConstraints = {@UniqueConstraint(name = "account_user_UK",columnNames = "username")})
-public class Account {
-
+public class Account  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -145,4 +148,6 @@ public class Account {
     public void setListVanDes(List<VanDe> listVanDes) {
         this.listVanDes = listVanDes;
     }
+
+
 }

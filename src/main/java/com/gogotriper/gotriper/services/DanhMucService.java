@@ -22,4 +22,10 @@ public class DanhMucService {
     public DanhMuc findDanhMucById(int id){
         return danhMucRepository.findDanhMucById(id);
     }
+    public void saveDanhMuc(DanhMuc danhMuc){
+        danhMucRepository.save(danhMuc);
+    }
+    public void removeDanhMuc(DanhMuc danhMuc){
+        danhMucRepository.delete(danhMuc);
+    }
 }

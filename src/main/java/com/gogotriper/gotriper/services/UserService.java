@@ -70,4 +70,11 @@ public class UserService {
         return  userRepository.findByUserId(id);
     }
 
+    public List<Account> getAllAccount(){
+        return userRepository.getAllAccount();
+    }
+    public void removeAccount(Account account){
+        userRepository.delete(account);
+    }
+
 }

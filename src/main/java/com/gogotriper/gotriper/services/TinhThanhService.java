@@ -18,4 +18,12 @@ public class TinhThanhService {
 
         return tinhThanhRepository.findById(id);
     }
+
+    public void removeTinhThanh(TinhThanh tinhThanh){
+        tinhThanhRepository.delete(tinhThanh);
+    }
+
+    public void saveTinhThanh(TinhThanh tinhThanh){
+        tinhThanhRepository.save(tinhThanh);
+    }
 }

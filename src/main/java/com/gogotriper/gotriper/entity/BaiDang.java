@@ -1,6 +1,7 @@
 package com.gogotriper.gotriper.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -25,6 +26,9 @@ public class BaiDang {
 
     @Column(name = "soluotxem")
     private int soLuotXem;
+
+    @Column(name = "flag")
+    private int flag;
 
     @ManyToOne
     @JoinColumn(name = "danhmuc_id")
@@ -138,5 +142,13 @@ public class BaiDang {
 
     public void setSoLuotXem(int soLuotXem) {
         this.soLuotXem = soLuotXem;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 }

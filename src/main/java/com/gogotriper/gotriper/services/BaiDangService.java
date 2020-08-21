@@ -44,4 +44,11 @@ public class BaiDangService {
         return baiDangRepository.findTop3BaiDangByBinhLuan();
     }
 
+    public List<BaiDang> getAll(){
+        return baiDangRepository.findAll();
+    }
+    public void removeBaiDang(BaiDang baiDang){
+        baiDangRepository.delete(baiDang);
+    }
+
 }

@@ -2,12 +2,13 @@ package com.gogotriper.gotriper.entity;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "diadiem")
-public class DiaDiem {
+public class DiaDiem  {
 
 
     @Id
@@ -45,7 +46,7 @@ public class DiaDiem {
     private String noiDung;
 
 
-    @OneToMany(mappedBy = "diaDiem")
+    @OneToMany(mappedBy = "diaDiem",cascade = CascadeType.ALL)
     private List<BaiDang> listBaiDang_DiaDiem;
 
     @OneToMany(mappedBy = "diaDiemImage",fetch = FetchType.LAZY,cascade = CascadeType.ALL)

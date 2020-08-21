@@ -1,11 +1,12 @@
 package com.gogotriper.gotriper.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "danhmuc")
-public class DanhMuc {
+public class DanhMuc  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

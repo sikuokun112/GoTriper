@@ -115,7 +115,7 @@
                     <th:block th:unless="${check}">
                         <div class="rese-btn">
                             <div class="featured-btn-wrap">
-                                <a href="#" class="btn btn-danger">HẾT HẠN</a>
+                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#giahanModal" th:data-whatever="${baidang.getId()}">HẾT HẠN</a>
                             </div>
                         </div>
                     </th:block>
@@ -234,6 +234,7 @@
                 <div class="booking-checkbox_wrap mt-4">
                     <h5 th:text="${baidang.getListBinhLuans().size()}+' Reviews'">34 Reviews</h5>
                     <hr>
+                    <th:block th:if="${check}">
                     <th:block th:each="binhluan : ${listbinhluans}">
                         <div class="customer-review_wrap">
                             <div class="customer-img">
@@ -271,6 +272,14 @@
                     </th:block>
                     <div class="blog__pagination row" id="review_pagination">
                     </div>
+                    </th:block>
+                    <th:block th:unless="${check}">
+                        <div class="rese-btn">
+                            <div class="featured-btn-wrap">
+                                <a href="#" class="btn btn-danger">BÌNH LUẬN ĐÃ BỊ KHOÁ</a>
+                            </div>
+                        </div>
+                    </th:block>
                 </div>
 
                 <div class="container-contact100 responsive-wrap">
@@ -370,6 +379,23 @@
                 </div>
             </div>
         </th:block>
+    </div>
+</div>
+<div class="modal fade" id="giahanModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Bạn có muốn gia hạn bài viết không ?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                <button type="button" class="btn btn-primary" id="giahanbutton">YES</button>
+            </div>
+        </div>
     </div>
 </div>
 <!--//END BOOKING DETAILS -->
@@ -502,6 +528,35 @@
             }
         });
     }
+</script>
+<script>
+    $('#giahanModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+        modal.find('.modal-title').text('BAN CO MUON GIA HAN BAI VIET ???');
+        modal.find('.modal-body input').val(recipient);
+        $(function() {
+            $('#giahanbutton').click(giahanAction);
+        });
+        function giahanAction(){
+            $.ajax({
+                method: "POST",
+                url: "/giahanbaiviet/"+recipient,
+                success: function(status){
+                    if(status) {
+                        //here you check the response from your controller and add your business logic
+                        $('#giahanModal').modal('hide');
+                        location.reload(true);
+                    }
+                }
+            });
+        }
+    })
+
+
 </script>
 </body>
 

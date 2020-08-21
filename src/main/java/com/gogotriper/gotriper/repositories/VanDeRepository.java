@@ -4,5 +4,5 @@ import com.gogotriper.gotriper.entity.VanDe;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VanDeRepository extends JpaRepository<VanDe,String> {
-
+        VanDe findById(int id);
 }

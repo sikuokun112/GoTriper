@@ -6,7 +6,6 @@ import com.gogotriper.gotriper.utils.EncrytedPasswordUtils;
 import com.gogotriper.gotriper.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,11 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -102,7 +98,7 @@ public class MainController {
         Date now = new Date();
         Timestamp ts = new Timestamp(now.getTime());
         baiDang.setThoiGianDang(ts);
-        // set ngay dang them 2 ngay
+        // set ngay dang them 10 ngay
         Calendar c = Calendar.getInstance();
         c.setTime(now);
         c.add(Calendar.DATE,10);
@@ -112,6 +108,7 @@ public class MainController {
         baiDang.setThoiGianHetHan(ts2);
 
         baiDang.setSoLuotXem(1);
+        baiDang.setFlag(0);
 
         String userName = principal.getName();
         Account user  = userService.findByUserName(userName);
@@ -154,6 +151,7 @@ public class MainController {
         Date end = c.getTime();
         Timestamp ts2 = new Timestamp(end.getTime());
         baiDang.setThoiGianHetHan(ts2);
+        baiDang.setFlag(0);
 
         List<Image > images = new ArrayList<>();
         int i =0;
@@ -323,6 +321,17 @@ public class MainController {
 
     }
 
+    @PostMapping("/giahanbaiviet/{id}")
+    public String giaHanBaiViet(@PathVariable String id, Principal principal){
+        // thay the ID bang Pathvariable ID
+        BaiDang baiDang =  baiDangService.findBaiDangById(Integer.parseInt(id));
+        baiDang.setFlag(1);
+        System.out.println("FLAG: "+baiDang.getFlag());
+        baiDangService.saveBaiDang(baiDang);
+        return "redirect:/chitietbaidang/"+id;
+
+    }
+
 
     @RequestMapping(value = {"/chitietdiadiem/{id}"},method =  RequestMethod.GET)
     public String DetailMain(Model model,@PathVariable String id){
@@ -335,30 +344,29 @@ public class MainController {
         return "layouts/detailmain";
     }
 
-    @RequestMapping("/error")
-    public String handleError(HttpServletRequest request) {
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-
-        if (status != null) {
-            Integer statusCode = Integer.valueOf(status.toString());
-
-            if(statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "404";
-            }
-            else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "500";
-            }
-        }
-        return "403Page";
-    }
+//    @RequestMapping("/error")
+//    public String handleError(HttpServletRequest request) {
+//        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+//
+//        if (status != null) {
+//            Integer statusCode = Integer.valueOf(status.toString());
+//
+//            if(statusCode == HttpStatus.NOT_FOUND.value()) {
+//                return "404";
+//            }
+//            else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+//                return "500";
+//            }
+//        }
+//        return "403Page";
+//    }
 
     @RequestMapping(value = {"/chitietbaidang/{id}"},method =  RequestMethod.GET)
     public String ChiTietBaiDang(Model model, Principal principal,@PathVariable String id){
         BaiDang baiDang = baiDangService.findBaiDangById(Integer.parseInt(id));
 //        System.out.println("SO LUOT XEM");
 
-        baiDang.setSoLuotXem(baiDang.getSoLuotXem()+1);
-        baiDangService.saveBaiDang(baiDang);
+
         List<Image> img = imageService.findAllImageByBaiDang(baiDang);
         Account account = userService.findByUserName(principal.getName());
         List<BinhLuan> binhLuanList = binhLuanService.getAllBinhLuanOfBaiDang(Integer.parseInt(id));
@@ -370,6 +378,8 @@ public class MainController {
             check = true;
 //            System.out.println("CHUA HET HAN");
         }
+        baiDang.setSoLuotXem(baiDang.getSoLuotXem()+1);
+        baiDangService.saveBaiDang(baiDang);
         boolean checkauthor =false;
         if(baiDang.getUserId() == account){
             checkauthor = true;
@@ -498,7 +508,7 @@ public class MainController {
             model.addAttribute("message", message);
 
         }
-        return "403Page";
+        return "403";
     }
 
 
