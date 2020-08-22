@@ -1,7 +1,6 @@
 package com.gogotriper.gotriper.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "vande")
@@ -22,7 +21,7 @@ public class VanDe {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Account userIdVanDe;
+    private TaiKhoan userIdVanDe;
 
     public int getId() {
         return id;
@@ -56,11 +55,11 @@ public class VanDe {
         this.flag = flag;
     }
 
-    public Account getUserIdVanDe() {
+    public TaiKhoan getUserIdVanDe() {
         return userIdVanDe;
     }
 
-    public void setUserIdVanDe(Account userIdVanDe) {
+    public void setUserIdVanDe(TaiKhoan userIdVanDe) {
         this.userIdVanDe = userIdVanDe;
     }
 }

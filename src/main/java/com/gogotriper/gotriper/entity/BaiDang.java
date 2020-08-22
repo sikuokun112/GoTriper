@@ -1,7 +1,6 @@
 package com.gogotriper.gotriper.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -39,22 +38,22 @@ public class BaiDang {
     private DiaDiem diaDiem;
 
     @OneToMany(mappedBy = "baiDangImage",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Image> listImage_BaiDang;
+    private List<HinhAnh> listHinhAnh_BaiDang;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Account userId;
+    private TaiKhoan userId;
 
     @OneToMany(mappedBy = "baiDang",cascade = CascadeType.ALL)
     private List<BinhLuan> listBinhLuans;
 
 
 
-    public Account getUserId() {
+    public TaiKhoan getUserId() {
         return userId;
     }
 
-    public void setUserId(Account userId) {
+    public void setUserId(TaiKhoan userId) {
         this.userId = userId;
     }
 
@@ -104,12 +103,12 @@ public class BaiDang {
         this.diaDiem = diaDiem;
     }
 
-    public List<Image> getListImage_BaiDang() {
-        return listImage_BaiDang;
+    public List<HinhAnh> getListImage_BaiDang() {
+        return listHinhAnh_BaiDang;
     }
 
-    public void setListImage_BaiDang(List<Image> listImage_BaiDang) {
-        this.listImage_BaiDang = listImage_BaiDang;
+    public void setListImage_BaiDang(List<HinhAnh> listHinhAnh_BaiDang) {
+        this.listHinhAnh_BaiDang = listHinhAnh_BaiDang;
     }
 
     public List<BinhLuan> getListBinhLuans() {

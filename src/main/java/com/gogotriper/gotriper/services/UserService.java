@@ -1,7 +1,6 @@
 package com.gogotriper.gotriper.services;
 
-import com.gogotriper.gotriper.dao.RoleDao;
-import com.gogotriper.gotriper.entity.Account;
+import com.gogotriper.gotriper.entity.TaiKhoan;
 import com.gogotriper.gotriper.entity.Role;
 import com.gogotriper.gotriper.repositories.RoleRepository;
 import com.gogotriper.gotriper.repositories.UserRepository;
@@ -23,19 +22,19 @@ public class UserService {
 
 
 
-    public void createUser(Account account) {
+    public void createUser(TaiKhoan taiKhoan) {
         BCryptPasswordEncoder encoder = new  BCryptPasswordEncoder();
-        account.setPassWord(encoder.encode(account.getPassWord()));
-        account.setEnable(true);
+        taiKhoan.setPassWord(encoder.encode(taiKhoan.getPassWord()));
+        taiKhoan.setEnable(true);
         Role role = roleRepository.findAllByRoleId(Integer.toUnsignedLong(2));
         List<Role> roles = new ArrayList<>();
         roles.add(role);
-        account.setRoles(roles);
-        userRepository.save(account);
+        taiKhoan.setRoles(roles);
+        userRepository.save(taiKhoan);
     }
 
-    public void saveUser(Account account){
-        userRepository.save(account);
+    public void saveUser(TaiKhoan taiKhoan){
+        userRepository.save(taiKhoan);
     }
 //    public void createAdmin(Account account) {
 //        BCryptPasswordEncoder  encoder = new  BCryptPasswordEncoder();
@@ -48,7 +47,7 @@ public class UserService {
 //        userRepository.save(account);
 //    }
 
-    public Account findOne(String userName) {
+    public TaiKhoan findOne(String userName) {
 
        // return userRepository.getOne(userName);
         return null;
@@ -56,25 +55,25 @@ public class UserService {
 
     public boolean isUserPresent(String userName) {
         // TODO Auto-generated method stub
-        Account u= userRepository.findByUserName(userName);
+        TaiKhoan u= userRepository.findByUserName(userName);
         if(u!=null) {
             return true;
         }
         return false;
     }
 
-    public Account findByUserName(String userName){
+    public TaiKhoan findByUserName(String userName){
         return userRepository.findByUserName(userName);
     }
-    public Account findByUserId(Long id ){
+    public TaiKhoan findByUserId(Long id ){
         return  userRepository.findByUserId(id);
     }
 
-    public List<Account> getAllAccount(){
+    public List<TaiKhoan> getAllAccount(){
         return userRepository.getAllAccount();
     }
-    public void removeAccount(Account account){
-        userRepository.delete(account);
+    public void removeAccount(TaiKhoan taiKhoan){
+        userRepository.delete(taiKhoan);
     }
 
 }

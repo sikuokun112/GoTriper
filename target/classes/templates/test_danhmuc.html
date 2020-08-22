@@ -21,8 +21,8 @@
          style="border: 1px darkgrey solid; border-radius: 10px; width: 50%; margin: 0 auto; padding: 20px;">
         <div class="col-sm-12">
             </div>
-            <td th:each="image:${img}">
-                <img alt="" th:src="@{'getimage/'+${image.getImageUrl()}}" width="500" height="400">
+            <td th:each="hinhAnh:${img}">
+                <img alt="" th:src="@{'getimage/'+${hinhAnh.getImageUrl()}}" width="500" height="400">
             </td>
         </div>
     </div>

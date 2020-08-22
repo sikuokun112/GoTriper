@@ -2,8 +2,7 @@ package com.gogotriper.gotriper.services;
 
 import com.gogotriper.gotriper.dao.RoleDao;
 import com.gogotriper.gotriper.dao.UserDao;
-import com.gogotriper.gotriper.entity.Account;
-import com.gogotriper.gotriper.entity.Role;
+import com.gogotriper.gotriper.entity.TaiKhoan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,13 +26,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Account account = this.userDao.findUserAccount(userName);
-        if(account == null){
+        TaiKhoan taiKhoan = this.userDao.findUserAccount(userName);
+        if(taiKhoan == null){
             System.out.println("User not found! "+userName);
             throw new UsernameNotFoundException("User "+userName+" was not found in data");
         }
-        System.out.println("Found User: "+account);
-        List<String> roleNames = this.roleDao.getRoleNames(account.getUserId());
+        System.out.println("Found User: "+ taiKhoan);
+        List<String> roleNames = this.roleDao.getRoleNames(taiKhoan.getUserId());
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
         if(roleNames != null){
             for(String role: roleNames){
@@ -41,7 +40,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 grantList.add(authority);
             }
         }
-        UserDetails userDetails = (UserDetails) new User(account.getUserName(),account.getPassWord(),grantList);
+        UserDetails userDetails = (UserDetails) new User(taiKhoan.getUserName(), taiKhoan.getPassWord(),grantList);
         return userDetails;
     }
 }

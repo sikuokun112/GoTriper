@@ -10,20 +10,20 @@ import java.util.List;
 public class ResonseUtils {
     private static ObjectMapper mapper = new ObjectMapper();
 
-    public static ObjectNode returnAccount(Account account){
+    public static ObjectNode returnAccount(TaiKhoan taiKhoan){
         ObjectNode node = mapper.createObjectNode();
-        node.put("userid",account.getUserId());
-        node.put("username",account.getUserName());
-        node.put("fullname",account.getFullName());
-        node.put("email",account.getEmail());
-        node.put("enable",account.isEnable());
+        node.put("userid", taiKhoan.getUserId());
+        node.put("username", taiKhoan.getUserName());
+        node.put("fullname", taiKhoan.getFullName());
+        node.put("email", taiKhoan.getEmail());
+        node.put("enable", taiKhoan.isEnable());
         return  node;
     }
 
-    public static ArrayNode returnListAccount(List<Account> accounts){
+    public static ArrayNode returnListAccount(List<TaiKhoan> taiKhoans){
         ArrayNode nodes = mapper.createArrayNode();
-        for(Account account:accounts){
-            nodes.add(returnAccount(account));
+        for(TaiKhoan taiKhoan : taiKhoans){
+            nodes.add(returnAccount(taiKhoan));
         }
         return nodes;
     }

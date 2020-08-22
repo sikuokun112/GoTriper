@@ -10,7 +10,7 @@
     <meta name="description" content="#">
     <meta name="keywords" content="#">
     <!-- Page Title -->
-    <title>Listing &amp; Directory Website Template</title>
+    <title>Home</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="mainpage/css/bootstrap.min.css">
     <!-- Google Fonts -->
@@ -26,7 +26,42 @@
 </head>
 
 <body>
-    <th:block th:include="/fragments/headermain"></th:block>
+    <th:block th:include="/fragments/headerpage"></th:block>
+    <!-- SLIDER -->
+    <section class="slider d-flex align-items-center">
+        <!-- <img src="hinhAnhs/slider.jpg" class="img-fluid" alt="#"> -->
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-12">
+                    <div class="slider-title_box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="slider-content_wrap">
+                                    <h1>Discover great places in Viet Nam</h1>
+                                    <h5>Let's uncover the best places to eat, drink, and shop to you.</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-10">
+                                <form class="form-wrap mt-4" th:action="@{'/searchDetail'}" method="post" enctype="multipart/form-data">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <input type="text" placeholder="What are your looking for?" class="btn-group1" name="test1">
+                                        <input type="text" placeholder="New york" class="btn-group2" name="test2">
+                                        <button type="submit" class="btn-form"><span class="icon-magnifier search-icon"></span>SEARCH<i class="pe-7s-angle-right"></i></button>
+                                    </div>
+                                </form>
+                                <div class="slider-link">
+                                    <a href="#">Name Places</a><span>or</span> <a href="#">Category Name</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--// SLIDER -->
     <!--============================= FIND PLACES =============================-->
     <section class="main-block">
         <div class="container">
@@ -42,10 +77,10 @@
                     <div class="find-place-img_wrap">
                         <div class="grid">
                             <figure class="effect-ruby">
-                                <img src="mainpage/images/find-place1.jpg" class="img-fluid" alt="img13" />
+                                <img src="mainpage/hinhAnhs/find-place1.jpg" class="img-fluid" alt="img13" />
                                 <figcaption>
-                                    <h5>Nightlife </h5>
-                                    <p>385 Listings</p>
+                                    <h5>Cuộc Sống</h5>
+                                    <p> Listings</p>
                                 </figcaption>
                             </figure>
                         </div>
@@ -57,10 +92,10 @@
                             <div class="find-place-img_wrap">
                                 <div class="grid">
                                     <figure class="effect-ruby">
-                                        <img src="mainpage/images/find-place2.jpg" class="img-fluid" alt="img13" />
+                                        <img src="mainpage/hinhAnhs/find-place2.jpg" class="img-fluid" alt="img13" />
                                         <figcaption>
-                                            <h5>Restaurants</h5>
-                                            <p>210 Listings</p>
+                                            <h5>Ẩm Thực</h5>
+                                            <p> Listings</p>
                                         </figcaption>
                                     </figure>
                                 </div>
@@ -72,10 +107,10 @@
                             <div class="find-place-img_wrap">
                                 <div class="grid">
                                     <figure class="effect-ruby">
-                                        <img src="mainpage/images/find-place3.jpg" class="img-fluid" alt="img13" />
+                                        <img src="mainpage/hinhAnhs/find-place3.jpg" class="img-fluid" alt="img13" />
                                         <figcaption>
-                                            <h5>Outdoors </h5>
-                                            <p>114 Listings</p>
+                                            <h5>Du Lịch</h5>
+                                            <p> Listings</p>
                                         </figcaption>
                                     </figure>
                                 </div>
@@ -89,10 +124,10 @@
                             <div class="find-place-img_wrap">
                                 <div class="grid">
                                     <figure class="effect-ruby">
-                                        <img src="mainpage/images/find-place4.jpg" class="img-fluid" alt="img13" />
+                                        <img src="mainpage/hinhAnhs/find-place4.jpg" class="img-fluid" alt="img13" />
                                         <figcaption>
-                                            <h5>Hotels </h5>
-                                            <p>577 Listings</p>
+                                            <h5>Khách Sạn</h5>
+                                            <p> Listings</p>
                                         </figcaption>
                                     </figure>
                                 </div>
@@ -104,10 +139,10 @@
                             <div class="find-place-img_wrap">
                                 <div class="grid">
                                     <figure class="effect-ruby">
-                                        <img src="mainpage/images/find-place5.jpg" class="img-fluid" alt="img13" />
+                                        <img src="mainpage/hinhAnhs/find-place5.jpg" class="img-fluid" alt="img13" />
                                         <figcaption>
-                                            <h5>Art & Culture </h5>
-                                            <p>79 Listings</p>
+                                            <h5>Văn Hoá</h5>
+                                            <p> Listings</p>
                                         </figcaption>
                                     </figure>
                                 </div>
@@ -125,104 +160,44 @@
             <div class="row justify-content-center">
                 <div class="col-md-5">
                     <div class="styled-heading">
-                        <h3>Featured Places</h3>
+                        <h3>TOP 3 MOST VIEWS</h3>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 featured-responsive">
-                    <div class="featured-place-wrap">
-                        <a href="detailmain.html">
-                            <img src="mainpage/images/featured1.jpg" class="img-fluid" alt="#">
-                            <span class="featured-rating-orange">6.5</span>
-                            <div class="featured-title-box">
-                                <h6>Burger & Lobster</h6>
-                                <p>Restaurant </p> <span>• </span>
-                                <p>3 Reviews</p> <span> • </span>
-                                <p><span>$$$</span>$$</p>
-                                <ul>
-                                    <li><span class="icon-location-pin"></span>
-                                        <p>1301 Avenue, Brooklyn, NY 11230</p>
-                                    </li>
-                                    <li><span class="icon-screen-smartphone"></span>
-                                        <p>+44 20 7336 8898</p>
-                                    </li>
-                                    <li><span class="icon-link"></span>
-                                        <p>https://burgerandlobster.com</p>
-                                    </li>
-
-                                </ul>
-                                <div class="bottom-icons">
-                                    <div class="closed-now">CLOSED NOW</div>
-                                    <span class="ti-heart"></span>
-                                    <span class="ti-bookmark"></span>
+                <th:block th:each="baidang:${top3views}">
+                    <div class="col-md-4 featured-responsive">
+                        <div class="featured-place-wrap">
+                            <a th:href="'/chitietbaidang/'+${baidang.getId()}">
+                                <img th:src="@{'getimage/'+${baidang.getListImage_BaiDang().get(0).getImageUrl()}}" class="img-fluid" style="width: 400px; height: 150px" alt="#">
+                                <span class="featured-rating">.</span>
+                                <div class="featured-title-box">
+                                    <h6 th:text="${baidang.getTieuDe()}">Joe’s Shanghai</h6>
+                                    <p th:text="${baidang.getDanhMuc().getTenDanhMuc()}"></p><span>• </span>
+                                    <p th:text="${baidang.getSoLuotXem()}+' Views'"></p> <span> • </span>
+                                    <p><span>$$$</span>$$</p>
+                                    <ul>
+                                        <li><span class="icon-location-pin"></span>
+                                            <p th:text="${baidang.getDiaDiem().getDiaChi()}"></p>
+                                        </li>
+                                        <li><span class="icon-screen-smartphone"></span>
+                                            <p th:text="${baidang.getDiaDiem().getSdt()}"></p>
+                                        </li>
+                                        <li><span class="icon-link"></span>
+                                            <p>https://gogotriper.com</p>
+                                        </li>
+                                    </ul>
+                                    <div class="bottom-icons">
+                                        <div class="open-now">OPEN NOW</div>
+                                        <span class="ti-heart"></span>
+                                        <span class="ti-bookmark"></span>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4 featured-responsive">
-                    <div class="featured-place-wrap">
-                        <a href="detailmain.html">
-                            <img src="mainpage/images/featured2.jpg" class="img-fluid" alt="#">
-                            <span class="featured-rating-green">9.5</span>
-                            <div class="featured-title-box">
-                                <h6>Joe’s Shanghai</h6>
-                                <p>Restaurant </p> <span>• </span>
-                                <p>3 Reviews</p> <span> • </span>
-                                <p><span>$$$</span>$$</p>
-                                <ul>
-                                    <li><span class="icon-location-pin"></span>
-                                        <p>1301 Avenue, Brooklyn, NY 11230</p>
-                                    </li>
-                                    <li><span class="icon-screen-smartphone"></span>
-                                        <p>+44 20 7336 8898</p>
-                                    </li>
-                                    <li><span class="icon-link"></span>
-                                        <p>https://burgerandlobster.com</p>
-                                    </li>
+                </th:block>
 
-                                </ul>
-                                <div class="bottom-icons">
-                                    <div class="closed-now">CLOSED NOW</div>
-                                    <span class="ti-heart"></span>
-                                    <span class="ti-bookmark"></span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-4 featured-responsive">
-                    <div class="featured-place-wrap">
-                        <a href="detailmain.html">
-                            <img src="mainpage/images/featured3.jpg" class="img-fluid" alt="#">
-                            <span class="featured-rating">3.2</span>
-                            <div class="featured-title-box">
-                                <h6>Tasty Hand-Pulled Noodles</h6>
-                                <p>Restaurant </p> <span>• </span>
-                                <p>3 Reviews</p> <span> • </span>
-                                <p><span>$$$</span>$$</p>
-                                <ul>
-                                    <li><span class="icon-location-pin"></span>
-                                        <p>1301 Avenue, Brooklyn, NY 11230</p>
-                                    </li>
-                                    <li><span class="icon-screen-smartphone"></span>
-                                        <p>+44 20 7336 8898</p>
-                                    </li>
-                                    <li><span class="icon-link"></span>
-                                        <p>https://burgerandlobster.com</p>
-                                    </li>
-
-                                </ul>
-                                <div class="bottom-icons">
-                                    <div class="open-now">OPEN NOW</div>
-                                    <span class="ti-heart"></span>
-                                    <span class="ti-bookmark"></span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-4">
@@ -234,6 +209,62 @@
         </div>
     </section>
     <!--//END FEATURED PLACES -->
+    <!--============================= FEATURED PLACES =============================-->
+    <section class="main-block light-bg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="styled-heading">
+                        <h3>TOP 3 MOST COMMENTS</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <th:block th:each="baidang:${top3BinhLuans}">
+                    <div class="col-md-4 featured-responsive">
+                        <div class="featured-place-wrap">
+                            <a th:href="'/chitietbaidang/'+${baidang.getId()}">
+                                <img th:src="@{'getimage/'+${baidang.getListImage_BaiDang().get(0).getImageUrl()}}" class="img-fluid" style="width: 400px; height: 150px" alt="#">
+                                <span class="featured-rating">.</span>
+                                <div class="featured-title-box">
+                                    <h6 th:text="${baidang.getTieuDe()}">Joe’s Shanghai</h6>
+                                    <p th:text="${baidang.getDanhMuc().getTenDanhMuc()}"></p><span>• </span>
+                                    <p th:text="${baidang.getListBinhLuans().size()}+' Reviews'"></p> <span> • </span>
+                                    <p><span>$$$</span>$$</p>
+                                    <ul>
+                                        <li><span class="icon-location-pin"></span>
+                                            <p th:text="${baidang.getDiaDiem().getDiaChi()}"></p>
+                                        </li>
+                                        <li><span class="icon-screen-smartphone"></span>
+                                            <p th:text="${baidang.getDiaDiem().getSdt()}"></p>
+                                        </li>
+                                        <li><span class="icon-link"></span>
+                                            <p>https://gogotriper.com</p>
+                                        </li>
+                                    </ul>
+                                    <div class="bottom-icons">
+                                        <div class="open-now">OPEN NOW</div>
+                                        <span class="ti-heart"></span>
+                                        <span class="ti-bookmark"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </th:block>
+
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="featured-btn-wrap">
+                        <a href="#" class="btn btn-danger">VIEW ALL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--//END FEATURED PLACES -->
+
     <!--============================= CATEGORIES =============================-->
     <section class="main-block">
         <div class="container">
@@ -454,9 +485,7 @@
                 $('.fixed').addClass('is-sticky');
 
             } else {
-
                 $('.fixed').removeClass('is-sticky');
-
             };
         });
     </script>

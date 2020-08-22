@@ -1,14 +1,106 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Logout</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Colorlib">
+    <meta name="description" content="#">
+    <meta name="keywords" content="#">
+    <!-- Page Title -->
+    <title>SIGN OUT</title>
+    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/bootstrap.min.css}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <!-- Simple line Icon -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/simple-line-icons.css}">
+    <!-- Themify Icon -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/themify-icons.css}">
+    <!-- Hover Effects -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/set1.css}">
+    <!-- Swipper Slider -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/swiper.min.css}">
+    <!-- Main CSS -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/style.css}">
+
+    <!-- BLOG DETAIL COMMENT -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/blog_detail_comment_form.css}">
+
+    <!-- SELECTEDBOX -->
+    <link rel="stylesheet" th:href="@{/mainpage/css/selectedbox.css}">
+
+    <!--    &lt;!&ndash; PREVIEW IMAGE CSS &ndash;&gt;-->
+    <!--    <link rel="stylesheet" th:href="@{/mainpage/css/previewimage.css}">-->
+
+    <link rel="stylesheet" th:href="@{/mainpage/css/inputcustom.css}">
+
+    <!--    HERO WRAP-->
+    <link rel="stylesheet" th:href="@{/mainpage/css/herowrap.css}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
 </head>
 
 <body>
-<!-- Include _menu.html -->
-<th:block th:include="/fragments/_menu"></th:block>
+<th:block th:include="/fragments/headerpage"></th:block>
+<!--END HEADER-->
 
-<h1>Logout Successful!</h1>
+<!--BODY-->
+<section class="main-block light-bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="styled-heading">
+                    <h3>LOG OUT SUCCESSFULLY</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="featured-btn-wrap">
+                    <a href="#" class="btn btn-danger">BYE BYE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--//END ADD LISTING -->
+<th:block th:include="/fragments/footermain"></th:block>
+
+<!-- prievew image -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!--<script th:src="@{/mainpage/js/previewimage.js}"></script>-->
+<!-- jQuery, Bootstrap JS. -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!--<script th:src="@{/mainpage/js/jquery-3.2.1.min.js}"></script>-->
+<script th:src="@{/mainpage/js/popper.min.js}"></script>
+<script th:src="@{/mainpage/js/bootstrap.min.js}"></script>
+<!-- Magnific popup JS -->
+<script th:src="@{/mainpage/js/jquery.magnific-popup.js}"></script>
+<!-- Swipper Slider JS -->
+<script th:src="@{/mainpage/js/swiper.min.js}"></script>
+
+<script>
+    $(window).scroll(function() {
+        // 100 = The point you would like to fade the nav in.
+        if ($(window).scrollTop() > 100) {
+
+            $('.fixed').addClass('is-sticky');
+
+        } else {
+
+            $('.fixed').removeClass('is-sticky');
+
+        };
+    });
+</script>
 </body>
 
 </html>

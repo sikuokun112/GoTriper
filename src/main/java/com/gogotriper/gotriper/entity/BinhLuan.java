@@ -1,7 +1,6 @@
 package com.gogotriper.gotriper.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
@@ -24,7 +23,7 @@ public class BinhLuan {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Account userId;
+    private TaiKhoan userId;
 
     @ManyToOne
     @JoinColumn(name = "baidang_id")
@@ -36,11 +35,11 @@ public class BinhLuan {
         this.baiDang = baiDang;
     }
 
-    public Account getUserId() {
+    public TaiKhoan getUserId() {
         return userId;
     }
 
-    public void setUserId(Account userId) {
+    public void setUserId(TaiKhoan userId) {
         this.userId = userId;
     }
 

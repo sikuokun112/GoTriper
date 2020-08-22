@@ -1,19 +1,18 @@
 package com.gogotriper.gotriper.repositories;
 
-import com.gogotriper.gotriper.entity.Account;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.gogotriper.gotriper.entity.TaiKhoan;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface UserRepository extends CrudRepository<Account,String> {
+public interface UserRepository extends CrudRepository<TaiKhoan,String> {
 
-    List<Account> findByUserNameContaining(String userName);
+    List<TaiKhoan> findByUserNameContaining(String userName);
 
     @Query(value = "SELECT  * FROM account" , nativeQuery = true)
-    List<Account> getAllAccount();
+    List<TaiKhoan> getAllAccount();
 
-    Account findByUserName(String userName);
-    Account findByUserId(Long id);
+    TaiKhoan findByUserName(String userName);
+    TaiKhoan findByUserId(Long id);
 }

@@ -1,7 +1,6 @@
 package com.gogotriper.gotriper.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -18,7 +17,7 @@ public class Role {
 
 
     @ManyToMany(mappedBy = "roles")
-    private List<Account> accounts;
+    private List<TaiKhoan> taiKhoans;
 
 
     public Long getRoleId() {
@@ -38,11 +37,11 @@ public class Role {
     }
 
 
-    public List<Account> getAccounts() {
-        return accounts;
+    public List<TaiKhoan> getAccounts() {
+        return taiKhoans;
     }
 
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
+    public void setAccounts(List<TaiKhoan> taiKhoans) {
+        this.taiKhoans = taiKhoans;
     }
 }

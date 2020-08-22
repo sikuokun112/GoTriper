@@ -2,7 +2,6 @@ package com.gogotriper.gotriper.entity;
 
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -50,21 +49,21 @@ public class DiaDiem  {
     private List<BaiDang> listBaiDang_DiaDiem;
 
     @OneToMany(mappedBy = "diaDiemImage",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Image> listImage_DiaDiem;
+    private List<HinhAnh> listHinhAnh_DiaDiem;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Account userId;
+    private TaiKhoan userId;
 
     @ManyToOne
     @JoinColumn(name = "tinhthanh_id")
     private TinhThanh tinhThanh;
 
-    public Account getUserId() {
+    public TaiKhoan getUserId() {
         return userId;
     }
 
-    public void setUserId(Account userId) {
+    public void setUserId(TaiKhoan userId) {
         this.userId = userId;
     }
 
@@ -152,12 +151,12 @@ public class DiaDiem  {
         this.listBaiDang_DiaDiem = listBaiDang_DiaDiem;
     }
 
-    public List<Image> getListImage_DiaDiem() {
-        return listImage_DiaDiem;
+    public List<HinhAnh> getListImage_DiaDiem() {
+        return listHinhAnh_DiaDiem;
     }
 
-    public void setListImage_DiaDiem(List<Image> listImage_DiaDiem) {
-        this.listImage_DiaDiem = listImage_DiaDiem;
+    public void setListImage_DiaDiem(List<HinhAnh> listHinhAnh_DiaDiem) {
+        this.listHinhAnh_DiaDiem = listHinhAnh_DiaDiem;
     }
 
     public String getViDo() {

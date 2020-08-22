@@ -65,10 +65,10 @@
         <!-- Swiper -->
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <th:block th:each="image: ${img}">
+                <th:block th:each="hinhAnh: ${img}">
                     <div class="swiper-slide">
-                        <a th:href="@{'getimage/'+${image.getImageUrl()}}" class="grid image-link">
-                            <img th:src="@{'getimage/'+${image.getImageUrl()}}" class="img-fluid" style="width: 400px; height: 250px" alt="#">
+                        <a th:href="@{'getimage/'+${hinhAnh.getImageUrl()}}" class="grid hinhAnh-link">
+                            <img th:src="@{'getimage/'+${hinhAnh.getImageUrl()}}" class="img-fluid" style="width: 400px; height: 250px" alt="#">
                         </a>
                     </div>
                 </th:block>
@@ -129,11 +129,11 @@
                                     <hr>
                                     <h1 class="big-letter">--------------------</h1>
                                     <div class="row">
-                                        <th:block th:each="image : ${diadiem.getListImage_DiaDiem()}">
+                                        <th:block th:each="hinhAnh : ${diadiem.getListImage_DiaDiem()}">
                                             <div class="col-sm-4 featured-responsive">
                                                 <div class="featured-place-wrap">
                                                     <a href="#">
-                                                        <img th:src="@{'getimage/'+${image.getImageUrl()}}" class="img-fluid" alt="#">
+                                                        <img th:src="@{'getimage/'+${hinhAnh.getImageUrl()}}" class="img-fluid" alt="#">
                                                     </a>
                                                 </div>
                                             </div>
@@ -220,7 +220,7 @@
                     </div>
                     <div class="follow">
                         <div class="follow-img">
-                            <img th:src="@{/mainpage/images/follow-img.jpg}" class="img-fluid" alt="#">
+                            <img th:src="@{/mainpage/hinhAnhs/follow-img.jpg}" class="img-fluid" alt="#">
                             <h6 th:text="${diadiem.getUserId().getUserName()}">Christine Evans</h6>
                             <span>New York</span>
                         </div>
@@ -364,7 +364,7 @@
         var el = document.createElement('div');
         el.className = 'marker';
         // Set marker properties using JS
-        el.style.backgroundImage = 'url(https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png)';
+        el.style.backgroundImage = 'url(https://developers.google.com/maps/documentation/javascript/examples/full/hinhAnhs/beachflag.png)';
         el.style.width = '20px';
         el.style.height = '20px';
 
@@ -397,17 +397,17 @@
         });
     </script>
     <script>
-        if ($('.image-link').length) {
-            $('.image-link').magnificPopup({
-                type: 'image',
+        if ($('.hinhAnh-link').length) {
+            $('.hinhAnh-link').magnificPopup({
+                type: 'hinhAnh',
                 gallery: {
                     enabled: true
                 }
             });
         }
-        if ($('.image-link2').length) {
-            $('.image-link2').magnificPopup({
-                type: 'image',
+        if ($('.hinhAnh-link2').length) {
+            $('.hinhAnh-link2').magnificPopup({
+                type: 'hinhAnh',
                 gallery: {
                     enabled: true
                 }

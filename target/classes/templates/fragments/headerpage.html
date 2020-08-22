@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand" href="homemain.html">Listing</a>
+                    <a class="navbar-brand" href="/home">GogoTriper</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="icon-menu"></span>
                     </button>
@@ -17,39 +17,39 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <th:block th:each="danhmuc: ${danhmuclist}">
-                                        <a class="dropdown-item" href="#"th:text="${danhmuc.getTenDanhMuc()}"></a>
+                                        <a class="dropdown-item" th:href="'/searchDanhMuc/'+${danhmuc.getId()}" th:text="${danhmuc.getTenDanhMuc()}"></a>
                                     </th:block>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Listing
+                                    Tỉnh
                                     <span class="icon-arrow-down"></span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <th:block th:each="tinhthanh: ${tinhthanhlist}">
+                                        <a class="dropdown-item" th:href="'/searchDiaDiem/'+${tinhthanh.getId()}" th:text="${tinhthanh.getTen()}"></a>
+                                    </th:block>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Pages
+                                    Địa Điểm
                                     <span class="icon-arrow-down"></span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <a class="dropdown-item" href="/searchDiaDiem">Tìm Kiếm</a>
                                 </div>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">About</a>
+                                <a class="nav-link" href="/mybaidang">Bài Đăng</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Blog</a>
+                                <a class="nav-link" href="/vande">Vấn Đề</a>
                             </li>
-                            <li><a href="#" class="btn btn-outline-light top-btn"><span class="ti-plus"></span> Add Listing</a></li>
+                            <li><a href="/dangdiadiem" class="btn btn-outline-light top-btn"><span class="ti-plus"></span> Đăng Địa Điểm</a></li>
+                            <li><a href="/profile" class="btn btn-outline-light top-btn"> Tài Khoản <th:block th:if="${#request.userPrincipal != null}"><img th:src="@{${avatar}}" style="vertical-align: middle; width: 20px;height: 20px;border-radius: 50%"></th:block></a></li>
+                            <li><a th:if="${#request.userPrincipal != null}" th:href="@{/logout}" class="btn btn-outline-light top-btn">Logout</a></li>
                         </ul>
                     </div>
                 </nav>

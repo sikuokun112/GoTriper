@@ -12,23 +12,49 @@
     <!-- Favicons -->
     <link rel="shortcut icon" href="#">
     <!-- Page Title -->
-    <title>Listing &amp; Directory Website Template</title>
+    <title>Chi tiết địa điểm</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="mainpage/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/mainpage/css/bootstrap.min.css}">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
     <!-- Simple line Icon -->
-    <link rel="stylesheet" href="mainpage/css/simple-line-icons.css">
+    <link rel="stylesheet" th:href="@{/mainpage/css/simple-line-icons.css}">
     <!-- Themify Icon -->
-    <link rel="stylesheet" href="mainpage/css/themify-icons.css">
+    <link rel="stylesheet" th:href="@{/mainpage/css/themify-icons.css}">
     <!-- Hover Effects -->
-    <link rel="stylesheet" href="mainpage/css/set1.css">
+    <link rel="stylesheet" th:href="@{/mainpage/css/set1.css}">
     <!-- Swipper Slider -->
-    <link rel="stylesheet" href="mainpage/css/swiper.min.css">
+    <link rel="stylesheet" th:href="@{/mainpage/css/swiper.min.css}">
     <!-- Magnific Popup CSS -->
-    <link rel="stylesheet" href="mainpage/css/magnific-popup.css">
+    <link rel="stylesheet" th:href="@{/mainpage/css/magnific-popup.css}">
     <!-- Main CSS -->
-    <link rel="stylesheet" href="mainpage/css/style.css">
+    <link rel="stylesheet" th:href="@{/mainpage/css/style.css}">
+
+    <link rel="stylesheet" th:href="@{/mainpage/css/herowrap.css}">
+
+    <!-- MAPBOXGL JS -->
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css' rel='stylesheet' />
+
+    <script src='https://tiles.locationiq.com/v2/js/liq-styles-ctrl-gl.js?v=0.1.6'></script>
+    <link href='https://tiles.locationiq.com/v2/css/liq-styles-ctrl-gl.css?v=0.1.6' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
+    <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+    <style>
+        .marker {
+            display: block;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,37 +65,13 @@
         <!-- Swiper -->
         <div class="swiper-container">
             <div class="swiper-wrapper">
-
-                <div class="swiper-slide">
-                    <a href="mainpage/images/reserve-slide2.jpg" class="grid image-link">
-                        <img src="mainpage/images/reserve-slide2.jpg" class="img-fluid" alt="#">
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="mainpage/images/reserve-slide1.jpg" class="grid image-link">
-                        <img src="mainpage/images/reserve-slide1.jpg" class="img-fluid" alt="#">
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="mainpage/images/reserve-slide3.jpg" class="grid image-link">
-                        <img src="mainpage/images/reserve-slide3.jpg" class="img-fluid" alt="#">
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="mainpage/images/reserve-slide1.jpg" class="grid image-link">
-                        <img src="mainpage/images/reserve-slide1.jpg" class="img-fluid" alt="#">
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="mainpage/images/reserve-slide2.jpg" class="grid image-link">
-                        <img src="mainpage/images/reserve-slide2.jpg" class="img-fluid" alt="#">
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="mainpage/images/reserve-slide3.jpg" class="grid image-link">
-                        <img src="mainpage/images/reserve-slide3.jpg" class="img-fluid" alt="#">
-                    </a>
-                </div>
+                <th:block th:each="hinhAnh: ${img}">
+                    <div class="swiper-slide">
+                        <a th:href="@{'getimage/'+${hinhAnh.getImageUrl()}}" class="grid hinhAnh-link">
+                            <img th:src="@{'getimage/'+${hinhAnh.getImageUrl()}}" class="img-fluid" style="width: 400px; height: 250px" alt="#">
+                        </a>
+                    </div>
+                </th:block>
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination swiper-pagination-white"></div>
@@ -84,22 +86,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>Tasty Hand-Pulled Noodles</h5>
+                    <h5 th:text="${diadiem.getTenDiaDiem()}">Tasty x</h5>
                     <p><span>$$$</span>$$</p>
-                    <p class="reserve-description">Innovative cooking, paired with fine wines in a modern setting.</p>
+                    <p class="reserve-description">Dưới đây là những thông tin về địa điểm.</p>
                 </div>
                 <div class="col-md-6">
                     <div class="reserve-seat-block">
                         <div class="reserve-rating">
-                            <span>9.5</span>
+                            <span>***</span>
                         </div>
                         <div class="review-btn">
-                            <a href="#" class="btn btn-outline-danger">WRITE A REVIEW</a>
-                            <span>34 reviews</span>
+                            <a th:href="'/diadiem/'+${diadiem.getId()}+'/dangbaiviet'" class="btn btn-outline-danger">WRITE A REVIEW</a>
+                            <span>reviews</span>
                         </div>
                         <div class="reserve-btn">
                             <div class="featured-btn-wrap">
-                                <a href="#" class="btn btn-danger">RESERVE A SEAT</a>
+                                <a href="#" class="btn btn-danger">HELLO!</a>
                             </div>
                         </div>
                     </div>
@@ -115,12 +117,43 @@
                 <div class="col-md-8 responsive-wrap">
                     <div class="booking-checkbox_wrap">
                         <div class="booking-checkbox">
-                            <p>Tasty Hand-Pulled Noodles is a 1950s style diner located in Madison, Wisconsin. Opened in 1946 by Mickey Weidman, and located just across the street from Camp Randall Stadium, it has become a popular game day tradition amongst
-                                many Badger fans. The diner is well known for its breakfast selections, especially the Scrambler, which is a large mound of potatoes, eggs, cheese, gravy, and a patrons’ choice of other toppings.</p>
-                            <p>Mickies has also been featured on “Todd’s Taste of the Town” during one of ESPN’s college football broadcasts. We are one of the best Chinese restaurants in the New York, New York area. We have been recognized for our outstanding
-                                Chinese & Asian cuisine, excellent Chinese menu, and great restaurant specials. We are one of the best Chinese restaurants in the New York, New York area. We have been recognized for our outstanding Chinese & Asian cuisine,
-                                excellent Chinese menu, and great restaurant specials.</p>
-                            <hr>
+                            <div class="hero-wrap">
+                                <div class="text ">
+                                    <h1 class="big-letter">Nội Dung</h1>
+                                    <br>
+                                    <h3 th:utext="${diadiem.getNoiDung()}"></h3>
+                                    <hr>
+                                    <h1 class="big-letter">Giá Cả</h1>
+                                    <br>
+                                    <p th:text="${diadiem.getGiamin()}+'VNĐ ------>>'+${diadiem.getGiamax()} +' VNĐ'"></p>
+                                    <hr>
+                                    <h1 class="big-letter">--------------------</h1>
+                                    <div class="row">
+                                        <th:block th:each="hinhAnh : ${diadiem.getListImage_DiaDiem()}">
+                                            <div class="col-sm-4 featured-responsive">
+                                                <div class="featured-place-wrap">
+                                                    <a href="#">
+                                                        <img th:src="@{'getimage/'+${hinhAnh.getImageUrl()}}" class="img-fluid" alt="#">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </th:block>
+                                    </div>
+                                    <h1 class="big-letter">--------------------</h1>
+                                    <h1 class="big-letter">Khung Giờ Hoạt Động</h1>
+                                    <br>
+                                    <p th:text="'Giờ mở cửa: '+${diadiem.getGioHoatDong()}"></p>
+                                    <p th:text="'Giờ đóng cửa:'+${diadiem.getGioDongCua()}"></p>
+                                    <hr>
+                                    <h1 class="big-letter">Toạ Độ Địa Lý</h1>
+                                    <br>
+                                    <div id="kinhdo" th:text="${diadiem.getKinhDo()}"></div>
+                                    <div id="vido" th:text="${diadiem.getViDo()}"></div>
+                                    <hr>
+
+
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
@@ -158,87 +191,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="booking-checkbox_wrap mt-4">
-                        <h5>34 Reviews</h5>
-                        <hr>
-                        <div class="customer-review_wrap">
-                            <div class="customer-img">
-                                <img src="mainpage/images/customer-img1.jpg" class="img-fluid" alt="#">
-                                <p>Amanda G</p>
-                                <span>35 Reviews</span>
-                            </div>
-                            <div class="customer-content-wrap">
-                                <div class="customer-content">
-                                    <div class="customer-review">
-                                        <h6>Best noodles in the Newyork city</h6>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                        <span class="round-icon-blank"></span>
-                                        <p>Reviewed 2 days ago</p>
-                                    </div>
-                                    <div class="customer-rating">8.0</div>
-                                </div>
-                                <p class="customer-text">I love the noodles here but it is so rare that I get to come here. Tasty Hand-Pulled Noodles is the best type of whole in the wall restaurant. The staff are really nice, and you should be seated quickly. I usually get the
-                                    hand pulled noodles in a soup. House Special #1 is amazing and the lamb noodles are also great. If you want your noodles a little chewier, get the knife cut noodles, which are also amazing. Their dumplings are great
-                                    dipped in their chili sauce.
-                                </p>
-                                <p class="customer-text">I love how you can see into the kitchen and watch them make the noodles and you can definitely tell that this is a family run establishment. The prices are are great with one dish maybe being $9. You just have to remember
-                                    to bring cash.
-                                </p>
-                                <ul>
-                                    <li><img src="mainpage/images/review-img1.jpg" class="img-fluid" alt="#"></li>
-                                    <li><img src="mainpage/images/review-img2.jpg" class="img-fluid" alt="#"></li>
-                                    <li><img src="mainpage/images/review-img3.jpg" class="img-fluid" alt="#"></li>
-                                </ul>
-                                <span>28 people marked this review as helpful</span>
-                                <a href="#"><span class="icon-like"></span>Helpful</a>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="customer-review_wrap">
-                            <div class="customer-img">
-                                <img src="mainpage/images/customer-img2.jpg" class="img-fluid" alt="#">
-                                <p>Kevin W</p>
-                                <span>17 Reviews</span>
-                            </div>
-                            <div class="customer-content-wrap">
-                                <div class="customer-content">
-                                    <div class="customer-review">
-                                        <h6>A hole-in-the-wall old school shop.</h6>
-                                        <span class="customer-rating-red"></span>
-                                        <span class="round-icon-blank"></span>
-                                        <span class="round-icon-blank"></span>
-                                        <span class="round-icon-blank"></span>
-                                        <span class="round-icon-blank"></span>
-                                        <p>Reviewed 3 months ago</p>
-                                    </div>
-                                    <div class="customer-rating customer-rating-red">2.0</div>
-                                </div>
-                                <p class="customer-text">The dumplings were so greasy...the pan-fried shrimp noodles were the same. So much oil and grease it was difficult to eat. The shrimp noodles only come with 3 shrimp (luckily the dish itself is cheap) </p>
-                                <p class="customer-text">The beef noodle soup was okay. I added black vinegar into the broth to give it some extra flavor. The soup has bok choy which I liked - it's a nice textural element. The shop itself is really unclean (which is the case
-                                    in many restaurants in Chinatown) They don't wipe down the tables after customers have eaten. If you peak into the kitchen many of their supplies are on the ground which is unsettling... </p>
-                                <span>10 people marked this review as helpful</span>
-                                <a href="#"><span class="icon-like"></span>Helpful</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-md-4 responsive-wrap">
                     <div class="contact-info">
-                        <img src="mainpage/images/map.jpg" class="img-fluid" alt="#">
+                        <div class="">
+                            <!-- data-toggle="affix" -->
+                            <!-- Google map will appear here! Edit the Latitude, Longitude and Zoom Level below using data-attr-*  -->
+                            <div id='map' class="z-depth-1-half map-container-6" style="height: 400px"></div>
+                        </div>
                         <div class="address">
                             <span class="icon-location-pin"></span>
-                            <p> Doyers St<br> New York, NY 10013<br> b/t Division St & St James Pl <br> Chinatown, Civic Center</p>
+                            <p th:text="${diadiem.getDiaChi()}"></p>
                         </div>
                         <div class="address">
                             <span class="icon-screen-smartphone"></span>
-                            <p> +44 20 7336 8898</p>
+                            <p th:text="${diadiem.getSdt()}"> +44 20 7336 8898</p>
                         </div>
                         <div class="address">
                             <span class="icon-link"></span>
-                            <p>https://burgerandlobster.com</p>
+                            <p th:text="${diadiem.getTinhThanh().getTen()}"></p>
                         </div>
                         <div class="address">
                             <span class="icon-clock"></span>
@@ -249,21 +220,21 @@
                     </div>
                     <div class="follow">
                         <div class="follow-img">
-                            <img src="mainpage/images/follow-img.jpg" class="img-fluid" alt="#">
-                            <h6>Christine Evans</h6>
+                            <img th:src="@{/mainpage/hinhAnhs/follow-img.jpg}" class="img-fluid" alt="#">
+                            <h6 th:text="${diadiem.getUserId().getUserName()}">Christine Evans</h6>
                             <span>New York</span>
                         </div>
                         <ul class="social-counts">
                             <li>
-                                <h6>26</h6>
+                                <h6>-</h6>
                                 <span>Listings</span>
                             </li>
                             <li>
-                                <h6>326</h6>
+                                <h6>-</h6>
                                 <span>Followers</span>
                             </li>
                             <li>
-                                <h6>12</h6>
+                                <h6>-</h6>
                                 <span>Followers</span>
                             </li>
                         </ul>
@@ -273,6 +244,48 @@
             </div>
         </div>
     </section>
+
+    <div class="hero-wrap">
+        <div class="text ">
+            <h2 class="big-letter" style="color: darksalmon">CÁC BÀI LIÊN QUAN </h2>
+        </div>
+    </div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <th:block th:each="baidang1 : ${baidanglienquan}">
+                <div class="swiper-slide">
+                    <div class="row light-bg detail-options-wrap">
+                        <div class="col-sm-9 featured-responsive">
+                            <div class="featured-place-wrap">
+                                <a th:href="'/chitietbaidang/'+${baidang1.getId()}">
+                                    <img th:src="@{'getimage/'+${baidang1.getListImage_BaiDang().get(0).getImageUrl()}}" class="img-fluid" style="width: 400px; height: 150px" alt="#">
+                                    <div class="featured-title-box">
+                                        <h6 th:text="${baidang1.getTieuDe()}"></h6>
+                                        <p th:text="${baidang1.getDanhMuc().getTenDanhMuc()}"></p> <span>• </span>
+                                        <p th:text="${baidang1.getListBinhLuans().size()} +' Reviews'"></p> <span> • </span>
+                                        <p><span>***</span>**</p>
+                                        <ul>
+                                            <li><span class="icon-location-pin"></span>
+                                                <p th:text="${baidang1.getDiaDiem().getDiaChi()}"></p>
+                                            </li>
+                                            <li><span class="icon-screen-smartphone"></span>
+                                                <p th:text="${baidang1.getDiaDiem().getSdt()}"></p>
+                                            </li>
+                                        </ul>
+                                        <div class="bottom-icons">
+                                            <div class="closed-now">READ NOW</div>
+                                            <span class="ti-heart"></span>
+                                            <span class="ti-bookmark"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
     <!--//END BOOKING DETAILS -->
     <th:block th:include="/fragments/footermain"></th:block>
 
@@ -281,13 +294,92 @@
 
     <!-- jQuery, Bootstrap JS. -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="mainpage/js/jquery-3.2.1.min.js"></script>
-    <script src="mainpage/js/popper.min.js"></script>
-    <script src="mainpage/js/bootstrap.min.js"></script>
+    <script th:src="@{/mainpage/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/mainpage/js/popper.min.js}"></script>
+    <script th:src="@{/mainpage/js/bootstrap.min.js}"></script>
     <!-- Magnific popup JS -->
-    <script src="mainpage/js/jquery.magnific-popup.js"></script>
+    <script th:src="@{/mainpage/js/jquery.magnific-popup.js}"></script>
     <!-- Swipper Slider JS -->
-    <script src="mainpage/js/swiper.min.js"></script>
+    <script th:src="@{/mainpage/js/swiper.min.js}"></script>
+    <script>
+        //Add your LocationIQ Maps Access Token here (not the API token!)
+
+        locationiq.key = 'pk.2308d72370d062bea24af4ac2d37ee18';
+
+        var kinhdo = document.getElementById("kinhdo").innerText;
+        var vido = document.getElementById("vido").innerText;
+        var center1 = [vido, kinhdo];
+        //Define the map and configure the map's theme
+        var map = new mapboxgl.Map({
+            container: 'map',
+            attributionControl: false, //need this to show a compact attribution icon (i) instead of the whole text
+            zoom: 15,
+            center: center1
+        });
+
+        //Define layers you want to add to the layer controls; the first element will be the default layer
+        var layerStyles = {
+            "Streets": "streets/raster",
+            "Satellite": "earth/raster",
+            "Hybrid": "hybrid/raster",
+            "Dark": "dark/raster",
+            "Light": "light/raster",
+        };
+
+        map.addControl(new locationiqLayerControl({
+            key: locationiq.key,
+            layerStyles: layerStyles
+        }), 'top-left');
+
+        //Add Navigation controls to the map to the top-right corner of the map
+        var nav = new mapboxgl.NavigationControl();
+        map.addControl(nav, 'top-right');
+
+
+        //Add a 'full screen' button to the map
+        map.addControl(new mapboxgl.FullscreenControl());
+
+        //Add a Scale to the map
+        map.addControl(new mapboxgl.ScaleControl({
+            maxWidth: 80,
+            unit: 'metric' //imperial for miles
+        }));
+
+        //Add Geolocation control to the map (will only render when page is opened over HTTPS)
+        map.addControl(new mapboxgl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: true
+        }));
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic2lrdW9rdW4xMSIsImEiOiJja2J5bDlkemcwNG9mMnNwOXZlZjgyczlzIn0.tG7282mKVo6pVtlP8kkkTQ';
+        map.addControl(
+            new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken,
+                mapboxgl: mapboxgl
+            })
+        );
+
+
+        var el = document.createElement('div');
+        el.className = 'marker';
+        // Set marker properties using JS
+        el.style.backgroundImage = 'url(https://developers.google.com/maps/documentation/javascript/examples/full/hinhAnhs/beachflag.png)';
+        el.style.width = '20px';
+        el.style.height = '20px';
+
+        var marker = new mapboxgl.Marker(el)
+            .setLngLat([vido, kinhdo])
+            .addTo(map);
+
+
+
+
+
+
+        // Add the geocoder to the map
+        // map.addControl(geocoder);
+    </script>
     <script>
         var swiper = new Swiper('.swiper-container', {
             slidesPerView: 3,
@@ -305,17 +397,17 @@
         });
     </script>
     <script>
-        if ($('.image-link').length) {
-            $('.image-link').magnificPopup({
-                type: 'image',
+        if ($('.hinhAnh-link').length) {
+            $('.hinhAnh-link').magnificPopup({
+                type: 'hinhAnh',
                 gallery: {
                     enabled: true
                 }
             });
         }
-        if ($('.image-link2').length) {
-            $('.image-link2').magnificPopup({
-                type: 'image',
+        if ($('.hinhAnh-link2').length) {
+            $('.hinhAnh-link2').magnificPopup({
+                type: 'hinhAnh',
                 gallery: {
                     enabled: true
                 }

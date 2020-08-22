@@ -48,47 +48,47 @@ public class AdminController {
 
     @RequestMapping(value = {"/","/home"},method = RequestMethod.GET)
     public String homeAdmin(Model model){
-        List<Account> listaccounts = userService.getAllAccount();
+        List<TaiKhoan> listaccounts = userService.getAllAccount();
         model.addAttribute("account", ResonseUtils.returnListAccount(listaccounts));
         return "adminlayout/homeadmin";
     }
     @RequestMapping(value = "/editaccount/{id}",method = RequestMethod.POST)
     public String EditAccount(@RequestParam(value = "username") String username,@RequestParam(value = "fullname") String fullname,@RequestParam(value = "email") String email,@RequestParam(value = "enable") Integer enable,@PathVariable String id){
-            Account account = userService.findByUserId(Long.parseLong(id));
-            account.setUserName(username);
-            account.setFullName(fullname);
+            TaiKhoan taiKhoan = userService.findByUserId(Long.parseLong(id));
+            taiKhoan.setUserName(username);
+            taiKhoan.setFullName(fullname);
             if(enable!=null){
                 if(enable == 0){
-                    account.setEnable(false);
+                    taiKhoan.setEnable(false);
                     Role role = roleRepository.findAllByRoleId(Integer.toUnsignedLong(3));
                     List<Role> roles = new ArrayList<>();
                     roles.add(role);
-                    account.setRoles(roles);
+                    taiKhoan.setRoles(roles);
                 }
                 else{
-                    account.setEnable(true);
+                    taiKhoan.setEnable(true);
                     Role role = roleRepository.findAllByRoleId(Integer.toUnsignedLong(2));
                     List<Role> roles = new ArrayList<>();
                     roles.add(role);
-                    account.setRoles(roles);
+                    taiKhoan.setRoles(roles);
                 }
             }
 
-            account.setEmail(email);
-            userService.saveUser(account);
+            taiKhoan.setEmail(email);
+            userService.saveUser(taiKhoan);
             return "redirect:/home";
 
     }
 
     @RequestMapping(value = "/deleteaccount/{id}",method = RequestMethod.POST)
     public String deleteAccount(@PathVariable String id){
-        Account account = userService.findByUserId(Long.parseLong(id));
-        account.setEnable(false);
+        TaiKhoan taiKhoan = userService.findByUserId(Long.parseLong(id));
+        taiKhoan.setEnable(false);
         Role role = roleRepository.findAllByRoleId(Integer.toUnsignedLong(3));
         List<Role> roles = new ArrayList<>();
         roles.add(role);
-        account.setRoles(roles);
-        userService.saveUser(account);
+        taiKhoan.setRoles(roles);
+        userService.saveUser(taiKhoan);
         return "redirect:/admin/home";
     }
 

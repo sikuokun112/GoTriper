@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Quan Ly Bài Đăng</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/admin/plugins/fontawesome-free/css/all.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- jsGrid -->
+    <link rel="stylesheet" th:href="@{/admin/plugins/jsgrid/jsgrid.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/plugins/jsgrid/jsgrid-theme.min.css}">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/admin/dist/css/adminlte.min.css}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!--    header-->
+    <th:block th:include="/adminlayout/header"></th:block>
+
+    <!--    slide navbar-->
+    <th:block th:include="/adminlayout/asidenavbar"></th:block>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>QUẢN LÝ BÀI ĐĂNG</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Admin</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Danh sách bài đăng</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div id="jsGrid1"></div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!--    Footer-->
+
+    <th:block th:include="/adminlayout/footer"></th:block>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+
+
+<div class="modal fade" id="modalEditForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Gia hạn cho bài viết<p id="baivietid"></p></h4>
+                <h5>0 de gia han bai viet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="text" id="tenbaiviet" class="form-control validate" readonly>
+                    <label data-error="wrong" data-success="right" for="flag">Tên bài viết</label>
+                </div>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="number" id="flag" class="form-control validate" min="0" max="1">
+                    <label data-error="wrong" data-success="right" for="flag">Tình trạng bài viết</label>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-default" id="editbaidangbtn">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDeleteForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Bạn có muốn xoá bài đăng này?<p id="baidangidfordelete"></p></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-default" id="deletebaidangbtn">Xoá</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- jsGrid -->
+<script th:src="@{/admin/data/dbbaidang.js}"></script>
+<script th:src="@{/admin/plugins/jsgrid/jsgrid.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<!-- AdminLTE for demo purposes -->
+<script th:src="@{/admin/dist/js/demo.js}"></script>
+<!-- page script -->
+<script th:inline="javascript">
+    $( document ).ready(function() {
+        $("#jsGrid1").jsGrid({
+            height: "auto",
+            width: "100%",
+            sorting: true,
+            paging: true,
+            autoload: true,
+            pageSize: 5,
+            pageButtonCount: 5,
+            deleteConfirm: "Do you really want to delete your job listing?",
+            data: /*[[${listBaiDangs}]]*/ [],
+            fields: [
+                { name: "baidangid", title: "id", type: "text", visible: false, width: 30 },
+                { name: "baidangname", title: "Ten Dia Diem", type: "text", width: 70 },
+                { name: "danhmucid", title: "Danh Muc ID", type: "text", width: 70 },
+                { name: "usercreateid", title: "UserID Create", type: "text", width: 70 },
+                { name: "diadiemid", title: "Dia Diem ID", type: "text", width: 70 },
+                { name: "soluotxem", title: "So Luot Xem", type: "text", width: 70 },
+                { name: "soluotdanhgia", title: "Danh Gia", type: "text", width: 70 },
+                { name: "tinhtrang", title: "Tinh Trang", type: "text", width: 70 },
+                { type: "control", width: 50, editButton: false, deleteButton: false,
+                    itemTemplate: function(value, item) {
+                        var $result = jsGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
+
+                        var $customEditButton = $("<button>").attr({class: "customGridEditbutton jsgrid-button jsgrid-edit-button"}).attr("data-toggle","modal").attr("data-target","#modalEditForm")
+                            .click(function(e) {
+                                $('#baivietid').val(item.baidangid);
+                                $('#tenbaiviet').val(item.baidangname);
+                                 $('#flag').val(item.tinhtrang);
+                                //e.stopPropagation();
+                            });
+                        var $customDeleteButton = $("<button>").attr({class: "customGridDeletebutton jsgrid-button jsgrid-delete-button"}).attr("data-toggle","modal").attr("data-target","#modalDeleteForm")
+                            .click(function(e) {
+                                $('#baidangidfordelete').val(item.baidangid);
+                            });
+                        return $("<div>").append($customEditButton).append($customDeleteButton);
+                        //return $result.add($customButton);
+                    },
+                }
+            ]
+        });
+
+        $('#editbaidangbtn').click(function(e){
+            $.ajax({
+                method: "POST",
+                url: "/admin/editbaidang/"+$('#baivietid').val(),
+                data: { 'flag' : $('#flag').val() },
+                success: function(status){
+                    if(status) {
+                        //here you check the response from your controller and add your business logic
+                        $('#modalEditForm').modal('hide');
+                        location.reload(true);
+                    }
+                }
+            });
+        });
+        $('#deletebaidangbtn').click(function(e){
+            $.ajax({
+                method: "POST",
+                url: "/admin/deletebaidang/"+$('#baidangidfordelete').val(),
+                success: function(status){
+                    if(status) {
+                        //here you check the response from your controller and add your business logic
+                        $('#modalDeleteForm').modal('hide');
+                        location.reload(true);
+                    }
+                }
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

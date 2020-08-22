@@ -2,7 +2,7 @@ package com.gogotriper.gotriper.services;
 
 import com.gogotriper.gotriper.entity.BaiDang;
 import com.gogotriper.gotriper.entity.DiaDiem;
-import com.gogotriper.gotriper.entity.Image;
+import com.gogotriper.gotriper.entity.HinhAnh;
 import com.gogotriper.gotriper.repositories.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,18 +20,18 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
-    public void saveImage(Image image){
-        imageRepository.save(image);
+    public void saveImage(HinhAnh hinhAnh){
+        imageRepository.save(hinhAnh);
     }
-    public void saveListImage(List<Image> listImages){
-        for (Image image: listImages){
-            imageRepository.save(image);
+    public void saveListImage(List<HinhAnh> listHinhAnhs){
+        for (HinhAnh hinhAnh : listHinhAnhs){
+            imageRepository.save(hinhAnh);
         }
     }
     public int getLatestIdImage(){
-        List<Image> images = imageRepository.findAll();
-        if(images.size()!=0){
-        return images.get(images.size()-1).getId();
+        List<HinhAnh> hinhAnhs = imageRepository.findAll();
+        if(hinhAnhs.size()!=0){
+        return hinhAnhs.get(hinhAnhs.size()-1).getId();
         }
         else{
             return 0;
@@ -47,10 +47,10 @@ public class ImageService {
             e.printStackTrace();
         }
     }
-    public List<Image> findAllImageByBaiDang(BaiDang baiDang){
+    public List<HinhAnh> findAllImageByBaiDang(BaiDang baiDang){
         return imageRepository.findAllByBaiDangImage(baiDang);
     }
-    public List<Image> findAllImageByDiaDiem(DiaDiem diaDiem){
+    public List<HinhAnh> findAllImageByDiaDiem(DiaDiem diaDiem){
         return imageRepository.findAllByDiaDiemImage(diaDiem);
     }
 

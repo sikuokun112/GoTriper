@@ -68,7 +68,7 @@ public class MainController {
 
         if(principal !=null){
             String userName = principal.getName();
-            Account user = userService.findByUserName(userName);
+            TaiKhoan user = userService.findByUserName(userName);
             if(user.getListUserImages().size()!=0){
                 return "getimage/"+user.getListUserImages().get(user.getListUserImages().size()-1).getImageUrl();
             }
@@ -82,7 +82,7 @@ public class MainController {
 
         model.addAttribute("danhmuclist",danhMucService.getAllDanhMuc());
         BaiDang baiDang = baiDangService.findBaiDangById(2);
-        List<Image> img = imageService.findAllImageByBaiDang(baiDang);
+        List<HinhAnh> img = imageService.findAllImageByBaiDang(baiDang);
         model.addAttribute("img",img);
         return "test_danhmuc";
     }
@@ -111,20 +111,20 @@ public class MainController {
         baiDang.setFlag(0);
 
         String userName = principal.getName();
-        Account user  = userService.findByUserName(userName);
+        TaiKhoan user  = userService.findByUserName(userName);
         baiDang.setUserId(user);
-        List<Image > images = new ArrayList<>();
+        List<HinhAnh> hinhAnhs = new ArrayList<>();
         int i =0;
         for(MultipartFile photo : photos){
-                Image image = new Image();
+                HinhAnh hinhAnh = new HinhAnh();
                 i++;
                 int series = imageService.getLatestIdImage()+i;
-                image.setImageUrl(series+"_"+photo.getOriginalFilename());
-                image.setBaiDangImage(baiDang);
-                images.add(image);
+                hinhAnh.setImageUrl(series+"_"+photo.getOriginalFilename());
+                hinhAnh.setBaiDangImage(baiDang);
+                hinhAnhs.add(hinhAnh);
                 imageService.saveImageToUploads(photo,series);
         }
-        baiDang.setListImage_BaiDang(images);
+        baiDang.setListImage_BaiDang(hinhAnhs);
         baiDangService.saveBaiDang(baiDang);
         return "success";
     }
@@ -137,7 +137,7 @@ public class MainController {
         baiDang.setNoiDung(noidung);
         baiDang.setTieuDe(tieude);
         String userName = principal.getName();
-        Account user  = userService.findByUserName(userName);
+        TaiKhoan user  = userService.findByUserName(userName);
         baiDang.setUserId(user);
         // set ngay dang now
 
@@ -153,18 +153,18 @@ public class MainController {
         baiDang.setThoiGianHetHan(ts2);
         baiDang.setFlag(0);
 
-        List<Image > images = new ArrayList<>();
+        List<HinhAnh> hinhAnhs = new ArrayList<>();
         int i =0;
         for(MultipartFile photo : photos){
-            Image image = new Image();
+            HinhAnh hinhAnh = new HinhAnh();
             i++;
             int series = imageService.getLatestIdImage()+i;
-            image.setImageUrl(series+"_"+photo.getOriginalFilename());
-            image.setBaiDangImage(baiDang);
-            images.add(image);
+            hinhAnh.setImageUrl(series+"_"+photo.getOriginalFilename());
+            hinhAnh.setBaiDangImage(baiDang);
+            hinhAnhs.add(hinhAnh);
             imageService.saveImageToUploads(photo,series);
         }
-        baiDang.setListImage_BaiDang(images);
+        baiDang.setListImage_BaiDang(hinhAnhs);
         baiDangService.saveBaiDang(baiDang);
         return "success";
     }
@@ -179,12 +179,12 @@ public class MainController {
     @PostMapping("/savevande")
     public String saveVanDe(@RequestParam("tieude") String tieude,@RequestParam("noidung") String noidung, Principal principal){
 
-        Account account = userService.findByUserName(principal.getName());
+        TaiKhoan taiKhoan = userService.findByUserName(principal.getName());
         VanDe vanDe = new VanDe();
         vanDe.setTieude(tieude);
         vanDe.setNoidung(noidung);
         vanDe.setFlag(0);
-        vanDe.setUserIdVanDe(account);
+        vanDe.setUserIdVanDe(taiKhoan);
 
         vanDeService.saveVanDe(vanDe);
         return "redirect:/vande";
@@ -237,22 +237,22 @@ public class MainController {
         diaDiem.setNoiDung(noidung);
         diaDiem.setSdt(phone);
         String userName = principal.getName();
-        Account user  = userService.findByUserName(userName);
+        TaiKhoan user  = userService.findByUserName(userName);
         diaDiem.setUserId(user);
-        List<Image > images = new ArrayList<>();
+        List<HinhAnh> hinhAnhs = new ArrayList<>();
         int i =0;
         for(MultipartFile photo : photos){
-            Image image = new Image();
+            HinhAnh hinhAnh = new HinhAnh();
             i++;
             int series = imageService.getLatestIdImage()+i;
-            image.setImageUrl(series+"_"+photo.getOriginalFilename());
-            image.setDiaDiemImage(diaDiem);
-            images.add(image);
+            hinhAnh.setImageUrl(series+"_"+photo.getOriginalFilename());
+            hinhAnh.setDiaDiemImage(diaDiem);
+            hinhAnhs.add(hinhAnh);
             imageService.saveImageToUploads(photo,series);
         }
         TinhThanh tinhThanh = tinhThanhService.getTinhThanhById(Integer.parseInt(tinhthanhname));
         diaDiem.setTinhThanh(tinhThanh);
-        diaDiem.setListImage_DiaDiem(images);
+        diaDiem.setListImage_DiaDiem(hinhAnhs);
         diaDiemService.saveDiaDiem(diaDiem);
         return "success";
     }
@@ -293,20 +293,20 @@ public class MainController {
     @PostMapping("/updatepassword/{id}")
     public String updatePassword(@RequestParam("oldpassword") String oldpassword,@RequestParam("newpassword") String newpassword,@RequestParam("confirmpassword") String confirmpassword,@PathVariable String id, Principal principal){
 
-        Account account = userService.findByUserId(Long.parseLong(id));
-        System.out.println(account.getPassWord());
+        TaiKhoan taiKhoan = userService.findByUserId(Long.parseLong(id));
+        System.out.println(taiKhoan.getPassWord());
         System.out.println(oldpassword);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println(encoder.encode(newpassword));
         System.out.println(newpassword);
         System.out.println(confirmpassword);
-        System.out.println(encoder.matches(oldpassword,account.getPassWord()));
-       if(encoder.matches(oldpassword,account.getPassWord()) == false || newpassword.compareTo(confirmpassword) != 0){
+        System.out.println(encoder.matches(oldpassword, taiKhoan.getPassWord()));
+       if(encoder.matches(oldpassword, taiKhoan.getPassWord()) == false || newpassword.compareTo(confirmpassword) != 0){
            return "error_changepass";
        }else{
-           account.setPassWord(EncrytedPasswordUtils.encrytedPassword(newpassword));
-           userService.saveUser(account);
+           taiKhoan.setPassWord(EncrytedPasswordUtils.encrytedPassword(newpassword));
+           userService.saveUser(taiKhoan);
            return "redirect:/profile";
        }
 
@@ -336,7 +336,7 @@ public class MainController {
     @RequestMapping(value = {"/chitietdiadiem/{id}"},method =  RequestMethod.GET)
     public String DetailMain(Model model,@PathVariable String id){
         DiaDiem diaDiem = diaDiemService.findDiaDiemById(Integer.parseInt(id));
-        List<Image> img = imageService.findAllImageByDiaDiem(diaDiem);
+        List<HinhAnh> img = imageService.findAllImageByDiaDiem(diaDiem);
         List<BaiDang> baidanglienquan = baiDangService.findAllBaiDangByDiaDiem(diaDiem);
         model.addAttribute("img",img);
         model.addAttribute("diadiem",diaDiem);
@@ -367,8 +367,8 @@ public class MainController {
 //        System.out.println("SO LUOT XEM");
 
 
-        List<Image> img = imageService.findAllImageByBaiDang(baiDang);
-        Account account = userService.findByUserName(principal.getName());
+        List<HinhAnh> img = imageService.findAllImageByBaiDang(baiDang);
+        TaiKhoan taiKhoan = userService.findByUserName(principal.getName());
         List<BinhLuan> binhLuanList = binhLuanService.getAllBinhLuanOfBaiDang(Integer.parseInt(id));
 
         Date now = new Date();
@@ -381,14 +381,14 @@ public class MainController {
         baiDang.setSoLuotXem(baiDang.getSoLuotXem()+1);
         baiDangService.saveBaiDang(baiDang);
         boolean checkauthor =false;
-        if(baiDang.getUserId() == account){
+        if(baiDang.getUserId() == taiKhoan){
             checkauthor = true;
         }
 
         List<BaiDang> baidanglienquan = baiDangService.findListBaiDangByDanhMuc(baiDang.getDanhMuc());
         model.addAttribute("img",img);
         model.addAttribute("baidang",baiDang);
-        model.addAttribute("account",account);
+        model.addAttribute("account", taiKhoan);
         model.addAttribute("listbinhluans",binhLuanList);
         model.addAttribute("check",check);
         model.addAttribute("checkauthor",checkauthor);
@@ -399,8 +399,8 @@ public class MainController {
 
     @RequestMapping(value = "/mybaidang",method = RequestMethod.GET)
     public String myBaiDang(Model model ,Principal principal){
-        Account account = userService.findByUserName(principal.getName());
-        model.addAttribute("account",account);
+        TaiKhoan taiKhoan = userService.findByUserName(principal.getName());
+        model.addAttribute("account", taiKhoan);
 
         return "layouts/myBaiDang";
     }
@@ -416,30 +416,30 @@ public class MainController {
     @RequestMapping(value = {"/signup"},method =  RequestMethod.GET)
     public String registerForm(Model model) {
 
-        model.addAttribute("user", new Account());
+        model.addAttribute("user", new TaiKhoan());
         return "registerForm";
     }
 
     @RequestMapping(value = {"/signup2"},method =  RequestMethod.GET)
     public String registerForm2(Model model) {
 
-        model.addAttribute("user", new Account());
+        model.addAttribute("user", new TaiKhoan());
         return "signup";
     }
 
 
 
     @PostMapping("/register")
-    public String registerUser(@Valid  Account account, BindingResult bindingResult, Model model) {
+    public String registerUser(@Valid TaiKhoan taiKhoan, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             return "registerForm2";
         }
-        if(userService.isUserPresent(account.getUserName())) {
+        if(userService.isUserPresent(taiKhoan.getUserName())) {
             model.addAttribute("exist",true);
             System.out.println("TAI KHOAN DA CO NGƯƠI SU DUNG");
             return "redirect:/signup2";
         }else{
-            userService.createUser(account);
+            userService.createUser(taiKhoan);
             return "success";
         }
 
@@ -516,7 +516,7 @@ public class MainController {
     @RequestMapping(value = "/profile",method = RequestMethod.GET)
     public String getProFile(Model model,Principal principal){
         String userName = principal.getName();
-        Account user = userService.findByUserName(userName);
+        TaiKhoan user = userService.findByUserName(userName);
         boolean check = false;
         if(user.getListUserImages().size() == 0){
             check = false;
@@ -668,21 +668,21 @@ public class MainController {
 
     @PostMapping("/postavatar/{id}/saveavatar")
     public String changeAvatar(Model model, @PathVariable String id ,@RequestParam("pro-image") List<MultipartFile> photos){
-            Account account = userService.findByUserId(Long.parseLong(id));
-            List<Image > images = new ArrayList<>();
+            TaiKhoan taiKhoan = userService.findByUserId(Long.parseLong(id));
+            List<HinhAnh> hinhAnhs = new ArrayList<>();
         int i =0;
         for(MultipartFile photo : photos){
-            Image image = new Image();
+            HinhAnh hinhAnh = new HinhAnh();
             i++;
             int series = imageService.getLatestIdImage()+i;
-            image.setImageUrl(series+"_"+photo.getOriginalFilename());
-            image.setUserImage(account);
-            images.add(image);
+            hinhAnh.setImageUrl(series+"_"+photo.getOriginalFilename());
+            hinhAnh.setUserImage(taiKhoan);
+            hinhAnhs.add(hinhAnh);
 
             imageService.saveImageToUploads(photo,series);
         }
-        account.setListUserImages(images);
-        userService.saveUser(account);
+        taiKhoan.setListUserImages(hinhAnhs);
+        userService.saveUser(taiKhoan);
 
 
         return "redirect:/profile";
